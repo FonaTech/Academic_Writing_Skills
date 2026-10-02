@@ -1,0 +1,6 @@
+interface:
+  display_name: "Scientific Writing Orchestrator"
+  short_description: "Plan, draft, revise and audit scientific papers"
+  default_prompt: "Use $sci-writing-orchestrator to configure the field/study/task perspective, plan evidence-led writing in the default precise style, and deliver requested formats with scoped reviews."
+policy:
+  allow_implicit_invocation: true

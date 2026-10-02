@@ -1,0 +1,92 @@
+{
+  "consort": {
+    "title": "CONSORT 2025 statement",
+    "url": "https://www.bmj.com/content/389/bmj-2024-081123",
+    "checked_on": "2026-10-03",
+    "access_scope": "primary publication identified from publisher search result"
+  },
+  "strobe": {
+    "title": "STROBE checklists",
+    "url": "https://www.strobe-statement.org/checklists/",
+    "checked_on": "2026-10-03",
+    "access_scope": "official page retrieved"
+  },
+  "prisma": {
+    "title": "PRISMA 2020 checklist",
+    "url": "https://www.prisma-statement.org/prisma-2020-checklist",
+    "checked_on": "2026-10-03",
+    "access_scope": "official page retrieved"
+  },
+  "jars": {
+    "title": "APA Journal Article Reporting Standards",
+    "url": "https://www.apa.org/pubs/journals/resources/publishing-tips/apa-style-jars",
+    "checked_on": "2026-10-03",
+    "access_scope": "official search result; full interactive checklist not inspected"
+  },
+  "aera": {
+    "title": "AERA research reporting standards",
+    "url": "https://www.aera.net/Publications/Standards-for-Research-Conduct",
+    "checked_on": "2026-10-03",
+    "access_scope": "official overview retrieved; select applicable linked standard"
+  },
+  "aea": {
+    "title": "AEA Data and Code Availability Policy",
+    "url": "https://www.aeaweb.org/journals/data/data-code-policy",
+    "checked_on": "2026-10-03",
+    "access_scope": "official policy retrieved"
+  },
+  "arrive": {
+    "title": "ARRIVE guidelines 2.0",
+    "url": "https://arriveguidelines.org/arrive-guidelines",
+    "checked_on": "2026-10-03",
+    "access_scope": "official overview retrieved; full item-level compliance not audited"
+  },
+  "iupac": {
+    "title": "IUPAC Gold Book: limit of detection",
+    "url": "https://goldbook.iupac.org/terms/view/L03540",
+    "checked_on": "2026-10-03",
+    "access_scope": "official search result; direct page retrieval failed"
+  },
+  "nist": {
+    "title": "NIST Technical Note 1297",
+    "url": "https://www.nist.gov/pml/nist-technical-note-1297",
+    "checked_on": "2026-10-03",
+    "access_scope": "official overview retrieved; project-specific uncertainty model remains author work"
+  },
+  "ipcc": {
+    "title": "IPCC consistent treatment of uncertainties",
+    "url": "https://www.ipcc.ch/publication/ipcc-cross-working-group-meeting-on-consistent-treatment-of-uncertainties/",
+    "checked_on": "2026-10-03",
+    "access_scope": "official search result; linked full PDF retrieval failed"
+  },
+  "neurips": {
+    "title": "NeurIPS Paper Checklist",
+    "url": "https://neurips.cc/public/guides/PaperChecklist",
+    "checked_on": "2026-10-03",
+    "access_scope": "official guideline retrieved"
+  },
+  "acm": {
+    "title": "ACM Artifact Review and Badging",
+    "url": "https://www.acm.org/publications/policies/artifact-review-and-badging-current",
+    "checked_on": "2026-10-03",
+    "access_scope": "official policy identified through official-host search result; direct page returned 403"
+  },
+  "aas": {
+    "title": "AAS Journals Data Guide",
+    "url": "https://journals.aas.org/data-guide/",
+    "checked_on": "2026-10-03",
+    "access_scope": "official data guide retrieved"
+  },
+  "nasa": {
+    "title": "NASA Standard for Models and Simulations",
+    "url": "https://standards.nasa.gov/standard/nasa/nasa-std-7009",
+    "checked_on": "2026-10-03",
+    "access_scope": "official standard landing page retrieved; not a project-specific compliance certification"
+  },
+  "fair": {
+    "title": "GO FAIR principles",
+    "url": "https://www.gofair.foundation/fair-principles",
+    "checked_on": "2026-10-03",
+    "access_scope": "official principles page retrieved"
+  }
+}

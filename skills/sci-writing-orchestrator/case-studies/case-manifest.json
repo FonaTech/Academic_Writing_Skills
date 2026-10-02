@@ -1,0 +1,162 @@
+[
+  {
+    "id": "01-clinical-randomized",
+    "field": "临床随机研究",
+    "mode": "clinical trial",
+    "role": "临床研究者＋试验方法审查者",
+    "source": "consort",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "01-clinical-randomized.md"
+  },
+  {
+    "id": "02-public-health-observational",
+    "field": "公共卫生观察研究",
+    "mode": "observational cohort",
+    "role": "流行病学研究者＋因果推断审查者",
+    "source": "strobe",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "02-public-health-observational.md"
+  },
+  {
+    "id": "03-psychology-experiment",
+    "field": "心理学实验",
+    "mode": "behavioral experiment",
+    "role": "心理学实验研究者＋统计方法审查者",
+    "source": "jars",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "03-psychology-experiment.md"
+  },
+  {
+    "id": "04-qualitative-interviews",
+    "field": "质性访谈",
+    "mode": "qualitative study",
+    "role": "质性研究者＋解释与证据审查者",
+    "source": "jars",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "04-qualitative-interviews.md"
+  },
+  {
+    "id": "05-economics-panel",
+    "field": "经济学面板分析",
+    "mode": "empirical econometrics",
+    "role": "应用经济学研究者＋识别与复现审查者",
+    "source": "aea",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "05-economics-panel.md"
+  },
+  {
+    "id": "06-education-evaluation",
+    "field": "教育研究评估",
+    "mode": "educational empirical study",
+    "role": "教育研究者＋测量与设计审查者",
+    "source": "aera",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "06-education-evaluation.md"
+  },
+  {
+    "id": "07-biology-animal",
+    "field": "实验生物学",
+    "mode": "in-vivo research",
+    "role": "实验生物学研究者＋设计与偏倚审查者",
+    "source": "arrive",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "07-biology-animal.md"
+  },
+  {
+    "id": "08-analytical-chemistry",
+    "field": "分析化学",
+    "mode": "method characterization",
+    "role": "分析化学研究者＋校准与不确定性审查者",
+    "source": "iupac",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "08-analytical-chemistry.md"
+  },
+  {
+    "id": "09-environment-climate",
+    "field": "环境与气候",
+    "mode": "assessment and projection",
+    "role": "环境研究者＋不确定性与尺度审查者",
+    "source": "ipcc",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "09-environment-climate.md"
+  },
+  {
+    "id": "10-computing-ml",
+    "field": "机器学习评估",
+    "mode": "predictive benchmark",
+    "role": "机器学习研究者＋评估与复现审查者",
+    "source": "neurips",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "10-computing-ml.md"
+  },
+  {
+    "id": "11-computer-systems",
+    "field": "计算系统与软件",
+    "mode": "performance experiment",
+    "role": "计算系统研究者＋实验与制品审查者",
+    "source": "acm",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "11-computer-systems.md"
+  },
+  {
+    "id": "12-engineering-simulation",
+    "field": "工程数值模拟",
+    "mode": "numerical modeling",
+    "role": "工程建模研究者＋验证与适用性审查者",
+    "source": "nasa",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "12-engineering-simulation.md"
+  },
+  {
+    "id": "13-astronomy-data",
+    "field": "天文学数据论文",
+    "mode": "observational astronomy",
+    "role": "天文学研究者＋数据与校准审查者",
+    "source": "aas",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "13-astronomy-data.md"
+  },
+  {
+    "id": "14-systematic-review",
+    "field": "跨领域系统综述",
+    "mode": "systematic synthesis",
+    "role": "证据综合研究者＋检索与偏倚审查者",
+    "source": "prisma",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "14-systematic-review.md"
+  },
+  {
+    "id": "15-theory-proof",
+    "field": "数学与理论研究",
+    "mode": "theorem or analytic argument",
+    "role": "理论研究者＋证明审查者",
+    "source": "neurips",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "15-theory-proof.md"
+  },
+  {
+    "id": "16-rebuttal-revision",
+    "field": "跨领域审稿返修",
+    "mode": "response and revision",
+    "role": "领域研究者＋学术编辑＋逐条核查者",
+    "source": "fair",
+    "kind": "authored hypothetical teaching scenario",
+    "executed_full_study": false,
+    "file": "16-rebuttal-revision.md"
+  }
+]

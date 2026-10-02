@@ -1,0 +1,7 @@
+{
+  "mode": "conference-paper",
+  "optional_scaffold": true,
+  "style_profile": "precise",
+  "venue_rules": "Check the actual target venue; no fixed word/figure/reference quotas.",
+  "structure_note": "Select the manuscript question, study type and argument; adapt headings rather than filling a fixed domain hierarchy."
+}
