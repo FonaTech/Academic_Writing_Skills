@@ -1,0 +1,9 @@
+# Optional: install only for the tools used by the project
+requests>=2.31
+PyMuPDF>=1.23
+openpyxl>=3.1
+matplotlib>=3.8
+numpy>=1.26
+# Pandoc executable (or pypandoc-binary) is optional for native equations.
+# pypdfium2 can substitute for PyMuPDF in render_check.py, not every extraction script.
+# Offline meeting transcription separately requires torch, transformers and ffmpeg.
