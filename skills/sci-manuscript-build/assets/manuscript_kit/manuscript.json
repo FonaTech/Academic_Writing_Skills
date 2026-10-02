@@ -1,0 +1,50 @@
+{
+  "_comment": "Content is data; edit section files, float metadata and configuration, then run pipeline.py.",
+  "project": {
+    "slug": "My_Manuscript",
+    "doc_type": "review",
+    "title_en": "Working title of the manuscript",
+    "title_zh": "论文暂定题目",
+    "subtitle_en": "",
+    "subtitle_zh": ""
+  },
+  "output": {
+    "languages": [
+      "en"
+    ],
+    "no_citation_variant": false,
+    "references_only": false,
+    "reference_style": "numbered",
+    "citation_marker": "bracket",
+    "figure_width_in": 6.6
+  },
+  "fonts": {
+    "latin": "Times New Roman",
+    "east_asian_body": "Songti SC",
+    "east_asian_heading": "Heiti SC",
+    "body_pt": 12,
+    "line_spacing": 1.5,
+    "heading_color": "000000"
+  },
+  "paths": {
+    "figures": "Figures",
+    "evidence": "evidence",
+    "references": "references.json",
+    "pandoc": "",
+    "source_audit": "source_audit"
+  },
+  "style": {
+    "profile": "precise",
+    "abbreviations": [],
+    "overrides": {}
+  },
+  "source": {
+    "format": "json",
+    "manifest": "content.json",
+    "floats": "floats.json"
+  },
+  "validation": {
+    "mode": "draft",
+    "require_visual_review": true
+  }
+}

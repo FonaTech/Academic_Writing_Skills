@@ -1,0 +1,6 @@
+interface:
+  display_name: "Scientific Figure Design"
+  short_description: "Figures, captions and image-model prompts"
+  default_prompt: "Use $sci-figure-design to plan and prepare scientific displays from the supplied evidence/data, with verified labels and no image-model reconstruction of data."
+policy:
+  allow_implicit_invocation: true

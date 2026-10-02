@@ -1,0 +1,6 @@
+interface:
+  display_name: "Manuscript Build"
+  short_description: "Build bilingual docx manuscripts from one source"
+  default_prompt: "Use $sci-manuscript-build to assemble requested documents from authoritative content, check freshness and inspect rendered pages before reviewed release checks."
+policy:
+  allow_implicit_invocation: true

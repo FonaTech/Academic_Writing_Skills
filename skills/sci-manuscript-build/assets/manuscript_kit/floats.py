@@ -1,0 +1,3 @@
+FIGURES = {}
+TABLES = {}
+BOXES = {}

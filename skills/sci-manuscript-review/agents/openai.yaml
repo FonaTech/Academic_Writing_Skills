@@ -1,0 +1,6 @@
+interface:
+  display_name: "Manuscript Review"
+  short_description: "Audit, referee simulation and rebuttals"
+  default_prompt: "Use $sci-manuscript-review from an independent critical perspective to check actual sources, methods, claims and displays; report coverage and uncertainty."
+policy:
+  allow_implicit_invocation: true
