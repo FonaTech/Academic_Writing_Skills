@@ -1,0 +1,30 @@
+{
+  "data_status": "artificially synthesized test data; no physical measurements",
+  "method": "Arithmetic mean within condition; B mean minus A mean",
+  "unit": "°C",
+  "conditions": {
+    "A": {
+      "record_count": 2,
+      "values": [
+        "20",
+        "22"
+      ],
+      "mean": "21"
+    },
+    "B": {
+      "record_count": 2,
+      "values": [
+        "24",
+        "26"
+      ],
+      "mean": "25"
+    }
+  },
+  "difference_B_minus_A": "4",
+  "source_sha256": "ff457c983b064f01d719b8bbd8495fa4fcfda261af7d6e4ad7954fd41effcce4",
+  "environment": {
+    "python": "3.12.14",
+    "arithmetic": "decimal.Decimal"
+  },
+  "limitations": "Descriptive arithmetic only; no causal or statistical-significance claim"
+}

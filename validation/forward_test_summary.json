@@ -1,0 +1,37 @@
+{
+  "request_type": "bilingual descriptive report from supplied artificial CSV",
+  "data_status": "synthetic",
+  "references": 0,
+  "figures": 0,
+  "tables": 1,
+  "equations": 0,
+  "evidence_records": 9,
+  "local_claim_bindings": 7,
+  "preview": {
+    "failures": 0,
+    "warnings": 0
+  },
+  "release": {
+    "failures": 0,
+    "warnings": 0
+  },
+  "english_sentences": {
+    "count": 14,
+    "median_words": 18,
+    "max_words": 20
+  },
+  "rendered_pages": {
+    "en": 1,
+    "zh": 1
+  },
+  "actual_full_page_ai_visual_review": true,
+  "independent_of_skill_maintainer": true,
+  "manuscript_scientific_review": "AI sequential self-review disclosed",
+  "human_acceptance": "pending",
+  "source_fingerprint": "0ab42ccce5a395ada70c2f3a4e17c91cf28e0cd5c0b484eb7f7c4f75a0e034c6",
+  "document_sha256": {
+    "Synthetic_Water_Temperature_EN_WithCitations.docx": "4ac9c527e3fe187836dc4fa39866f793a293c870ee7f2d7c3d818943dc61c29f",
+    "Synthetic_Water_Temperature_ZH_WithCitations.docx": "75934de69e3e195839bc5d568aafaac89af76c7b8064f15a956602fda23d9aee"
+  },
+  "scope_limit": "One tiny synthetic dataset and two one-page documents; no empirical study or journal-readiness certification."
+}

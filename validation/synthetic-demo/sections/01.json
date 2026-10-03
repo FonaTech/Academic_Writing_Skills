@@ -1,0 +1,27 @@
+{
+  "blocks": [
+    {
+      "id": "scope_heading",
+      "type": "heading",
+      "level": 1,
+      "en": "Scope and method",
+      "zh": "范围与方法"
+    },
+    {
+      "id": "data_status",
+      "type": "para",
+      "status": "reviewed",
+      "claims": [],
+      "en": "The supplied temperature records consist entirely of artificial test data, with no physical water measurements represented. The descriptive comparison concerns mean temperatures for the supplied condition labels A and B within this artificial dataset. The labels have no supplied physical definitions, which limits their interpretation to identifiers for grouping the artificial records.",
+      "zh": "所提供的温度记录全部为人工合成测试数据，不包含实际水温测量。本描述性比较针对该人工数据集中条件标签 A 与 B 的平均温度。未提供这些标签的物理定义，因此仅将其解释为人工记录的分组标识。"
+    },
+    {
+      "id": "mean_method",
+      "type": "para",
+      "status": "reviewed",
+      "claims": [],
+      "en": "Within each condition, we calculated the arithmetic mean by dividing the sum of temperatures by the record count. We calculated the difference between these means by subtracting the mean for A from the mean for B. The analysis reports descriptive arithmetic for the supplied artificial values, without performing an inferential statistical test on them.",
+      "zh": "各条件的算术平均温度由该条件温度总和除以记录数计算。均值之差以 B 的均值减去 A 的均值计算。本分析对所提供的人工数值作描述性计算，未对其进行推断统计检验。"
+    }
+  ]
+}

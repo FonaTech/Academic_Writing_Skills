@@ -1,0 +1,59 @@
+{
+  "version": "2.0.0",
+  "date": "2026-10-03",
+  "skill_count": 6,
+  "skill_validator": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "quick_validate_passed": 6,
+  "local_python_310": {
+    "passed": 33,
+    "skipped": 0,
+    "failed": 0,
+    "network_calls": false
+  },
+  "bundled_python_312": {
+    "passed": 30,
+    "skipped": 3,
+    "failed": 0,
+    "skip_reason": "optional PyMuPDF/requests unavailable"
+  },
+  "test_names": [
+    "test_optional_library.OptionalLibraryTests.test_no_doi_source_is_retained_with_stable_id",
+    "test_optional_library.OptionalLibraryTests.test_single_page_pdf_digest",
+    "test_optional_library.OptionalLibraryTests.test_empty_identifier_and_unicode_title_do_not_false_match",
+    "test_workflow.EvidenceTests.test_complete_quote_and_decimal",
+    "test_workflow.EvidenceTests.test_complete_tail",
+    "test_workflow.EvidenceTests.test_page_and_missing_fields",
+    "test_workflow.EvidenceTests.test_cross_page_quote",
+    "test_workflow.EvidenceTests.test_numeric_token_not_substring",
+    "test_workflow.EvidenceTests.test_empty_record_set_fails",
+    "test_workflow.EvidenceTests.test_wrong_metric_same_number_is_not_support",
+    "test_workflow.EvidenceTests.test_no_binding_fails_even_when_number_exists",
+    "test_workflow.EvidenceTests.test_provenance_hash_change",
+    "test_workflow.EvidenceTests.test_table_header_unit_inheritance_and_wrong_header",
+    "test_workflow.EvidenceTests.test_unbound_numeric_table_cell",
+    "test_workflow.EvidenceTests.test_declared_units_across_fields",
+    "test_workflow.ProjectTests.test_small_bilingual_value_difference",
+    "test_workflow.ProjectTests.test_bilingual_unit_difference",
+    "test_workflow.ProjectTests.test_chinese_primary_does_not_overwrite_english",
+    "test_workflow.ProjectTests.test_markdown_source_and_stale_build",
+    "test_workflow.ProjectTests.test_missing_document",
+    "test_workflow.ProjectTests.test_release_rejects_unbound_quantity_and_unperformed_reviews",
+    "test_workflow.ProjectTests.test_table_cell_swap",
+    "test_workflow.ProjectTests.test_new_project_never_overwrites_local_files",
+    "test_workflow.ProjectTests.test_release_positive_control_and_stale_review",
+    "test_workflow.ProjectTests.test_configured_heading_fonts",
+    "test_workflow.ProjectTests.test_default_style_and_opt_in_profiles",
+    "test_workflow.ProjectTests.test_cross_domain_case_bank_and_private_history_exclusion",
+    "test_workflow.FigureAndInstallTests.test_missing_final_fails",
+    "test_workflow.FigureAndInstallTests.test_exact_pixels_and_color_changes",
+    "test_workflow.FigureAndInstallTests.test_install_preserves_previous_skill",
+    "test_workflow.FigureAndInstallTests.test_missing_composition_slot_fails",
+    "test_workflow.FigureAndInstallTests.test_model_layout_input_never_contains_data_panel",
+    "test_workflow.FigureAndInstallTests.test_render_failure_is_nonzero_and_stale_pdf_removed"
+  ],
+  "expert_validation": false,
+  "human_author_acceptance": "pending"
+}

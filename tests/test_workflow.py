@@ -29,15 +29,15 @@ class EvidenceTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
-        (self.root/'source.txt').write_text('=== PAGE 1 ===\nMeasured efficiency was 1.5 TOPS/W.\n=== PAGE 2 ===\nThe next sentence continues here.',encoding='utf-8')
-        self.rec = dict(source_file=str(self.root/'source.txt'),page=1,quote='Measured efficiency was 1.5 TOPS/W.',value='1.5')
+        (self.root/'source.txt').write_text('=== PAGE 1 ===\nObserved concentration was 1.5 mg/L.\n=== PAGE 2 ===\nThe next sentence continues here.',encoding='utf-8')
+        self.rec = dict(source_file=str(self.root/'source.txt'),page=1,quote='Observed concentration was 1.5 mg/L.',value='1.5')
 
     def tearDown(self):
         self.temp.cleanup()
 
     def test_complete_quote_and_decimal(self):
         self.assertEqual(verify_quote(self.rec,self.root),[])
-        wrong = dict(self.rec,quote='Measured efficiency was 15 TOPS/W.',value='15')
+        wrong = dict(self.rec,quote='Observed concentration was 15 mg/L.',value='15')
         self.assertTrue(verify_quote(wrong,self.root))
 
     def test_complete_tail(self):
@@ -53,7 +53,7 @@ class EvidenceTests(unittest.TestCase):
         self.assertTrue(verify_quote(dict(self.rec,page=None),self.root))
 
     def test_cross_page_quote(self):
-        rec = dict(self.rec,pages=[1,2],quote='1.5 TOPS/W. The next sentence continues here.')
+        rec = dict(self.rec,pages=[1,2],quote='1.5 mg/L. The next sentence continues here.')
         self.assertEqual(verify_quote(rec,self.root),[])
 
     def test_numeric_token_not_substring(self):
@@ -69,8 +69,8 @@ class EvidenceTests(unittest.TestCase):
         self.assertNotEqual(run(LIT/'verify_evidence_quotes.py',file,'--text-dir',self.root).returncode,0)
 
     def test_wrong_metric_same_number_is_not_support(self):
-        rec = dict(value='62.11',unit='TOPS/W',metric='efficiency',entity='B',result_method='measured',source_kind='raw_data')
-        claim = dict(evidence_key='b',value='62.11',unit='J',metric='energy',entity='A',result_method='measured',text={'en':'Device A consumed 62.11 J.'})
+        rec = dict(value='7.5',unit='mg/L',metric='concentration',entity='B',result_method='measured',source_kind='raw_data')
+        claim = dict(evidence_key='b',value='7.5',unit='s',metric='duration',entity='A',result_method='measured',text={'en':'Task A took 7.5 s.'})
         block = dict(claims=[claim])
         errors,_,_ = audit_bindings([('p1',block,{'en':claim['text']['en']})],{'b':rec},release=True)
         self.assertGreaterEqual(len(errors),3)
@@ -219,8 +219,8 @@ class ProjectTests(unittest.TestCase):
         for case in cases:
             self.assertFalse(case['executed_full_study']);self.assertTrue((folder/case['file']).is_file())
         private_markers=('/Users/','/home/')
-        for file in (ROOT/'skills').rglob('*'):
-            if file.suffix in ('.md','.json','.py','.csv','.yaml') and '__pycache__' not in file.parts:
+        for file in ROOT.rglob('*'):
+            if file.suffix in ('.md','.json','.py','.csv','.yaml') and '__pycache__' not in file.parts and 'tests' not in file.relative_to(ROOT).parts:
                 for marker in private_markers:self.assertNotIn(marker,file.read_text(),str(file))
 
 class FigureAndInstallTests(unittest.TestCase):

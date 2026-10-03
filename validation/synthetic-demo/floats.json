@@ -1,0 +1,122 @@
+{
+  "figures": {},
+  "tables": {
+    "temperature_summary": {
+      "status": "reviewed",
+      "title_en": "Descriptive summary of artificial test temperatures",
+      "title_zh": "人工合成测试温度的描述性汇总",
+      "columns_en": [
+        "Condition",
+        "Synthetic records",
+        "Mean temperature (°C)"
+      ],
+      "columns_zh": [
+        "条件",
+        "人工合成记录数",
+        "平均温度 (°C)"
+      ],
+      "rows_en": [
+        [
+          "A",
+          "2",
+          "21"
+        ],
+        [
+          "B",
+          "2",
+          "25"
+        ]
+      ],
+      "rows_zh": [
+        [
+          "A",
+          "2",
+          "21"
+        ],
+        [
+          "B",
+          "2",
+          "25"
+        ]
+      ],
+      "widths": [
+        1.0,
+        1.7,
+        3.0
+      ],
+      "note_en": "All table values summarize artificial test records and contain no physical measurements of water under either condition. The means were calculated arithmetically from the supplied records, without any claim of statistical significance for the comparison.",
+      "note_zh": "表中所有数值均汇总人工测试记录，不包含任何条件下的实际水温测量。均值由所提供记录作算术计算所得，不对该比较作统计显著性声明。",
+      "cell_claims": {
+        "0:1": {
+          "claims": [
+            {
+              "evidence_key": "A.count",
+              "value": "2",
+              "unit": "",
+              "metric": "synthetic record count",
+              "entity": "synthetic condition A",
+              "result_method": "inferred",
+              "text": {
+                "en": "2",
+                "zh": "2"
+              },
+              "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions"
+            }
+          ]
+        },
+        "0:2": {
+          "claims": [
+            {
+              "evidence_key": "A.mean",
+              "value": "21",
+              "unit": "°C",
+              "metric": "arithmetic mean temperature",
+              "entity": "synthetic condition A",
+              "result_method": "inferred",
+              "text": {
+                "en": "21",
+                "zh": "21"
+              },
+              "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions"
+            }
+          ]
+        },
+        "1:1": {
+          "claims": [
+            {
+              "evidence_key": "B.count",
+              "value": "2",
+              "unit": "",
+              "metric": "synthetic record count",
+              "entity": "synthetic condition B",
+              "result_method": "inferred",
+              "text": {
+                "en": "2",
+                "zh": "2"
+              },
+              "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions"
+            }
+          ]
+        },
+        "1:2": {
+          "claims": [
+            {
+              "evidence_key": "B.mean",
+              "value": "25",
+              "unit": "°C",
+              "metric": "arithmetic mean temperature",
+              "entity": "synthetic condition B",
+              "result_method": "inferred",
+              "text": {
+                "en": "25",
+                "zh": "25"
+              },
+              "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "boxes": {}
+}

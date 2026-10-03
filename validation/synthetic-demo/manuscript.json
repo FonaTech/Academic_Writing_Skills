@@ -1,0 +1,76 @@
+{
+  "_comment": "Content is data; edit section files, float metadata and configuration, then run pipeline.py.",
+  "project": {
+    "slug": "Synthetic_Water_Temperature",
+    "doc_type": "article",
+    "title_en": "Descriptive comparison of synthetic water temperatures",
+    "title_zh": "人工合成水温数据的描述性比较",
+    "subtitle_en": "",
+    "subtitle_zh": ""
+  },
+  "output": {
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "no_citation_variant": false,
+    "references_only": false,
+    "reference_style": "numbered",
+    "citation_marker": "bracket",
+    "figure_width_in": 6.6
+  },
+  "fonts": {
+    "latin": "Times New Roman",
+    "east_asian_body": "Songti SC",
+    "east_asian_heading": "Heiti SC",
+    "body_pt": 11,
+    "line_spacing": 1.15
+  },
+  "paths": {
+    "figures": "Figures",
+    "evidence": "evidence",
+    "references": "references.json",
+    "pandoc": "",
+    "source_audit": "source_audit"
+  },
+  "style": {
+    "profile": "precise",
+    "abbreviations": [],
+    "overrides": {}
+  },
+  "source": {
+    "format": "json",
+    "manifest": "content.json",
+    "floats": "floats.json"
+  },
+  "validation": {
+    "mode": "draft",
+    "require_visual_review": true
+  },
+  "kit_version": "2.0.0",
+  "writing_context": {
+    "field": "environmental measurement",
+    "subfield": "water temperature description",
+    "study_type": "synthetic descriptive test fixture",
+    "task": "bilingual short research-report drafting and validation",
+    "role_perspective": [
+      "environmental measurement researcher",
+      "scientific editor"
+    ],
+    "reader_venue": "technical reader; no target journal",
+    "style_profile": "precise",
+    "evidence_inputs": [
+      "data/temperatures.csv",
+      "analysis/results.json",
+      "evidence/temperature.json"
+    ],
+    "source_owner": "user-supplied artificial CSV; local declarative prose source",
+    "completion_scope": "descriptive arithmetic and checked draft; human author acceptance pending",
+    "phase_roles": {
+      "drafting": "environmental measurement researcher and scientific editor",
+      "evidence": "source analyst and descriptive-method reviewer",
+      "review": "critical AI peer-review perspective; sequential self-review disclosed",
+      "construction": "document engineer"
+    }
+  }
+}

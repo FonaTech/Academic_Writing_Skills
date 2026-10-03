@@ -1,0 +1,319 @@
+{
+  "A.record.1": {
+    "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions",
+    "source_role": "original",
+    "access_status": "raw-files",
+    "verification": "verified",
+    "data_status": "synthetic test data, not a physical measurement or physical simulation",
+    "key": "A.record.1",
+    "source_kind": "raw_data",
+    "value": "20",
+    "unit": "°C",
+    "metric": "synthetic temperature value",
+    "entity": "synthetic condition A",
+    "result_method": "synthetic",
+    "provenance": {
+      "artifacts": [
+        {
+          "path": "data/temperatures.csv",
+          "sha256": "ff457c983b064f01d719b8bbd8495fa4fcfda261af7d6e4ad7954fd41effcce4"
+        }
+      ],
+      "locator": "CSV line 2, column temperature_C, condition A, replicate 1",
+      "method": "Values supplied by the user as artificial test records; read without conversion",
+      "environment": {
+        "python": "3.12.14",
+        "arithmetic": "decimal.Decimal"
+      }
+    }
+  },
+  "A.record.2": {
+    "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions",
+    "source_role": "original",
+    "access_status": "raw-files",
+    "verification": "verified",
+    "data_status": "synthetic test data, not a physical measurement or physical simulation",
+    "key": "A.record.2",
+    "source_kind": "raw_data",
+    "value": "22",
+    "unit": "°C",
+    "metric": "synthetic temperature value",
+    "entity": "synthetic condition A",
+    "result_method": "synthetic",
+    "provenance": {
+      "artifacts": [
+        {
+          "path": "data/temperatures.csv",
+          "sha256": "ff457c983b064f01d719b8bbd8495fa4fcfda261af7d6e4ad7954fd41effcce4"
+        }
+      ],
+      "locator": "CSV line 3, column temperature_C, condition A, replicate 2",
+      "method": "Values supplied by the user as artificial test records; read without conversion",
+      "environment": {
+        "python": "3.12.14",
+        "arithmetic": "decimal.Decimal"
+      }
+    }
+  },
+  "B.record.1": {
+    "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions",
+    "source_role": "original",
+    "access_status": "raw-files",
+    "verification": "verified",
+    "data_status": "synthetic test data, not a physical measurement or physical simulation",
+    "key": "B.record.1",
+    "source_kind": "raw_data",
+    "value": "24",
+    "unit": "°C",
+    "metric": "synthetic temperature value",
+    "entity": "synthetic condition B",
+    "result_method": "synthetic",
+    "provenance": {
+      "artifacts": [
+        {
+          "path": "data/temperatures.csv",
+          "sha256": "ff457c983b064f01d719b8bbd8495fa4fcfda261af7d6e4ad7954fd41effcce4"
+        }
+      ],
+      "locator": "CSV line 4, column temperature_C, condition B, replicate 1",
+      "method": "Values supplied by the user as artificial test records; read without conversion",
+      "environment": {
+        "python": "3.12.14",
+        "arithmetic": "decimal.Decimal"
+      }
+    }
+  },
+  "B.record.2": {
+    "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions",
+    "source_role": "original",
+    "access_status": "raw-files",
+    "verification": "verified",
+    "data_status": "synthetic test data, not a physical measurement or physical simulation",
+    "key": "B.record.2",
+    "source_kind": "raw_data",
+    "value": "26",
+    "unit": "°C",
+    "metric": "synthetic temperature value",
+    "entity": "synthetic condition B",
+    "result_method": "synthetic",
+    "provenance": {
+      "artifacts": [
+        {
+          "path": "data/temperatures.csv",
+          "sha256": "ff457c983b064f01d719b8bbd8495fa4fcfda261af7d6e4ad7954fd41effcce4"
+        }
+      ],
+      "locator": "CSV line 5, column temperature_C, condition B, replicate 2",
+      "method": "Values supplied by the user as artificial test records; read without conversion",
+      "environment": {
+        "python": "3.12.14",
+        "arithmetic": "decimal.Decimal"
+      }
+    }
+  },
+  "A.mean": {
+    "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions",
+    "source_role": "original",
+    "access_status": "raw-files",
+    "verification": "verified",
+    "data_status": "synthetic test data, not a physical measurement or physical simulation",
+    "key": "A.mean",
+    "source_kind": "derived",
+    "value": "21",
+    "unit": "°C",
+    "metric": "arithmetic mean temperature",
+    "entity": "synthetic condition A",
+    "result_method": "inferred",
+    "provenance": {
+      "artifacts": [
+        {
+          "path": "data/temperatures.csv",
+          "sha256": "ff457c983b064f01d719b8bbd8495fa4fcfda261af7d6e4ad7954fd41effcce4"
+        },
+        {
+          "path": "analysis/summarize.py",
+          "sha256": "bcd0e8a30e71acb532df17b56e6d8c2692f7b2be744f1953f025e39facc3be83"
+        },
+        {
+          "path": "analysis/results.json",
+          "sha256": "043f4fe15681cb4987bd70c7b093184e7c71061a76522b5032d70b302b8f93e6"
+        }
+      ],
+      "locator": "analysis/results.json: conditions.A.mean",
+      "method": "Arithmetic mean within condition; B mean minus A mean",
+      "environment": {
+        "python": "3.12.14",
+        "arithmetic": "decimal.Decimal"
+      },
+      "formula": "sum(temperature_C for condition) / count(records for condition)",
+      "inputs": [
+        "A.record.1",
+        "A.record.2"
+      ]
+    }
+  },
+  "A.count": {
+    "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions",
+    "source_role": "original",
+    "access_status": "raw-files",
+    "verification": "verified",
+    "data_status": "synthetic test data, not a physical measurement or physical simulation",
+    "key": "A.count",
+    "source_kind": "derived",
+    "value": "2",
+    "unit": "",
+    "metric": "synthetic record count",
+    "entity": "synthetic condition A",
+    "result_method": "inferred",
+    "provenance": {
+      "artifacts": [
+        {
+          "path": "data/temperatures.csv",
+          "sha256": "ff457c983b064f01d719b8bbd8495fa4fcfda261af7d6e4ad7954fd41effcce4"
+        },
+        {
+          "path": "analysis/summarize.py",
+          "sha256": "bcd0e8a30e71acb532df17b56e6d8c2692f7b2be744f1953f025e39facc3be83"
+        },
+        {
+          "path": "analysis/results.json",
+          "sha256": "043f4fe15681cb4987bd70c7b093184e7c71061a76522b5032d70b302b8f93e6"
+        }
+      ],
+      "locator": "analysis/results.json: conditions.A.record_count",
+      "method": "Arithmetic mean within condition; B mean minus A mean",
+      "environment": {
+        "python": "3.12.14",
+        "arithmetic": "decimal.Decimal"
+      },
+      "formula": "count(CSV records with condition label)",
+      "inputs": [
+        "A.record.1",
+        "A.record.2"
+      ]
+    }
+  },
+  "B.mean": {
+    "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions",
+    "source_role": "original",
+    "access_status": "raw-files",
+    "verification": "verified",
+    "data_status": "synthetic test data, not a physical measurement or physical simulation",
+    "key": "B.mean",
+    "source_kind": "derived",
+    "value": "25",
+    "unit": "°C",
+    "metric": "arithmetic mean temperature",
+    "entity": "synthetic condition B",
+    "result_method": "inferred",
+    "provenance": {
+      "artifacts": [
+        {
+          "path": "data/temperatures.csv",
+          "sha256": "ff457c983b064f01d719b8bbd8495fa4fcfda261af7d6e4ad7954fd41effcce4"
+        },
+        {
+          "path": "analysis/summarize.py",
+          "sha256": "bcd0e8a30e71acb532df17b56e6d8c2692f7b2be744f1953f025e39facc3be83"
+        },
+        {
+          "path": "analysis/results.json",
+          "sha256": "043f4fe15681cb4987bd70c7b093184e7c71061a76522b5032d70b302b8f93e6"
+        }
+      ],
+      "locator": "analysis/results.json: conditions.B.mean",
+      "method": "Arithmetic mean within condition; B mean minus A mean",
+      "environment": {
+        "python": "3.12.14",
+        "arithmetic": "decimal.Decimal"
+      },
+      "formula": "sum(temperature_C for condition) / count(records for condition)",
+      "inputs": [
+        "B.record.1",
+        "B.record.2"
+      ]
+    }
+  },
+  "B.count": {
+    "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions",
+    "source_role": "original",
+    "access_status": "raw-files",
+    "verification": "verified",
+    "data_status": "synthetic test data, not a physical measurement or physical simulation",
+    "key": "B.count",
+    "source_kind": "derived",
+    "value": "2",
+    "unit": "",
+    "metric": "synthetic record count",
+    "entity": "synthetic condition B",
+    "result_method": "inferred",
+    "provenance": {
+      "artifacts": [
+        {
+          "path": "data/temperatures.csv",
+          "sha256": "ff457c983b064f01d719b8bbd8495fa4fcfda261af7d6e4ad7954fd41effcce4"
+        },
+        {
+          "path": "analysis/summarize.py",
+          "sha256": "bcd0e8a30e71acb532df17b56e6d8c2692f7b2be744f1953f025e39facc3be83"
+        },
+        {
+          "path": "analysis/results.json",
+          "sha256": "043f4fe15681cb4987bd70c7b093184e7c71061a76522b5032d70b302b8f93e6"
+        }
+      ],
+      "locator": "analysis/results.json: conditions.B.record_count",
+      "method": "Arithmetic mean within condition; B mean minus A mean",
+      "environment": {
+        "python": "3.12.14",
+        "arithmetic": "decimal.Decimal"
+      },
+      "formula": "count(CSV records with condition label)",
+      "inputs": [
+        "B.record.1",
+        "B.record.2"
+      ]
+    }
+  },
+  "B_minus_A.mean": {
+    "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions",
+    "source_role": "original",
+    "access_status": "raw-files",
+    "verification": "verified",
+    "data_status": "synthetic test data, not a physical measurement or physical simulation",
+    "key": "B_minus_A.mean",
+    "source_kind": "derived",
+    "value": "4",
+    "unit": "°C",
+    "metric": "difference of arithmetic mean temperatures",
+    "entity": "synthetic condition B minus A",
+    "result_method": "inferred",
+    "provenance": {
+      "artifacts": [
+        {
+          "path": "data/temperatures.csv",
+          "sha256": "ff457c983b064f01d719b8bbd8495fa4fcfda261af7d6e4ad7954fd41effcce4"
+        },
+        {
+          "path": "analysis/summarize.py",
+          "sha256": "bcd0e8a30e71acb532df17b56e6d8c2692f7b2be744f1953f025e39facc3be83"
+        },
+        {
+          "path": "analysis/results.json",
+          "sha256": "043f4fe15681cb4987bd70c7b093184e7c71061a76522b5032d70b302b8f93e6"
+        }
+      ],
+      "locator": "analysis/results.json: difference_B_minus_A",
+      "method": "Arithmetic mean within condition; B mean minus A mean",
+      "environment": {
+        "python": "3.12.14",
+        "arithmetic": "decimal.Decimal"
+      },
+      "formula": "B.mean - A.mean",
+      "inputs": [
+        "B.mean",
+        "A.mean"
+      ]
+    }
+  }
+}

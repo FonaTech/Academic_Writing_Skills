@@ -1,0 +1,59 @@
+{
+  "blocks": [
+    {
+      "id": "results_heading",
+      "type": "heading",
+      "level": 1,
+      "en": "Descriptive results",
+      "zh": "描述性结果"
+    },
+    {
+      "id": "temperature_means",
+      "type": "para",
+      "status": "reviewed",
+      "en": "The arithmetic mean for condition A was 21 °C, calculated from its temperature records in the artificial dataset. The arithmetic mean for condition B was 25 °C, calculated from its temperature records in the artificial dataset. For these artificial temperature records, the difference between the condition means, expressed as B minus A, was 4 °C. The condition summaries in {tab:temperature_summary} pair each mean temperature with the count of artificial records used for its calculation.",
+      "zh": "条件 A 的算术平均温度为 21 °C，由该人工数据集中该条件的温度记录计算。条件 B 的算术平均温度为 25 °C，由该人工数据集中该条件的温度记录计算。对这些人工温度记录，条件均值之差，即 B 减 A，为 4 °C。{tab:temperature_summary}中的条件汇总列出各平均温度及用于计算的人工记录数。",
+      "claims": [
+        {
+          "evidence_key": "A.mean",
+          "value": "21",
+          "unit": "°C",
+          "metric": "arithmetic mean temperature",
+          "entity": "synthetic condition A",
+          "result_method": "inferred",
+          "text": {
+            "en": "The arithmetic mean for condition A was 21 °C, calculated from its temperature records in the artificial dataset.",
+            "zh": "条件 A 的算术平均温度为 21 °C，由该人工数据集中该条件的温度记录计算。"
+          },
+          "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions"
+        },
+        {
+          "evidence_key": "B.mean",
+          "value": "25",
+          "unit": "°C",
+          "metric": "arithmetic mean temperature",
+          "entity": "synthetic condition B",
+          "result_method": "inferred",
+          "text": {
+            "en": "The arithmetic mean for condition B was 25 °C, calculated from its temperature records in the artificial dataset.",
+            "zh": "条件 B 的算术平均温度为 25 °C，由该人工数据集中该条件的温度记录计算。"
+          },
+          "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions"
+        },
+        {
+          "evidence_key": "B_minus_A.mean",
+          "value": "4",
+          "unit": "°C",
+          "metric": "difference of arithmetic mean temperatures",
+          "entity": "synthetic condition B minus A",
+          "result_method": "inferred",
+          "text": {
+            "en": "For these artificial temperature records, the difference between the condition means, expressed as B minus A, was 4 °C.",
+            "zh": "对这些人工温度记录，条件均值之差，即 B 减 A，为 4 °C。"
+          },
+          "conditions": "Artificially synthesized test data; A and B are supplied labels without physical definitions"
+        }
+      ]
+    }
+  ]
+}

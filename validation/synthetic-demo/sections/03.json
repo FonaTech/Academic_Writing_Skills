@@ -1,0 +1,19 @@
+{
+  "blocks": [
+    {
+      "id": "limits_heading",
+      "type": "heading",
+      "level": 1,
+      "en": "Interpretation and limits",
+      "zh": "解释与局限"
+    },
+    {
+      "id": "limits",
+      "type": "para",
+      "status": "reviewed",
+      "claims": [],
+      "en": "The comparison of artificial records cannot support conclusions about temperature differences between physical conditions in actual water. No causal effect can be inferred from the descriptive contrast between condition labels in this artificial test dataset. The arithmetic difference does not establish statistical significance, because this analysis did not include an inferential statistical test. Any empirical conclusion would require measured data from an actual study designed for the intended water temperature comparison.",
+      "zh": "人工记录的比较不能支持关于实际水体不同物理条件下温差的结论。不能从该人工测试数据集中条件标签之间的描述性差异推断因果效应。算术差异不代表统计显著性，因为本分析未进行推断统计检验。任何实证结论均需要针对所需水温比较而设计的实际研究及实测数据。"
+    }
+  ]
+}

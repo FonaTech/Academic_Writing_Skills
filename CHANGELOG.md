@@ -17,3 +17,6 @@ v1 Python content remains a trusted legacy option. A v2 project defaults to an a
 - Explicit field/study/task professional perspectives; independent reviewing has a separate role and stated limitations.
 - Sixteen cross-domain teaching cases with public source-access records; private project history/corpus and fixed-domain reviewer examples removed from the distributable.
 - Project-declared units extend numerical checks to clinical, educational, economic and other domains; unusual formats still need semantic review.
+- Root English/Chinese documentation and optional article/proposal presets generalized; default topic-sentence instruction made consistent.
+- DOI-free library sources retained with stable identifiers and an explicit manual-check path; Unicode identity normalization and single-page PDF extraction repaired.
+- Thirty core and three optional local PDF/library behavioral regressions, scoped independent synthetic forward test and honest validation limits included.
