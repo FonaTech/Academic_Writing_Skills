@@ -10,7 +10,8 @@ assign  keeps rows whose decision is include (include, yes, y, 1, 纳入), gives
         (R### review or perspective, P### primary, X### preprint; an optional 'kind' column
         R/P/X overrides the guess from type, venue and title) and a folder
         01_综述与观点/<category>/, 02_原始研究/<category>/ or 03_预印本/<category>/. Ids already in
-        library_plan.csv are kept, matched by DOI. Writes library_plan.csv and selection_manifest.json.
+        library_plan.csv are kept, matched by DOI or a stable source/title key when DOI is absent.
+        DOI-free sources are retained for manual identity checks. Writes library_plan.csv and selection_manifest.json.
 tables  joins the plan with library_status.csv and download_attempts.jsonl and writes
         全部文献.csv, 已下载文献.csv, 未下载文献.csv (UTF-8 BOM), <Topic>_文献库.xlsx, 文献目录.md,
         未下载文献_入口与摘要.md, PDF完整性报告.csv, library.json, and README_draft.md when no
@@ -62,7 +63,7 @@ def guess_kind(row):
     if 'review' in text or re.search(r'\b(review|perspective|survey|tutorial|roadmap|progress in|advances in)\b',
                                      row.get('title', '').lower()):
         return 'R', 'type or title (check)'
-    return 'P', 'default'
+    return 'P', 'default (check)'
 
 
 def safe(name):
@@ -73,28 +74,45 @@ def assign(args):
     lib = Path(args.library)
     lib.mkdir(parents=True, exist_ok=True)
     plan_path = lib / 'library_plan.csv'
-    old = {r['doi'].lower(): r['id'] for r in read_csv(plan_path)} if plan_path.exists() else {}
+    def identity(row):
+        doi = re.sub(r'^https?://(?:dx\.)?doi\.org/', '', row.get('doi', '').strip(), flags=re.I).lower()
+        if doi:
+            return 'doi:' + doi
+        source_id = row.get('source_key') or row.get('search_id') or row.get('openalex') or row.get('id')
+        if source_id:
+            return 'source:' + str(source_id)
+        title = ' '.join(row.get('title', '').casefold().split())
+        if not title:
+            raise ValueError('Included source needs a title or stable source identifier; DOI is optional.')
+        return 'title:' + '|'.join((title, row.get('year', ''), row.get('venue', '')))
+    old = {r.get('identity_key') or identity(r): r['id'] for r in read_csv(plan_path)} if plan_path.exists() else {}
     used = Counter()   # highest number already given per prefix, so new ids never reuse an old one
     for i in old.values():
         used[i[0]] = max(used[i[0]], int(i[1:]))
-    rows, manifest = [], []
+    rows, manifest, current = [], [], {}
     for r in read_csv(args.candidates):
         keep = (r.get('decision') or '').strip().lower() in INCLUDE
         manifest.append(dict(search_id=r.get('id'), doi=r.get('doi'), title=r.get('title'),
                              decision=r.get('decision', ''), category=r.get('category', '')))
-        if not keep or not r.get('doi'):
+        if not keep:
             continue
         kind, basis = guess_kind(r)
-        doi = r['doi'].replace('https://doi.org/', '').strip().lower()
-        rid = old.get(doi)
+        doi = re.sub(r'^https?://(?:dx\.)?doi\.org/', '', r.get('doi', '').strip(), flags=re.I).lower()
+        key = identity(r)
+        if key in current:
+            manifest[-1]['duplicate_of'] = current[key]
+            continue
+        rid = old.get(key)
         if not rid:
             used[kind] += 1
             rid = f'{kind}{used[kind]:03d}'
         category = safe(r.get('category') or '未分类')
-        rows.append(dict(r, id=rid, search_id=r.get('id'), doi=doi, kind=rid[0], kind_basis=basis,
+        current[key] = rid
+        rows.append(dict(r, id=rid, search_id=r.get('id'), doi=doi, identity_key=key, kind=rid[0], kind_basis=basis,
+                         identity_status='pending-manual-check',
                          category=category, folder=f'{TOP[rid[0]]}/{category}'))
         manifest[-1]['library_id'] = rid
-    fields = ['id', 'search_id', 'kind', 'kind_basis', 'category', 'folder', 'title', 'year', 'venue', 'type', 'doi',
+    fields = ['id', 'search_id', 'identity_key', 'identity_status', 'source_key', 'kind', 'kind_basis', 'category', 'folder', 'title', 'year', 'venue', 'type', 'doi',
               'cited_by', 'is_oa', 'oa_url', 'openalex', 'note_zh', 'abstract']
     write_csv(plan_path, sorted(rows, key=lambda r: r['id']), fields)
     (lib / 'selection_manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding='utf-8')
@@ -138,7 +156,7 @@ def tables(args):
                 pages = doc.page_count
             integrity.append(dict(id=r['id'], file=r['file'], pages=pages, check='pass' if ok else 'FAIL', detail=detail,
                                   sha256=hashlib.sha256(pdf.read_bytes()).hexdigest()))
-        links = [f'https://doi.org/{r["doi"]}'] + [u for u in (r.get('openalex'), r.get('oa_url')) if u]
+        links = ([f'https://doi.org/{r["doi"]}'] if r.get('doi') else []) + [u for u in (r.get('openalex'), r.get('oa_url')) if u]
         r['entry_points'] = ' ; '.join(dict.fromkeys(links + tried.get(r['id'], [])[:4]))
         rows.append(r)
     have = [r for r in rows if r['file']]
@@ -181,7 +199,8 @@ def workbook(path, rows):
                        r['doi'], r.get('cited_by'), r.get('note_zh', ''), (r.get('abstract') or '')[:1500],
                        r['status'], r['file']])
             n = ws.max_row
-            ws.cell(n, 7).hyperlink, ws.cell(n, 7).style = f'https://doi.org/{r["doi"]}', 'Hyperlink'
+            if r.get('doi'):
+                ws.cell(n, 7).hyperlink, ws.cell(n, 7).style = f'https://doi.org/{r["doi"]}', 'Hyperlink'
             if r['file']:
                 ws.cell(n, 12).hyperlink, ws.cell(n, 12).style = r['file'], 'Hyperlink'
         for col, width in zip('ABCDEFGHIJKL', (7, 16, 16, 60, 6, 28, 28, 8, 40, 70, 12, 40)):
@@ -210,8 +229,9 @@ def catalogue(lib, rows, missing):
         for r in group:
             where = f'[PDF]({r["file"]})' if r['file'] else '未下载'
             note = f' {r["note_zh"]}' if r.get('note_zh') else ''
+            entry = f'https://doi.org/{r["doi"]}' if r.get('doi') else 'No DOI; check source identity manually'
             out.append(f'- {r["id"]} {r["title"]} ({r.get("year", "")}, {r.get("venue", "")}). '
-                       f'https://doi.org/{r["doi"]} · {where}.{note}')
+                       f'{entry} · {where}.{note}')
         out.append('')
     (lib / '文献目录.md').write_text('\n'.join(out), encoding='utf-8')
     out = ['# 未下载文献：入口与摘要', '',
