@@ -1,6 +1,6 @@
 # Default precise scientific style
 
-Default profile: precise. Keep natural expert prose, one main claim per sentence and one coherent question per paragraph. Put the topic sentence first where it makes the reasoning clear. Prefer concrete subjects and verbs, evidence-bearing statements and explicit scientific relationships.
+Default profile: precise. Keep natural expert prose, one main claim per sentence and one coherent question per paragraph. Put the topic sentence first; preserve a necessary scientific qualification when restructuring. Prefer concrete subjects and verbs, evidence-bearing statements and explicit scientific relationships.
 
 For English, target a sentence-length median of 16–20 words and a ceiling around 30. These are editorial targets, not scientific thresholds. Retain necessary conditions, uncertainty and technical precision; split or restructure a sentence rather than deleting them. Avoid a choppy series of fragments written only to satisfy a word limit. Chinese is reviewed using meaning and natural Chinese syntax, not English word counts.
 

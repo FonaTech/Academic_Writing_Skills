@@ -11,7 +11,7 @@ Improve the argument and clarity while preserving what the evidence actually sup
 ## Revision passes
 1. Argument: define each section's question, contribution, supporting evidence and limits. Test alternatives and avoid duplication.
 2. Evidence: check attributed claims, quantities, units, methods, scope and uncertainty against their individual records. Mark gaps instead of filling them.
-3. Paragraphs: group related reasoning; make the topic and connection to the paper clear. Use a topic sentence where it helps rather than imposing one fixed paragraph pattern.
+3. Paragraphs: keep one coherent question per paragraph and put the topic sentence first in the default precise style. Make the connection to the paper clear; vary the remaining sentence structure with the argument.
 4. Sentences: split when qualifications or clauses obscure meaning. Preserve causal distinctions, technical detail and necessary conditions. One principal claim per sentence is a useful default, not a rule against natural compound sentences.
 5. Wording: remove unsupported praise and empty phrasing. Keep legitimate technical words and justified emphases; no ordinary word is globally forbidden.
 6. Consistency: use stable terms, correct symbols/units and contextual abbreviation definitions. Choose conventions required by the venue.
