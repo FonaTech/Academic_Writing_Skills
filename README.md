@@ -1,4 +1,4 @@
-# Academic Writing Skills — Generic v2.0
+# Academic Writing Skills
 
 Six reusable skills for evidence-traceable academic writing across disciplines. Select the field, study type, audience and professional perspective for the actual task. Research articles, reviews, letters, theses, proposals and rebuttals use appropriate branches; a small edit uses only relevant steps.
 
