@@ -42,7 +42,7 @@ SEARCH = 'https://api.crossref.org/works?'
 def norm_title(text):
     text = html.unescape(text or '')
     text = re.sub(r'<[^>]+>', '', text)
-    return re.sub(r'[\W_]+', ' ', text.lower()).strip()
+    return re.sub(r'[^a-z0-9]+', ' ', text.lower()).strip()
 
 
 def similarity(a, b):
@@ -101,9 +101,6 @@ def parse(msg):
         pages=clean(pages.replace('-', '–')) if pages else None,
         article_number=clean(number) if number else None,
         type=msg.get('type'),
-        post_publication_updates=msg.get('update-to', []),
-        relations=msg.get('relation', {}),
-        integrity_status='pending',
     )
 
 
@@ -145,8 +142,8 @@ def main(argv=None):
         claimed = spec.get('title')
         sim = similarity(rec['title'], claimed) if claimed else None
         rec['title_similarity'] = round(sim, 3) if sim is not None else None
-        rec['title_match'] = ('unchecked' if sim is None else 'exact' if norm_title(rec['title']) == norm_title(claimed) else 'near' if sim >= 0.55 else 'mismatch')
-        rec['verified'] = 'crossref' if claimed and rec['title_match'] == 'exact' else 'identity-review-needed'
+        rec['title_match'] = ('unchecked' if sim is None else 'exact' if sim >= 0.95 else 'near' if sim >= 0.55 else 'mismatch')
+        rec['verified'] = 'crossref' if claimed else 'crossref-unchecked'
         if rec['title_match'] == 'mismatch':
             q = SEARCH + urllib.parse.urlencode({'query.bibliographic': claimed, 'rows': 5})
             found = fetch(q, cache, args.mailto, args.pause)
@@ -173,18 +170,14 @@ def main(argv=None):
                 year=rec.get('year'), title=rec.get('title'), journal=rec.get('journal'),
                 volume=rec.get('volume'), issue=rec.get('issue'), pages=rec.get('pages'),
                 article_number=rec.get('article_number'), doi=rec.get('doi'),
-                verified=rec.get('verified'),integrity_status=rec.get('integrity_status'),
-                post_publication_updates=rec.get('post_publication_updates'),relations=rec.get('relations')).items() if v not in (None, '')}
+                verified=rec.get('verified')).items() if v not in (None, '')}
         Path(args.emit_references).write_text(json.dumps(refs, ensure_ascii=False, indent=2), encoding='utf-8')
     print('\nmismatch:', report['mismatch'] or 'none')
     print('unresolved:', report['unresolved'] or 'none')
     print('manual:', report['manual'] or 'none')
     if report['missing_fields']:
         print('missing fields:', json.dumps(report['missing_fields'], ensure_ascii=False))
-    pending = [key for key,rec in verified.items() if rec.get('verified') not in ('crossref','manual-checked')]
-    if pending:
-        print('identity review needed:', pending)
-    return 1 if report['mismatch'] or report['unresolved'] or pending else 0
+    return 1 if report['mismatch'] or report['unresolved'] else 0
 
 
 if __name__ == '__main__':

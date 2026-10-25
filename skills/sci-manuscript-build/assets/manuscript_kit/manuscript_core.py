@@ -1,4 +1,4 @@
-"""Rendering core for repeatable scientific Word construction.
+"""Rendering core of the manuscript kit.
 
 Markup parsing, citation and float resolution, rich-text runs and document defaults.
 Numbering and rendering live in build_manuscript.py.
@@ -147,7 +147,7 @@ def _tokenize_plain(text: str) -> list[tuple[str, str]]:
     """Split plain text into (text, style) runs.
 
     Styles: '' plain, 'bold', 'italic', 'sub', 'sup'. Outside math, chemical
-    subscripts use ~x~ (MoS~2~), unit exponents use ^ (cm^2, s^-1, 10^{4}) and
+    subscripts use ~x~ (CO~2~), unit exponents use ^ (cm^2, s^-1, 10^{4}) and
     symbol subscripts use _ after a letter (V_DS, I_on).
     """
     out, i = [], 0
@@ -175,6 +175,9 @@ def _tokenize_plain(text: str) -> list[tuple[str, str]]:
     return [(t, s) for t, s in out if t]
 
 
+MATH_FUNC_RE = re.compile(r'\\(ln|log|exp|sin|cos|tan|sinh|cosh|tanh|max|min|lim|det|arg|deg)(?![A-Za-z])')
+
+
 def _tokenize_math(expr: str) -> list[tuple[str, str]]:
     """Convert one inline-math expression into (text, style) runs.
 
@@ -183,6 +186,8 @@ def _tokenize_math(expr: str) -> list[tuple[str, str]]:
     """
     expr = re.sub(r'\\math(?:bf|rm|it|sf)\{([^}]*)\}', r'\1', expr)
     expr = expr.replace(r'\!', '').replace(r'\left', '').replace(r'\right', '')
+    # function names (\ln, \exp, ...) stay upright; \x00 marks them for the loop below
+    expr = MATH_FUNC_RE.sub(lambda m: f'\x00{m.group(1)}\x00', expr)
     for name, char in sorted(SYMBOLS.items(), key=lambda kv: -len(kv[0])):
         expr = expr.replace(name, char)
     expr = expr.replace(r'\,', ' ').replace(r'\;', ' ').replace('~', ' ')
@@ -200,6 +205,11 @@ def _tokenize_math(expr: str) -> list[tuple[str, str]]:
                 body = expr[i + 1]
                 i += 2
             runs.append((body, script))
+            continue
+        if char == '\x00':
+            end = expr.index('\x00', i + 1)
+            runs.append((expr[i + 1:end], ''))
+            i = end + 1
             continue
         if char.isspace():
             runs.append((' ', ''))
@@ -275,7 +285,7 @@ TEAL = '18757E'
 SLATE = '425A64'
 
 
-def set_doc_defaults(doc, fonts=None):
+def set_doc_defaults(doc):
     sec = doc.sections[0]
     sec.top_margin = Inches(0.85)
     sec.bottom_margin = Inches(0.85)
@@ -283,29 +293,21 @@ def set_doc_defaults(doc, fonts=None):
     sec.right_margin = Inches(0.9)
     styles = doc.styles
     normal = styles['Normal']
-    fonts = fonts or {}
-    normal.font.name = fonts.get('latin', 'Times New Roman')
-    normal._element.rPr.rFonts.set(qn('w:eastAsia'), fonts.get('east_asian_body', 'Songti SC'))
-    normal.font.size = Pt(fonts.get('body_pt', 12))
-    normal.paragraph_format.line_spacing = fonts.get('line_spacing', 1.5)
+    normal.font.name = 'Times New Roman'
+    normal._element.rPr.rFonts.set(qn('w:eastAsia'), '宋体')
+    normal.font.size = Pt(12)
+    normal.paragraph_format.line_spacing = 1.5
     normal.paragraph_format.space_after = Pt(6)
     for name, size, bold, color in [('Title', 16, True, NAVY),
                                     ('Heading 1', 14, True, NAVY),
                                     ('Heading 2', 12, True, TEAL),
                                     ('Heading 3', 12, True, SLATE)]:
         st = styles[name]
-        st.font.name = fonts.get('latin', 'Times New Roman')
-        st._element.rPr.rFonts.set(qn('w:eastAsia'), fonts.get('east_asian_heading', 'Heiti SC'))
+        st.font.name = 'Times New Roman'
+        st._element.rPr.rFonts.set(qn('w:eastAsia'), '黑体')
         st.font.size = Pt(size)
         st.font.bold = bold
-        st.font.color.rgb = RGBColor.from_string(fonts.get('heading_color', '000000'))
-        st.paragraph_format.keep_with_next = True
-        # Word's built-in Title can carry a decorative bottom rule.
-        ppr = st._element.find(qn('w:pPr'))
-        if ppr is not None:
-            borders = ppr.find(qn('w:pBdr'))
-            if borders is not None:
-                ppr.remove(borders)
+        st.font.color.rgb = RGBColor.from_string(color)
 
 
 def add_title(doc, title, subtitle=None):

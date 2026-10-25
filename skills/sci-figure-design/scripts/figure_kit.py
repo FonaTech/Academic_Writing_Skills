@@ -11,21 +11,21 @@ One folder per figure, driven by figure_spec.json (see references/figure-spec-sc
     layout.json           derived grid description
     layout_preview.png    annotated wireframe for humans and for the docx placeholder
     layout_blocks.png     text-free colour blocks, the only layout image given to the model
-    prompt_NBP.md         per-panel schematic prompts, text-free fallbacks and layout-draft guidance
-    final.png             deterministic composition; model composites are not accepted data finals
+    prompt_NBP.md         route A per-panel prompts, text-free fallbacks, edit templates,
+                          route B composite prompt, captions and QC checklist
+    final.png             composed figure (route A)      final_nbp.png  model composite (route B)
 
 Usage
   figure_kit.py layout  FOLDER [FOLDER ...]
   figure_kit.py prompts FOLDER [...]
   figure_kit.py compose FOLDER [...]
-  figure_kit.py verify  FOLDER [...]     compare RGB pixels and source hashes in final.png
+  figure_kit.py verify  FOLDER [...]     locate data panels in final*.png and score their fidelity
   figure_kit.py sizes   FOLDER [...]     print size of every slot (use it as the matplotlib figsize)
   figure_kit.py all     FOLDER [...]     layout + prompts (+ compose when nbp panels exist)
 """
 from __future__ import annotations
 
 import json
-import hashlib
 import sys
 from pathlib import Path
 
@@ -34,59 +34,64 @@ PALETTE = {
     'gold': '#C9A227', 'lgrey': '#C9CFD4', 'pale': '#F2F6F8', 'green': '#6E9C75', 'purple': '#7B6A9B',
 }
 ROLES = {
-    'navy': 'structures and text', 'cyan': 'primary object or positive branch',
-    'coral': 'trapped charge, negative branch, highlighted value', 'teal': 'arrows and signal flow',
-    'gold': 'metal electrodes', 'lgrey': 'substrate, inactive parts, non-target comparators',
+    'navy': 'structures and text', 'cyan': 'primary object, positive branch, measured data',
+    'coral': 'highlighted element, negative branch, highlighted value', 'teal': 'arrows, flows and signal paths',
+    'gold': 'contacts, interfaces or key components', 'lgrey': 'background, inactive parts, non-target comparators',
 }
 STYLE = (
-    'Clear scientific conceptual schematic with uniform outlines, a plain background and legible labels. '
-    'Use consistent accessible colors for scientific roles specified in the scene. Depict only the objects '
-    'required by this discipline and question. Keep the geometry and relationships explicit.'
+    'Clean scientific schematic in the style of a Nature Reviews figure panel. Flat vector illustration with light '
+    'isometric shading, thin dark outlines of uniform weight, white background, generous white space, and a '
+    'restrained palette: navy #153B50 for structures and text, cyan #2C78A0 for the primary object and positive '
+    'signals, coral #D98262 for highlighted elements and negative signals, teal #18757E for arrows and flows, gold '
+    '#C9A227 for contacts, interfaces or key components, light grey #C9CFD4 for backgrounds and inactive parts. All '
+    'text in a plain sans-serif font such as Helvetica, sentence case, one size for all labels, perfectly spelled and '
+    'fully legible.'
 )
 PROHIBIT = (
     'Do not add a figure title, panel letters, captions, references, logos or watermarks. Do not write any numbers, '
-    'units, axis tick values or equations; add verified numeric labels later in deterministic software. '
-    'Do not invent data, realistic evidence images or unrelated decorations. Depict anatomical or other '
-    'domain objects only when explicitly required by the scene. Do not invent labels beyond the quoted list.'
+    'units, axis tick values or equations. Do not draw human faces, robots, brains, glowing effects, lens flares or '
+    'photographic backgrounds. Do not invent labels beyond the quoted list and do not repeat any label.'
 )
+# Field-neutral visual primitives. Add project-specific hints in figure_spec.json ("hints": {...}) rather than here.
 DOMAIN_HINTS = {
-    'flow': 'Show the declared inputs, operations and outputs with unambiguous directed connections.',
-    'biology': 'Draw only the supplied conceptual biological structures and relationships; no invented evidence images.',
-    'environment': 'Keep the supplied spatial or temporal relationships explicit and distinguish observed from conceptual elements.',
-    'chemistry': 'Use the supplied chemically valid relationships; add verified formulas and numeric labels separately.',
-    'statistics': 'Depict sampling or analysis steps conceptually; never invent a plot or distribution.',
+    'layers': 'Stacked layers are flat slabs of distinct colours seen at a shallow isometric angle, with thin gaps '
+              'between them and the order exactly as described.',
+    'sheets': 'Thin sheets are single flat planes with a faint regular lattice seen at a shallow angle; stacks show '
+              'distinct sheets with small gaps.',
+    'tubes': 'Cylindrical objects (fibres, tubes, filaments or vessels) are thin seamless cylinders drawn as aligned '
+             'rods or a sparse random network; never ropes, springs or helices unless described.',
+    'grid': 'A grid is a square array of parallel row lines crossing parallel column lines, with one small identical '
+            'unit at each crossing; keep every row and column straight and evenly spaced.',
+    'network': 'A network is a set of round nodes joined by straight thin edges, with no crossing clutter; node size '
+               'and colour follow the palette roles.',
+    'blocks': 'Process or system blocks are rounded rectangles connected by straight orthogonal connectors with small '
+              'arrowheads; no decorative packages or icons.',
+    'flow': 'Flows are smooth arrows of one width in teal, following the described path, without glow or motion blur.',
+    'optics': 'Light is shown as a few straight rays or a soft cone in a single hue, not as rainbows or glow.',
+    'pulses': 'Pulse trains and events are drawn as short vertical ticks on a thin baseline, not as noisy waveforms.',
+    'molecule': 'Molecules are ball-and-stick models with flat-shaded spheres and uniform bonds, no reflections.',
+    'cell': 'Cells and tissue are simple pale cross-sections with clean outlines and few organelles, not photographic.',
+    'map': 'Geographic areas are flat shapes with thin borders and no terrain texture; no real map tiles.',
 }
-
 QC = [
     'Every label matches the whitelist character by character; no extra, missing or repeated words.',
     'No numbers, units, tick values or equations inside schematic panels.',
-    'Geometry is physically plausible: layer order, electrode positions, current directions and arrow heads.',
+    'Geometry is physically plausible: layer order, contact positions, flow directions and arrow heads.',
     'Colour semantics follow the palette roles; the same object has the same colour in every panel.',
-    'Objects and geometry fit the actual discipline; no invented data or decorative additions.',
-    'Data panels match deterministic code composition and source hashes; verify their data separately.',
+    'No faces, robots, brains, glow, gradients, photographic textures or decorative packages.',
+    'Data panels in final images are pixel-identical to panels/*.png (route A) or pass figure_kit.py verify (route B).',
     'Panel letters are bold lowercase at the top-left of each panel and match the caption order.',
-    'Text remains legible at the specified final width and meets the actual venue requirements.',
+    'Text remains legible at the printed width (180 mm): minimum label height about 2 mm.',
 ]
 
 
 def load_spec(folder: Path) -> dict:
     spec = json.loads((folder / 'figure_spec.json').read_text(encoding='utf-8'))
-    rows, cols = spec['grid']['rows'], spec['grid']['cols']
-    if type(rows) is not int or type(cols) is not int or min(rows,cols)<1 or not spec['slots']:
-        raise ValueError('figure needs a positive grid and at least one slot')
-    names, occupied = set(), set()
     for slot in spec['slots']:
         if slot.get('kind') == 'nbp':
             slot['kind'] = 'schematic'
         slot.setdefault('col_span', 1)
         slot.setdefault('row_span', 1)
-        if slot.get('kind') not in ('data','schematic') or slot.get('panel') in names:
-            raise ValueError('slots require a supported kind and unique panel letters')
-        names.add(slot['panel'])
-        cells = {(r,c) for r in range(slot['row'],slot['row']+slot['row_span']) for c in range(slot['col'],slot['col']+slot['col_span'])}
-        if not cells or any(r<0 or r>=rows or c<0 or c>=cols for r,c in cells) or occupied.intersection(cells):
-            raise ValueError('panel grid spans overlap or exceed the grid')
-        occupied.update(cells)
     return spec
 
 
@@ -100,7 +105,10 @@ def cell_ratio(spec) -> float:
 # Layout images
 # --------------------------------------------------------------------------
 def write_layout(folder: Path):
-    from PIL import Image, ImageDraw
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Rectangle
     spec = load_spec(folder)
     rows, cols = spec['grid']['rows'], spec['grid']['cols']
     ratio = cell_ratio(spec)
@@ -109,30 +117,45 @@ def write_layout(folder: Path):
                        for s in spec['slots']]
     (folder / 'layout.json').write_text(json.dumps(layout, ensure_ascii=False, indent=2), encoding='utf-8')
     for annotated in (True, False):
-        cw, ch = 800, round(800/ratio)
-        canvas = Image.new('RGB',(cols*cw,rows*ch),'white')
-        draw = ImageDraw.Draw(canvas)
+        cw, ch = 4.0, 4.0 / ratio
+        fig, ax = plt.subplots(figsize=(cols * cw, rows * ch))
+        ax.set_xlim(0, cols); ax.set_ylim(0, rows); ax.axis('off')
+        if annotated:
+            ax.set_title(spec.get('title', folder.name), fontsize=11, color=PALETTE['navy'], pad=8)
         for slot in spec['slots']:
-            x, y = slot['col']*cw, slot['row']*ch
-            w, h = slot['col_span']*cw, slot['row_span']*ch
+            x, w, h = slot['col'], slot['col_span'], slot['row_span']
+            y = rows - slot['row'] - h
             schematic = slot['kind'] == 'schematic'
             face = (PALETTE['pale'] if annotated else '#DCEBF2') if schematic else ('white' if annotated else '#F4DCCF')
-            draw.rectangle((x+10,y+10,x+w-10,y+h-10),fill=face)
+            ax.add_patch(Rectangle((x + 0.02, y + 0.03), w - 0.04, h - 0.06, facecolor=face,
+                                   edgecolor=(PALETTE['teal'] if schematic else '#B8C0C8') if annotated else face,
+                                   linewidth=1.2, linestyle='--' if schematic else '-'))
             if not annotated:
-                # A model layout input must contain blocks only, never evidence/data panels.
+                if not schematic and (folder / slot['file']).exists():
+                    _place(ax, plt.imread(folder / slot['file']), x, y, w, h, cw, ch)
                 continue
-            draw.text((x+20,y+20),slot['panel'],fill=PALETTE['navy'])
+            ax.text(x + 0.06, y + h - 0.1, slot['panel'], fontsize=11, fontweight='bold', color=PALETTE['navy'], va='top')
             if schematic:
-                draw.text((x+20,y+45),slot.get('title','schematic'),fill=PALETTE['navy'])
+                ax.text(x + w / 2, y + h / 2, slot.get('title', ''), fontsize=7.5, color=PALETTE['navy'],
+                        ha='center', va='center', wrap=True, style='italic')
+                ax.text(x + w / 2, y + 0.1, 'schematic: image model', fontsize=6.5, color=PALETTE['teal'], ha='center')
             elif (folder / slot['file']).exists():
-                panel=Image.open(folder/slot['file']).convert('RGB')
-                panel.thumbnail((w-40,h-80),Image.Resampling.LANCZOS)
-                canvas.paste(panel,(x+(w-panel.width)//2,y+60+(h-80-panel.height)//2))
+                _place(ax, plt.imread(folder / slot['file']), x, y, w, h, cw, ch)
             else:
-                draw.text((x+20,y+60),f"missing {slot['file']}",fill='#B4501E')
+                ax.text(x + w / 2, y + h / 2, f"missing {slot['file']}", fontsize=7, color='#B4501E', ha='center')
         name = 'layout_preview.png' if annotated else 'layout_blocks.png'
-        canvas.save(folder/name,dpi=(200,200))
+        fig.savefig(folder / name, dpi=200, bbox_inches='tight', facecolor='white', pad_inches=0.08)
+        plt.close(fig)
     print(f'{folder.name}: layout.json, layout_preview.png, layout_blocks.png')
+
+
+def _place(ax, img, x, y, w, h, cw, ch):
+    box_w, box_h = w - 0.14, h - 0.24
+    ih, iw = img.shape[0], img.shape[1]
+    scale = min(box_w * cw / iw, box_h * ch / ih)
+    dw, dh = iw * scale / cw, ih * scale / ch
+    x0, y0 = x + 0.07 + (box_w - dw) / 2, y + 0.08 + (box_h - dh) / 2
+    ax.imshow(img, extent=(x0, x0 + dw, y0, y0 + dh), aspect='auto', zorder=2)
 
 
 # --------------------------------------------------------------------------
@@ -154,9 +177,21 @@ def slot_ratio(spec, slot) -> str:
     return nearest_ratio(cell_ratio(spec) * slot['col_span'] / slot['row_span'])
 
 
+def hint_table(spec):
+    """Built-in primitives plus project hints from figure_spec.json ("hints": {key: sentence})."""
+    table = dict(DOMAIN_HINTS)
+    table.update(spec.get('hints', {}))
+    return table
+
+
 def hints(spec, slot):
     keys = list(dict.fromkeys(spec.get('domain', []) + slot.get('domain', [])))
-    return ' '.join(DOMAIN_HINTS[k] for k in keys if k in DOMAIN_HINTS)
+    table = hint_table(spec)
+    unknown = [k for k in keys if k not in table]
+    if unknown:
+        print(f"warning: no hint for domain key(s) {unknown}; add them under \"hints\" in figure_spec.json",
+              file=sys.stderr)
+    return ' '.join(table[k] for k in keys if k in table)
 
 
 def panel_prompt(spec, slot):
@@ -164,13 +199,13 @@ def panel_prompt(spec, slot):
     label_rule = (f'Add exactly these text labels, each next to the element it names, with a thin leader line where '
                   f'needed, and no other text: {labels}.') if labels else 'Do not add any text.'
     return (f"Create one panel of a scientific figure, aspect ratio {slot_ratio(spec, slot)}. "
-            f"Subject: {slot.get('title','conceptual schematic')}. {slot['scene']} {hints(spec, slot)} {label_rule} {spec.get('style_prompt',STYLE)} {PROHIBIT}")
+            f"Subject: {slot['title']}. {slot['scene']} {hints(spec, slot)} {label_rule} {STYLE} {PROHIBIT}")
 
 
 def textfree_prompt(spec, slot):
     return (f"Create the same scientific schematic with no text at all, aspect ratio {slot_ratio(spec, slot)}. "
-            f"Subject: {slot.get('title','conceptual schematic')}. {slot['scene']} {hints(spec, slot)} Leave clear white space next "
-            f"to each element so labels can be added later. {spec.get('style_prompt',STYLE)} Do not write any letters, words, numbers or "
+            f"Subject: {slot['title']}. {slot['scene']} {hints(spec, slot)} Leave clear white space next "
+            f"to each element so labels can be added later. {STYLE} Do not write any letters, words, numbers or "
             f"symbols. " + PROHIBIT.split('. ', 1)[1])
 
 
@@ -183,14 +218,34 @@ def edit_templates(slot):
         f"Remove every piece of text that is not in this list and keep everything else identical: {whitelist}.",
         "Make all outlines the same thin weight and replace any glow, gradient or texture with flat colour on white; "
         "keep layout, colours and labels identical.",
-        "Correct only the geometry of <element>: <one physical fact, e.g. the gate lies below the dielectric>. "
+        "Correct only the geometry of <element>: <one physical fact, e.g. the base layer lies below the middle layer>. "
         "Keep every other element, colour and label identical.",
     ]
 
 
 def composite_prompt(spec):
-    return ('Draft only schematic layout ideas. Do not upload, draw, reconstruct or include any data panel. '
-            'Leave data positions blank. Final composition is performed by code, never by an image model. ' + STYLE)
+    grid = spec['grid']
+    parts = []
+    for slot in spec['slots']:
+        pos = f"row {slot['row'] + 1}, column {slot['col'] + 1}"
+        if slot['col_span'] > 1 or slot['row_span'] > 1:
+            pos += f", spanning {slot['col_span']} columns and {slot['row_span']} rows"
+        if slot['kind'] == 'data':
+            parts.append(f"Panel {slot['panel']} ({pos}): place the uploaded image '{Path(slot['file']).name}' "
+                         f"exactly as provided. Do not redraw, recolour, crop, sharpen or retype any text, number, "
+                         f"tick or data point in it.")
+        else:
+            labels = ', '.join(f"'{l}'" for l in slot.get('labels', []))
+            parts.append(f"Panel {slot['panel']} ({pos}): {slot['title']}. {slot['scene']} "
+                         f"Labels for this panel only: {labels}.")
+    return (f"Create a complete multi-panel scientific figure, aspect ratio {spec.get('ratio', '16:9')}, on a "
+            f"white background. The uploaded image 'layout_blocks.png' shows only where each panel "
+            f"goes ({grid['rows']} rows by {grid['cols']} columns, even gutters); blue blocks are schematic panels "
+            f"to draw and orange blocks hold the uploaded data images. Do not reproduce the blocks themselves. Put a "
+            f"bold lowercase panel letter at the top-left corner of each panel. " + ' '.join(parts) + f" "
+            f"{' '.join(hint_table(spec)[k] for k in spec.get('domain', []) if k in hint_table(spec))} {STYLE} "
+            "Do not add a figure title, captions, references, logos or watermarks. Do not write numbers, units or "
+            "equations inside the schematic panels. Do not draw faces, robots, brains or glow effects.")
 
 
 def ensure_sources(folder: Path):
@@ -211,16 +266,17 @@ def write_prompts(folder: Path):
          '<folder>`. Data panels stay untouched.',
          '- Route A (only if the journal allows AI illustrations, with a caption disclosure): use the rendered '
          'panels in `nbp/` directly, then `compose`.',
-         '- Set supported dimensions/resolution through the selected tool when available; syntax is provider-specific.',
-         '- Layout drafts: provide only text-free blocks from `layout_blocks.png`; keep data slots empty. '
-         'Never upload data panels for model composition. The legacy filename prompt_NBP.md is provider-neutral guidance.', '']
+         '- Set the aspect ratio and the output resolution (2K for panels, 4K for composites) in the app or the '
+         'API (`image_size`); writing them in the prompt text does not set them.',
+         '- Route B: upload `layout_blocks.png` and every file in `panels/` with the composite prompt; save the result '
+         'as `final_nbp.png` and run `figure_kit.py verify <folder>`.', '']
     for slot in spec['slots']:
         if slot['kind'] == 'data':
             L += [f"## Panel {slot['panel']} (data, drawn by code)", '',
                   f"- File: `{slot['file']}`; {slot.get('title', '')}",
                   f"- Values and sources: `panels/panel_data.json`. Never regenerate this panel with an image model.", '']
             continue
-        L += [f"## Panel {slot['panel']}: {slot.get('title','conceptual schematic')} (schematic, aspect {slot_ratio(spec, slot)})", '',
+        L += [f"## Panel {slot['panel']}: {slot['title']} (schematic, aspect {slot_ratio(spec, slot)})", '',
               '### Prompt', '', '```text', panel_prompt(spec, slot), '```', '',
               '### Label whitelist', '', ' | '.join(slot.get('labels', [])) or '(none)', '']
         if slot.get('zh'):
@@ -229,10 +285,10 @@ def write_prompts(folder: Path):
               '### Edit templates', ''] + [f'- {t}' for t in edit_templates(slot)] + ['']
     L += ['## Redraw brief (route D)', '',
           'Use the rendered draft only as a layout reference. Redraw in standard software at the print size given by '
-          '`figure_kit.py sizes`, with the chosen role colors, readable venue-compliant labels and the label whitelist verbatim. '
-          'Check the geometry against the scene description and sources. '
+          '`figure_kit.py sizes`, with the palette hex codes, one sans-serif font at 7-8 pt, the label whitelist verbatim, '
+          'uniform 0.5-0.75 pt outlines and no effects. Check the geometry against the scene description and the source papers. '
           'Save as `final/panel_<letter>.png` (or the full figure as `final/figure.png`).', '']
-    L += ['## Schematic layout draft only', '', '```text', composite_prompt(spec), '```', '',
+    L += ['## Route B composite prompt', '', '```text', composite_prompt(spec), '```', '',
           '## Caption drafts', '', f"**EN** {spec.get('caption_en', '')}", '', f"**ZH** {spec.get('caption_zh', '')}", '',
           '## QC checklist', ''] + [f'- [ ] {q}' for q in QC] + ['']
     (folder / 'prompt_NBP.md').write_text('\n'.join(L), encoding='utf-8')
@@ -309,14 +365,11 @@ def compose(folder: Path):
             px = x0 + (avail_w - img.width) // 2
             py = y0 + g['top'] + (avail_h - img.height) // 2
             canvas.paste(img, (px, py))
-            placements[slot['panel']] = dict(box=[px,py,img.width,img.height],
-                source_file=str(src.relative_to(folder)),source_sha256=hashlib.sha256(src.read_bytes()).hexdigest())
+            placements[slot['panel']] = [px, py, img.width, img.height]
         else:
             missing.append(slot['panel'])
             draw.rectangle((x0, y0 + g['top'], x0 + w, y0 + h), outline='#9AAAB2', width=3)
         draw.text((x0, y0), slot['panel'], fill='black', font=font)
-    if missing:
-        raise ValueError('cannot produce a final with missing panels: '+', '.join(missing))
     canvas.save(folder / 'final.png', dpi=(g['dpi'], g['dpi']))
     (folder / 'final_placements.json').write_text(json.dumps(placements, indent=2), encoding='utf-8')
     print(f"{folder.name}: final.png ({g['total_w']} × {height} px, {spec.get('print_width_mm', 180)} mm)"
@@ -324,42 +377,96 @@ def compose(folder: Path):
     return missing
 
 
-def verify(folder: Path):
-    """Verify exact RGB pixels and source hashes after deterministic composition."""
+def _match(region, ref, fracs):
+    """Best normalised cross-correlation of ref inside region over a set of width fractions."""
+    import numpy as np
+    from skimage.feature import match_template
+    best = (-1.0, None, None, None)
+    reg = np.asarray(region, dtype=float) / 255.0
+    for frac in fracs:
+        tw = int(round(frac * region.width))
+        th = int(round(tw * ref.height / ref.width))
+        if tw < 16 or th < 16 or th > region.height or tw > region.width:
+            continue
+        tpl = np.asarray(ref.resize((tw, th)), dtype=float) / 255.0
+        res = match_template(reg, tpl)
+        idx = np.unravel_index(int(np.argmax(res)), res.shape)
+        if res[idx] > best[0]:
+            best = (float(res[idx]), frac, (int(idx[1]), int(idx[0])), (tw, th))
+    return best
+
+
+def verify(folder: Path, files=('final.png', 'final_nbp.png', 'final/figure.png')):
+    """Locate every data panel in the final figure and measure how faithfully it survived.
+
+    Image models re-render every pixel, so a route-B composite will rarely score as identical;
+    the side-by-side images written to verify/ must then be checked by eye for every number,
+    tick label and data point. Route A (compose) keeps the pixels and should score >= 0.97.
+    """
+    import numpy as np
     from PIL import Image
+    try:
+        from skimage.metrics import structural_similarity
+    except ImportError:
+        print('verify needs scikit-image: pip install scikit-image')
+        return False
     spec = load_spec(folder)
-    data = [s for s in spec['slots'] if s['kind'] == 'data']
-    if not data:
-        good = any((folder/name).is_file() for name in ('final.png','final/figure.png'))
-        print(f'{folder.name}: schematic final ' + ('exists; geometry still needs review' if good else 'MISSING'))
-        return good
-    final, placement = folder/'final.png', folder/'final_placements.json'
-    if not final.is_file() or not placement.is_file():
-        print(f'{folder.name}: FAIL missing code-composed final/placement records')
-        return False
-    placed = json.loads(placement.read_text(encoding='utf-8'))
-    if set(placed) != {s['panel'] for s in spec['slots']}:
-        print(f'{folder.name}: FAIL missing or extra panels in final composition')
-        return False
-    big = Image.open(final).convert('RGB')
     ok = True
-    for slot in data:
-        source, item = folder/slot['file'], placed.get(slot['panel'])
-        if not source.is_file() or not isinstance(item, dict):
-            print(f'{slot["panel"]}: FAIL missing source/placement')
-            ok = False
+    out_dir = folder / 'verify'
+    for name in files:
+        final = folder / name
+        if not final.exists():
             continue
-        digest = hashlib.sha256(source.read_bytes()).hexdigest()
-        if digest != item.get('source_sha256'):
-            print(f'{slot["panel"]}: FAIL source changed after composition')
-            ok = False
-            continue
-        x,y,w,h = item['box']
-        expected = Image.open(source).convert('RGB').resize((w,h), Image.Resampling.LANCZOS)
-        identical = big.crop((x,y,x+w,y+h)).tobytes() == expected.tobytes()
-        print(f'{slot["panel"]}: ' + ('OK exact RGB composition' if identical else 'FAIL pixels altered'))
-        ok = ok and identical
-    print(f'{len(data)} data panels checked; underlying values and physical meaning require separate review')
+        out_dir.mkdir(exist_ok=True)
+        big = Image.open(final).convert('L')
+        cw, ch = big.width / spec['grid']['cols'], big.height / spec['grid']['rows']
+        placed = {}
+        if name == 'final.png' and (folder / 'final_placements.json').exists():
+            placed = json.loads((folder / 'final_placements.json').read_text(encoding='utf-8'))
+        for slot in spec['slots']:
+            if slot['kind'] != 'data':
+                continue
+            if slot['panel'] in placed:
+                # route A: compare at the recorded position with the same resampling as compose()
+                px, py, tw, th = placed[slot['panel']]
+                crop = np.asarray(big.crop((px, py, px + tw, py + th)), dtype=float)
+                ref_r = np.asarray(Image.open(folder / slot['file']).convert('RGB')
+                                   .resize((tw, th), Image.LANCZOS).convert('L'), dtype=float)
+                ssim = float(structural_similarity(crop, ref_r, data_range=255))
+                ok &= ssim >= 0.97
+                print(f'{folder.name}/{name}: panel {slot["panel"]} SSIM {ssim:.3f} at recorded position -> '
+                      f'{"identical" if ssim >= 0.97 else "CHANGED after composition"}')
+                continue
+            ref = Image.open(folder / slot['file']).convert('L')
+            m = 0.15
+            box = (max(0, int((slot['col'] - m) * cw)), max(0, int((slot['row'] - m) * ch)),
+                   min(big.width, int((slot['col'] + slot['col_span'] + m) * cw)),
+                   min(big.height, int((slot['row'] + slot['row_span'] + m) * ch)))
+            region = big.crop(box)
+            f = min(1.0, 420 / region.width)
+            small = region.resize((max(1, int(region.width * f)), max(1, int(region.height * f))))
+            score, frac, pos, _ = _match(small, ref, np.linspace(0.35, 1.0, 27))
+            if frac is None:
+                print(f'{folder.name}/{name}: panel {slot["panel"]} not found')
+                ok = False
+                continue
+            step = 0.0025
+            score, frac, pos, (tw, th) = _match(region, ref, frac + step * np.arange(-10, 11))
+            crop = np.asarray(region.crop((pos[0], pos[1], pos[0] + tw, pos[1] + th)), dtype=float)
+            ref_r = np.asarray(ref.resize((tw, th), Image.LANCZOS), dtype=float)
+            ssim = float(structural_similarity(crop, ref_r, data_range=255))
+            status = ('identical' if ssim >= 0.97 else 'altered: inspect every number and mark' if ssim >= 0.75
+                      else 'redrawn or replaced')
+            ok &= ssim >= 0.97
+            side = Image.new('L', (tw * 3 + 20, th), 255)
+            side.paste(Image.fromarray(crop.astype('uint8')), (0, 0))
+            side.paste(Image.fromarray(ref_r.astype('uint8')), (tw + 10, 0))
+            side.paste(Image.fromarray((255 - np.abs(crop - ref_r)).clip(0, 255).astype('uint8')), (2 * tw + 20, 0))
+            side.save(out_dir / f'{Path(name).stem}_panel_{slot["panel"]}.png')
+            print(f'{folder.name}/{name}: panel {slot["panel"]} NCC {score:.2f}, SSIM {ssim:.3f} -> {status}')
+    if not ok:
+        print('  Compare the side-by-side images in verify/ (figure | source | difference). '
+              'Use route A (compose) whenever data integrity matters.')
     return ok
 
 

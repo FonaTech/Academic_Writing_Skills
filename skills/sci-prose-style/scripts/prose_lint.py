@@ -2,7 +2,7 @@
 """Lint scientific English (and basic Chinese) prose for expert-journal style.
 
 Usage
-  prose_lint.py FILE [FILE ...] [--json] [--limits FILE] [--max-words N] [--quiet]
+  prose_lint.py FILE [FILE ...] [--json] [--limits FILE] [--max-words N] [--quiet] [--known A,B]
 
 FILE may be .txt, .md or .docx. Markdown code blocks, tables, block quotes, headings and reference
 lists are skipped, and each list item is read as its own paragraph; for .docx the body paragraphs
@@ -15,6 +15,10 @@ manuscript.json (its style.overrides apply) or a {label: cap} map.
 Reports
   - sentence-length profile (median, mean, share over the limit, share of very short sentences)
   - overlong sentences and paragraphs, stacked clauses (>= 3 of which/that/while/whereas ...)
+  - staccato runs (4 or more consecutive sentences of 12 words or fewer, none opening with a
+    connective or pronoun that ties it to the previous one) and orphan paragraphs (1-2 sentences)
+  - defensive phrases (so far, not yet, has not been, remains missing ...), screening-report voice,
+    "in a preprint" and per-paper fault-finding, from style_limits.json
   - banned phrases and capped words from style_limits.json, with the cap scaled to the text length
   - further vocabulary that reads as generated or promotional (see references/ai-flavor-lexicon.md)
   - hedging stacks, empty intensifiers, nominalisations, passive clusters, flagged openers,
@@ -45,8 +49,8 @@ DEFAULT_LIMITS = HERE.parent / 'assets' / 'style_limits.json'
 
 # ----------------------------------------------------------------------------- lexicon
 # Phrases that style_limits.json bans or caps are not repeated here. Weights follow
-# references/ai-flavor-lexicon.md. All findings require context; vocabulary does not identify AI authorship.
-LEGACY_LEXICON = {
+# references/ai-flavor-lexicon.md. 3: cut every time. 2: usually replace. 1: check in context.
+LEXICON = {
     3: [r'\bin the ever[- ]evolving\b', r'\bunlock(s|ed|ing)? the (full )?potential\b', r'\ba testament to\b',
         r'\bnavigat(e|es|ing) the complex\b', r'\bmultifaceted\b', r'\bever[- ]growing demand\b', r'\bneedless to say\b',
         r'\bin today\'?s (world|era)\b', r'\bembark(s|ed|ing)? on\b', r'\bharness(es|ed|ing)? the power\b',
@@ -66,7 +70,6 @@ LEGACY_LEXICON = {
         r'\bto (be|this) end\b', r'\bin recent years\b', r'\bwith the (rapid )?development of\b', r'\bframework\b',
         r'\bstep change\b'],
 }
-LEXICON = {1: [], 2: [], 3: []}
 META = [r'\bas (mentioned|discussed|noted|stated) (above|earlier|previously|before)\b',
         r'\bin this (section|chapter|subsection), we (will )?(discuss|describe|present|introduce)\b',
         r'\bthe (following|next) (section|subsection)s? (will )?(discuss|describe|present)\b',
@@ -80,15 +83,21 @@ PASSIVE = re.compile(r'\b(is|are|was|were|be|been|being)\s+(\w+ly\s+)?\w+(ed|en)
 CLAUSE = re.compile(r'\b(which|that|while|whereas|although|because|since|whose|where|when)\b', re.I)
 LIST3 = re.compile(r'\b\w+(?:\s\w+)?, \w+(?:\s\w+)?,? and \w+(?:\s\w+)?\b')   # counted only; lists of facts are fine
 CAPTION = re.compile(r'^(Supplementary\s+)?(Fig(ure)?s?\.?|Table|Box|图|表|专栏)\s*S?\d+', re.I)
-UNITS = r'(nm|µm|um|mm|cm|m|ns|µs|us|ms|s|Hz|kHz|MHz|GHz|THz|V|mV|µV|A|mA|µA|nA|pA|W|mW|µW|nW|pW|J|mJ|µJ|nJ|pJ|fJ|aJ|Ω|kΩ|MΩ|S|mS|µS|K|°C|eV|meV|dB|bit|bits|b|TOPS|GOPS|%|F|pF|fF|nF)'
+UNITS = (r'([kMGTPµunpfa]?(?:m|s|Hz|V|A|W|J|Ω|S|F|g|L|mol|Pa|eV|Gy|Bq|OPS)|um|us|K|°C|dB|bits?|b|%|'
+         r'ppm|ppb|min|h|yr|kg|mg|µg|ng|mL|µL|mM|µM|nM)')
 NUM_UNIT = re.compile(rf'\b\d+(?:\.\d+)?{UNITS}\b')
 PLAIN_EXP = re.compile(r'\b10\^-?\d+|\b10\^\{?-')
 TILDE = re.compile(r'(?<!\S)~\s?\d')
 ABBR_DEF = re.compile(r'\(([A-Z][A-Za-z0-9\-/]{1,9}s?)\)')
-# caption and table-note convention: 'ADC, analog-to-digital converter;'
+# caption and table-note convention: 'CI, confidence interval;'
 ABBR_DEF_NOTE = re.compile(r'(?:^|[;.]\s)([A-Z][A-Za-z0-9\-/]{1,9}), [a-z][a-z\- ]{3,80}(?=[;.])')
 ABBR_USE = re.compile(r'(?<![\w\-/])([A-Z][A-Z0-9]{1,7}s?)(?![\w\-/])')
-ABBR_SKIP = {'EN','ZH','CN','I','II','III','IV','V','VI','VII','VIII','IX','X','PDF','ID','SI','OK','PhD','MSc','BSc','US','UK','EU','USA','Hz','kHz','MHz','GHz','THz'}
+# generic acronyms that need no definition; a project adds its own field's standard names with --known
+ABBR_SKIP = {'ON', 'OFF', 'PDF', 'SI', 'ID', 'OK', 'NB', 'EN', 'ZH', 'AI', 'US', 'UK', 'EU', 'USA', 'UN', 'WHO',
+             'DNA', 'RNA', 'UV', 'IR', 'NIR', 'RGB', 'LED', 'CPU', 'GPU', 'DC', 'AC', 'NR', 'PhD', 'MSc', 'BSc',
+             'IEEE', 'ACS', 'RSC', 'APS', 'AIP', 'IOP', 'MDPI', 'PLOS', 'PNAS', 'BMJ', 'JAMA', 'NEJM',
+             'Fig', 'Figs', 'Eq', 'Eqs', 'OR', 'AND', 'NOT', 'XOR', 'CI', 'SD', 'SE', 'SEM', 'IQR',
+             'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'A'}
 
 
 def read(path: Path) -> list[str]:
@@ -131,6 +140,27 @@ def read(path: Path) -> list[str]:
     return paras
 
 
+# words that tie a short sentence to the one before it; a run of short sentences without them reads as notes
+LINKERS = re.compile(r'^(and|but|so|yet|thus|then|still|instead|because|since|although|while|whereas|when|as|if|'
+                     r'by contrast|in contrast|even so|in turn|by comparison|consequently|therefore|hence|'
+                     r'this|these|that|those|it|its|they|their|such|both|each|the same|here|there)\b', re.I)
+
+
+def staccato_runs(sents, short=12, run=4):
+    """Runs of `run` or more consecutive short sentences in which no sentence after the first is linked."""
+    out, cur = [], []
+    for s in sents:
+        if len(s.split()) <= short and (not cur or not LINKERS.match(s)):
+            cur.append(s)
+            continue
+        if len(cur) >= run:
+            out.append(cur)
+        cur = [s] if len(s.split()) <= short else []
+    if len(cur) >= run:
+        out.append(cur)
+    return out
+
+
 def is_chinese(text: str) -> bool:
     han = len(re.findall(r'[一-鿿]', text))
     return han > 0.3 * max(1, len(re.sub(r'\s', '', text)))
@@ -146,7 +176,8 @@ def clean(text: str) -> str:
 
 def sentences_en(text: str) -> list[str]:
     protected = re.sub(r'\b(et al|e\.g|i\.e|Fig|Figs|Eq|Eqs|Ref|Refs|vs|approx|ca|cf|No|no|Vol|vol|pp|p|'
-                       r'Nat|Commun|Rev|Chem|Phys|Mater|Appl|Lett|Adv|Electron|Photon|Sci|Soc|Proc|Technol|Eng|Bull)\.',
+                       r'Nat|Commun|Rev|Chem|Phys|Mater|Appl|Lett|Adv|Electron|Photon|Sci|Soc|Proc|Technol|Eng|Bull|'
+                       r'Med|Biol|Ecol|Environ|Geol|Math|Stat|Econ|Psychol|Neurosci|Int|Res|J)\.',
                        lambda m: m.group(0).replace('.', '§'), text)
     protected = re.sub(r'(\d)\.(\d)', r'\1§\2', protected)
     parts = re.split(r'(?<=[.!?\]])\s+(?=[A-Z0-9(“"\[])', protected)   # a bracketed note after a sentence starts a new one
@@ -157,18 +188,15 @@ def sentences_zh(text: str) -> list[str]:
     return [s for s in re.split(r'(?<=[。！？；])', text) if len(s.strip()) > 4]
 
 
-def read_limits(arg=None, profile=None):
+def read_limits(arg=None):
     """style_limits.json by default; --limits may name another one, a manuscript.json or a {label: cap} map."""
     if not arg:
-        return sl.load(sl.profile_path(DEFAULT_LIMITS.parent,profile or 'precise'))
+        return sl.load(DEFAULT_LIMITS)
     data = json.loads(Path(arg).read_text(encoding='utf-8'))
     if 'caps' in data or 'banned' in data:
         return sl.apply_overrides(data, {})
     if 'style' in data:
-        name = profile or data['style'].get('profile','precise')
-        local = Path(arg).resolve().parent
-        folder = local if (local/'style_profiles').is_dir() else DEFAULT_LIMITS.parent
-        return sl.load(sl.profile_path(folder,name), data['style'].get('overrides', {}))
+        return sl.load(DEFAULT_LIMITS, data['style'].get('overrides', {}))
     return sl.load(DEFAULT_LIMITS, data)
 
 
@@ -199,6 +227,14 @@ def lint(paths, max_words=None, limits=None):
             en_words += words
             if words > target['paragraph_max_words']:
                 findings.append((2, loc, 'long-paragraph', f'{words} words; split where the topic changes'))
+            sents = sentences_en(text)
+            if 1 <= len(sents) <= 2 and words >= 12 and not CAPTION.match(para) and not para.rstrip().endswith(':'):
+                findings.append((1, loc, 'orphan-paragraph',
+                                 f'{len(sents)} sentence(s); merge into the neighbouring paragraph with a connective'))
+            for r in staccato_runs(sents):
+                findings.append((2, loc, 'staccato-run',
+                                 f'{len(r)} short unlinked sentences; join them by cause, contrast or a shared subject: '
+                                 f'{" ".join(r)[:100]}…'))
             banned_spans = []
             for entry, m in sl.banned_hits(limits, text):
                 banned_spans.append((m.start(), m.end()))
@@ -293,10 +329,11 @@ def main(argv=None):
     ap.add_argument('--limits', help='style_limits.json, manuscript.json or {label: cap} map (default: '
                                      '../assets/style_limits.json)')
     ap.add_argument('--max-words', type=int, default=None, help='sentence ceiling (default from the limits file)')
-    ap.add_argument('--profile',choices=['precise','generic','explanatory','compact'],help='precise is the default; override a project profile')
     ap.add_argument('--quiet', action='store_true', help='summary only')
+    ap.add_argument('--known', default='', help='comma-separated acronyms of the field that need no definition')
     args = ap.parse_args(argv)
-    stats, findings, counts, undefined = lint(args.files, args.max_words, read_limits(args.limits,args.profile))
+    ABBR_SKIP.update(a.strip() for a in args.known.split(',') if a.strip())
+    stats, findings, counts, undefined = lint(args.files, args.max_words, read_limits(args.limits))
     if args.json:
         print(json.dumps(dict(stats=stats, findings=[dict(weight=w, where=l, kind=k, detail=d) for w, l, k, d in findings],
                               counts=counts, abbreviations_without_definition=undefined), ensure_ascii=False, indent=2))
@@ -311,7 +348,7 @@ def main(argv=None):
     if top:
         print('Most frequent flagged items:', '; '.join(top))
     if undefined:
-        print('Abbreviations used before a definition "(ABBR)" (names of chips, products and datasets need none):',
+        print('Abbreviations used before a definition "(ABBR)" (names of products, instruments and datasets need none):',
               ', '.join(f'{a} ({loc})' for a, loc in list(undefined.items())[:25]))
     return 0
 

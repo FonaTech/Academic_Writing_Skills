@@ -44,12 +44,9 @@ from lxml import etree
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import manuscript_core as rc  # noqa: E402
-from project_source import load_project, fingerprint
-from evidence_tools import sha256
 
 CFG = json.loads((HERE / 'manuscript.json').read_text(encoding='utf-8'))
 FIG_DIR = HERE / CFG['paths']['figures']
-PRIMARY = CFG['output'].get('languages', ['en'])[0]
 _OMML_NS = {'m': 'http://schemas.openxmlformats.org/officeDocument/2006/math'}
 _OMML_CACHE: dict = {}
 LABELS = {
@@ -66,8 +63,6 @@ def load_references():
 
 
 REFERENCES = load_references()
-for _lang in CFG['output'].get('languages', ['en']):
-    LABELS.setdefault(_lang, CFG.get('labels', {}).get(_lang, LABELS['en']))
 
 
 def pandoc_binary() -> Path:
@@ -179,6 +174,51 @@ def three_line_table(doc, title, columns, rows, note=None, widths=None):
     return table
 
 
+_REF_HEADERS = ('ref', 'refs', 'reference', 'references', 'source', 'sources', '文献', '参考文献', '来源')
+
+
+def _years_of(text):
+    """Publication years of the works cited in one cell: '2021' or '2008–2024'."""
+    years = sorted({int(REFERENCES[k]['year']) for k in rc.parse_cite_keys(text)
+                    if str(REFERENCES.get(k, {}).get('year', '')).isdigit()})
+    if not years:
+        return ''
+    return str(years[0]) if len(years) == 1 else f'{years[0]}–{years[-1]}'
+
+
+def add_table_years(tab, lang):
+    """Publication years from references.json, never typed by hand (opt-in per table).
+
+    tab['year_column']: insert a Year column after the first Ref./Source column, one value per row
+                        (a range when a cell cites several works; blank on separator rows).
+    tab['year_inline']: column indices; each citation group there is preceded by its year.
+    Years survive in the no-citation edition, where citation numbers are dropped."""
+    columns = list(tab.get(f'columns_{lang}', []))
+    rows = [[str(c) for c in row] for row in tab.get(f'rows_{lang}', [])]
+    widths = list(tab['widths']) if tab.get('widths') else None
+    zh = lang == 'zh'
+    if tab.get('year_column'):
+        ref = [j for j, h in enumerate(columns) if h.strip().lower().rstrip('.') in _REF_HEADERS]
+        if not ref:
+            raise KeyError(f"table '{tab.get('title_en', '')[:40]}': year_column needs a Ref./Source column")
+        j = ref[0]
+        columns.insert(j + 1, '年份' if zh else 'Year')
+        for r in rows:
+            # separator rows carry only a group label in the first cell
+            is_sep = all(not c for c in r[1:]) and not rc.parse_cite_keys(r[0])
+            r.insert(j + 1, '' if is_sep else _years_of(r[j]))
+        if widths:
+            widths.insert(j + 1, 0.45)
+    for j in tab.get('year_inline') or []:
+        for r in rows:
+            if zh:   # full-width brackets sit tight against the Chinese text
+                r[j] = re.sub(r'\s*(' + rc.CITE_RE.pattern + ')',
+                              lambda m: f'（{_years_of(m.group(1))}）{m.group(1)}', r[j])
+            else:
+                r[j] = rc.CITE_RE.sub(lambda m: f'({_years_of(m.group(0))}) {m.group(0)}', r[j])
+    return columns, rows, widths
+
+
 def equation_omml(key, tex):
     if key in _OMML_CACHE:
         return deepcopy(_OMML_CACHE[key])
@@ -216,11 +256,13 @@ def add_equation(doc, key, tex, number, zh=False, indent=0.0):
 
 
 def figure_image(fig):
+    """final/figure.png (author redraw) > final.png (composed) > final_nbp.png (model composite) > layout_preview.png."""
     folder = FIG_DIR / fig['folder']
-    spec = folder/'figure_spec.json'
-    has_data = spec.exists() and any(s.get('kind') == 'data' for s in json.loads(spec.read_text()).get('slots', []))
-    names = ('final.png','layout_preview.png') if has_data else ('final/figure.png','final.png','layout_preview.png')
-    return next((folder/n for n in names if (folder/n).is_file()), None)
+    for name in ('final/figure.png', 'final/figure.jpg', 'final.png', 'final.jpg', 'final_nbp.png',
+                 'final_nbp.jpg', 'layout_preview.png'):
+        if (folder / name).exists():
+            return folder / name
+    return None
 
 
 def figure_width(fig):
@@ -283,8 +325,8 @@ def expand(content, floats):
         if kind in ('heading', 'box'):
             flush()
         items.append((kind, block))
-        texts = [block[PRIMARY]] if kind == 'para' else (
-            [it[PRIMARY] for it in block['items'] if it['type'] == 'para'] if kind == 'box' else [])
+        texts = [block['en']] if kind == 'para' else (
+            [it['en'] for it in block['items'] if it['type'] == 'para'] if kind == 'box' else [])
         for text in texts:
             for fkind, key, _ in rc.FLOAT_RE.findall(text):
                 tag = f'{fkind}:{key}'
@@ -321,7 +363,7 @@ def number_sections(content):
     for block in content.BLOCKS:
         if block['type'] == 'heading':
             level = block.get('level', 1)
-            leading = re.match(r'^(\d+(?:\.\d+)*)\s', block[PRIMARY])
+            leading = re.match(r'^(\d+(?:\.\d+)*)\s', block['en'])
             if leading:
                 sec_no[block['id']] = leading.group(1)
                 continue
@@ -386,7 +428,7 @@ def text_stream(items, floats, lang='en'):
 
 def number_references(items, floats):
     order = {}
-    for where, text in text_stream(items, floats, PRIMARY):
+    for where, text in text_stream(items, floats, 'en'):
         for key in rc.parse_cite_keys(text):
             if key not in REFERENCES:
                 raise KeyError(f'unknown citation key @{key} in {where}; add it to references.json')
@@ -483,7 +525,7 @@ def render_document(path, content, floats, items, maps, lang='en', citations=Tru
     ref_order, fig_no, tab_no, eq_no, sec_no, box_no = maps
     resolve = make_resolver(maps, lang, citations)
     doc = Document()
-    rc.set_doc_defaults(doc, CFG.get('fonts', {}))
+    rc.set_doc_defaults(doc)
     fonts = CFG.get('fonts', {})
     normal = doc.styles['Normal']
     normal.font.name = fonts.get('latin', 'Times New Roman')
@@ -507,10 +549,19 @@ def render_document(path, content, floats, items, maps, lang='en', citations=Tru
         elif kind == 'tab':
             tab = floats.TABLES[obj]
             label = f"{LABELS[lang]['tab']}{'' if lang == 'zh' else ' '}{tab_no[obj]} | "
-            rows = [[resolve(str(c)) for c in row] for row in tab.get(f'rows_{lang}', [])]
-            three_line_table(doc, label + resolve(tab.get(f'title_{lang}', '')),
-                             tab.get(f'columns_{lang}', []), rows,
-                             resolve(tab.get(f'note_{lang}', '')) or None, tab.get('widths'))
+            columns, raw_rows, widths = add_table_years(tab, lang)
+            rows = [[resolve(c) for c in row] for row in raw_rows]
+            if not citations:
+                # a column that held only citations is empty in the no-citation edition; drop it
+                drop = [j for j, h in enumerate(columns) if h.strip().lower().rstrip('.') in _REF_HEADERS
+                        and not any(r[j].strip() for r in rows if j < len(r))]
+                for j in reversed(drop):
+                    columns.pop(j)
+                    rows = [r[:j] + r[j + 1:] for r in rows]
+                    if widths:
+                        widths.pop(j)
+            three_line_table(doc, label + resolve(tab.get(f'title_{lang}', '')), columns, rows,
+                             resolve(tab.get(f'note_{lang}', '')) or None, widths)
     if citations and ref_order:
         add_references(doc, ref_order, lang)
     doc.save(path)
@@ -519,14 +570,15 @@ def render_document(path, content, floats, items, maps, lang='en', citations=Tru
 
 def build_reference_list(path, ref_order):
     doc = Document()
-    rc.set_doc_defaults(doc, CFG.get('fonts', {}))
+    rc.set_doc_defaults(doc)
     add_references(doc, ref_order, 'en')
     doc.save(path)
     print('  wrote', path.name)
 
 
 def main(argv):
-    content, floats = load_project(HERE, CFG)
+    content = importlib.import_module('content')
+    floats = importlib.import_module('floats')
     items = expand(content, floats)
     fig_no, tab_no, eq_no = number_items(items)
     ref_order = number_references(items, floats)
@@ -534,7 +586,7 @@ def main(argv):
     maps = (ref_order, fig_no, tab_no, eq_no, sec_no, box_no)
     slug = CFG['project']['slug']
     langs = CFG['output'].get('languages', ['en'])
-    if '--en-only' in argv or '--primary-only' in argv:
+    if '--en-only' in argv:
         langs = langs[:1]
     for lang in langs:
         tag = lang.upper()
@@ -550,16 +602,14 @@ def main(argv):
             equations[str(eq_no[eq['key']])] = {'key': eq['key'], 'latex': eq['latex']}
     (HERE / f'{slug}_Equations.json').write_text(json.dumps(equations, ensure_ascii=False, indent=2), encoding='utf-8')
     report = {'references': ref_order, 'figures': fig_no, 'tables': tab_no, 'equations': eq_no,
-              'unused_references': sorted(set(REFERENCES) - set(ref_order)), 'languages': langs,
-              'source_fingerprint': fingerprint(HERE, CFG),
-              'documents': {p.name: sha256(p) for p in HERE.glob(f'{slug}_*.docx')}}
+              'unused_references': sorted(set(REFERENCES) - set(ref_order)), 'languages': langs}
     (HERE / 'build_report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
     print(f'Built: {len(ref_order)} references, {len(fig_no)} figures, {len(tab_no)} tables, '
           f'{len(eq_no)} equations; languages {", ".join(langs)}.')
     if report['unused_references']:
         print('Unused reference keys:', ', '.join(report['unused_references']))
     if '--check' in argv:
-        return subprocess.call([sys.executable, str(HERE / 'check_manuscript.py')] + (['--release'] if '--release' in argv else []))
+        return subprocess.call([sys.executable, str(HERE / 'check_manuscript.py')])
     return 0
 
 

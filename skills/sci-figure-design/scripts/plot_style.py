@@ -4,10 +4,15 @@
     apply_style()
     fig, ax = plt.subplots(figsize=size_for('FigN_slug', 'c'))   # print size from figure_spec.json
 
-Result methods are measured, simulated, projected, estimated, inferred and synthetic.
-Source role and access status are separate keyword arguments. Marker/hatch differences are
-optional presentation conventions, not evidence quality ranks. Legends/captions retain the
-actual method, source role and access limits; estimated results are never relabeled simulated.
+Evidence levels (one vocabulary for evidence tables, panel_data.json and plots)
+    measured          filled marker / solid bar in the series colour
+    simulated         open marker / hatched bar          (simulated with measured inputs)
+    projected         open marker, dashed edge / cross-hatched bar   (another node or scale)
+    estimated         as simulated                        (authors' calculation, e.g. V x I x t)
+    reported-survey   as the level of the original work when known, else as simulated
+    abstract-only     open marker, lighter colour / dotted bar
+    comparator        light grey (non-target technology, any level)
+    model             line only; legend or title says "model"
 
 evidence_marker() returns keyword arguments for ax.scatter; evidence_line() for ax.plot markers.
 """
@@ -30,7 +35,7 @@ DPI = 300
 
 
 def apply_style(font='DejaVu Sans', base=7.5):
-    """Optional print panel defaults; set fonts/sizes and venue requirements for this figure."""
+    """Nature-like panel style: 7-8 pt text at print size, thin axes, light grid, no top/right spines."""
     plt.rcParams.update({
         'font.family': font, 'font.size': base, 'axes.titlesize': base + 1, 'axes.titleweight': 'bold',
         'axes.labelsize': base, 'xtick.labelsize': base - 0.5, 'ytick.labelsize': base - 0.5,
@@ -46,46 +51,61 @@ def apply_style(font='DejaVu Sans', base=7.5):
     })
 
 
-LEVELS = ('measured', 'simulated', 'projected', 'estimated', 'inferred', 'synthetic')
+LEVELS = ('measured', 'simulated', 'projected', 'estimated', 'reported-survey', 'abstract-only', 'comparator', 'model')
 
 
 def _level(level):
-    if level not in LEVELS:
-        raise ValueError('Supply an explicit v2 result_method; source role/access state are separate fields')
-    return level
+    level = (level or 'measured').lower()
+    return 'simulated' if level in ('reported-survey', 'estimated') else level
 
 
-def _metadata(source_role, access_status):
-    if source_role not in ('primary','secondary','original') or access_status not in ('full-text','abstract-only','raw-files'):
-        raise ValueError('Invalid source_role/access_status')
-
-
-def evidence_line(level: str, colour: str, *, source_role='primary', access_status='full-text', comparator=False) -> dict:
-    """Optional plot convention; legend retains the actual method and access/source fields."""
-    level = _level(level); _metadata(source_role,access_status)
-    colour = PALETTE['lgrey'] if comparator else colour
-    style = dict(color=colour,markerfacecolor=colour if level=='measured' else 'white',markeredgecolor=colour)
-    if level=='projected': style['linestyle']='--'
-    if level=='synthetic': style['linestyle']=':'
-    if access_status=='abstract-only': style['alpha']=0.7
+def evidence_line(level: str, colour: str) -> dict:
+    """Keyword arguments for ax.plot(..., marker='o') by evidence level."""
+    level = _level(level)
+    if level == 'measured':
+        return dict(color=colour, markerfacecolor=colour, markeredgecolor='white')
+    if level == 'comparator':
+        return dict(color=PALETTE['lgrey'], markerfacecolor=PALETTE['lgrey'], markeredgecolor='white')
+    style = dict(color=colour, markerfacecolor='white', markeredgecolor=colour)
+    if level == 'projected':
+        style['linestyle'] = '--'
+    if level in ('abstract-only', 'abstract'):
+        style['alpha'] = 0.7
     return style
 
 
-def evidence_marker(level: str, colour: str, *, source_role='primary', access_status='full-text', comparator=False) -> dict:
-    level = _level(level); _metadata(source_role,access_status)
-    colour = PALETTE['lgrey'] if comparator else colour
-    style = dict(facecolors=colour if level=='measured' else 'white',edgecolors=colour,linewidths=0.8)
-    if access_status=='abstract-only': style['alpha']=0.7
-    return style
+def evidence_marker(level: str, colour: str) -> dict:
+    """Keyword arguments for ax.scatter by evidence level (use evidence_line for ax.plot)."""
+    level = _level(level)
+    if level == 'measured':
+        return dict(color=colour, edgecolors='white', linewidths=0.6)
+    if level in ('simulated', 'estimated'):
+        return dict(facecolors='white', edgecolors=colour, linewidths=1.1)
+    if level == 'projected':
+        return dict(facecolors='white', edgecolors=colour, linewidths=1.1, linestyle='--')
+    if level in ('abstract-only', 'abstract'):
+        return dict(facecolors='white', edgecolors=colour, linewidths=0.9, alpha=0.7)
+    if level == 'comparator':
+        return dict(color=PALETTE['lgrey'], edgecolors='white', linewidths=0.6)
+    return dict(color=colour)
 
 
-def evidence_bar(level: str, colour: str, *, source_role='primary', access_status='full-text', comparator=False) -> dict:
-    level = _level(level); _metadata(source_role,access_status)
-    colour = PALETTE['lgrey'] if comparator else colour
-    style = dict(color=colour if level=='measured' else 'white',edgecolor=colour,linewidth=0.8)
-    if level!='measured': style['hatch']={'simulated':'////','estimated':'\\','inferred':'..','projected':'xx','synthetic':'++'}[level]
-    if access_status=='abstract-only': style['alpha']=0.7
-    return style
+def evidence_bar(level: str, colour: str) -> dict:
+    """Keyword arguments for ax.bar / ax.barh by evidence level."""
+    level = (level or 'measured').lower()
+    if level in ('reported-survey', 'estimated'):
+        level = 'simulated'
+    if level == 'measured':
+        return dict(color=colour, edgecolor=colour)
+    if level in ('simulated', 'estimated'):
+        return dict(color='white', edgecolor=colour, hatch='////', linewidth=1.0)
+    if level == 'projected':
+        return dict(color='white', edgecolor=colour, hatch='xx', linewidth=1.0)
+    if level in ('abstract-only', 'abstract'):
+        return dict(color='white', edgecolor=colour, hatch='..', linewidth=0.8)
+    if level == 'comparator':
+        return dict(color=PALETTE['lgrey'], edgecolor=PALETTE['lgrey'])
+    return dict(color=colour)
 
 
 def model_label(text: str) -> str:

@@ -4,21 +4,19 @@
 Usage
   render_check.py DOC.docx [DOC2.docx ...] [--out render_check/] [--dpi 70] [--per-sheet 8]
 
-Default conversion: LibreOffice headless. --allow-word-app enables Word/docx2pdf fallbacks.
-Each PDF is split into page PNGs and tiled into contact sheets
+Conversion order: Microsoft Word through AppleScript (macOS), then LibreOffice headless
+(soffice), then docx2pdf. Each PDF is split into page PNGs and tiled into contact sheets
 (4 × 2 pages) that an agent or a person can inspect for equation rendering, table layout,
 figure placement, captions, orphaned headings and overflowing tables.
 """
 from __future__ import annotations
 
 import argparse
-import os
 import shutil
 import subprocess
 import sys
 import time
 from pathlib import Path
-from xml.sax.saxutils import escape
 
 APPLESCRIPT = '''on run argv
     set inPath to item 1 of argv
@@ -80,50 +78,24 @@ def via_docx2pdf(docx: Path, pdf: Path) -> bool:
         return False
 
 
-def to_pdf(docx: Path, out: Path, allow_word=False) -> Path | None:
+def to_pdf(docx: Path, out: Path) -> Path | None:
     pdf = out / (docx.stem + '.pdf')
-    pdf.unlink(missing_ok=True)
-    for fn in ((via_soffice, via_word, via_docx2pdf) if allow_word else (via_soffice,)):
+    for fn in (via_word, via_soffice, via_docx2pdf):
         if fn(docx, pdf):
             print(f'{docx.name}: PDF via {fn.__name__[4:]}')
             return pdf
     print(f'{docx.name}: no converter available (install LibreOffice or run on macOS with Word)')
     return None
 
-def configure_fonts(out, directories):
-    """Expose existing fonts to headless fontconfig without editing system files."""
-    dirs = [Path(d).resolve() for d in directories if Path(d).is_dir()]
-    if not dirs:
-        return
-    folder = out.resolve()/'fontconfig'
-    folder.mkdir(parents=True, exist_ok=True)
-    cache = folder/'cache'
-    cache.mkdir(exist_ok=True)
-    config = folder/'fonts.conf'
-    config.write_text('<?xml version="1.0"?><!DOCTYPE fontconfig SYSTEM "fonts.dtd"><fontconfig>'+
-        ''.join('<dir>'+escape(str(d))+'</dir>' for d in dirs)+
-        '<cachedir>'+escape(str(cache))+'</cachedir></fontconfig>', encoding='utf-8')
-    os.environ['FONTCONFIG_FILE'] = str(config)
-    print('Headless fonts: '+', '.join(str(d) for d in dirs))
-
 
 def sheets(pdf: Path, out: Path, dpi: int, per_sheet: int):
+    import fitz
     from PIL import Image
-    try:
-        import fitz
-        doc = fitz.open(pdf)
-        engine = 'fitz'
-    except ImportError:
-        import pypdfium2
-        doc = pypdfium2.PdfDocument(str(pdf))
-        engine = 'pdfium'
+    doc = fitz.open(pdf)
     pages = []
     for i, page in enumerate(doc, start=1):
         png = out / f'{pdf.stem}_p{i:03d}.png'
-        if engine == 'fitz':
-            page.get_pixmap(dpi=dpi).save(str(png))
-        else:
-            page.render(scale=dpi/72).to_pil().save(png)
+        page.get_pixmap(dpi=dpi).save(str(png))
         pages.append(png)
     cols = 4
     for s in range(0, len(pages), per_sheet):
@@ -145,22 +117,15 @@ def main(argv=None):
     ap.add_argument('--out', default='render_check')
     ap.add_argument('--dpi', type=int, default=70)
     ap.add_argument('--per-sheet', type=int, default=8)
-    ap.add_argument('--font-dir', action='append', default=[], help='existing font directory; repeat as needed')
-    ap.add_argument('--allow-word-app', action='store_true', help='allow fallbacks that open Microsoft Word')
     args = ap.parse_args(argv)
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    dirs = args.font_dir or (['/System/Library/Fonts','/Library/Fonts'] if sys.platform == 'darwin' else [])
-    configure_fonts(out, dirs)
-    failed = 0
     for d in args.docs:
-        pdf = to_pdf(Path(d), out, args.allow_word_app)
+        pdf = to_pdf(Path(d), out)
         if pdf:
             n = sheets(pdf, out, args.dpi, args.per_sheet)
             print(f'  {n} pages')
-        else:
-            failed += 1
-    return 1 if failed else 0
+    return 0
 
 
 if __name__ == '__main__':

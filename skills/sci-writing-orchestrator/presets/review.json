@@ -1,7 +1,62 @@
 {
   "mode": "review",
-  "optional_scaffold": true,
-  "style_profile": "precise",
-  "venue_rules": "Check the actual target venue; no fixed word/figure/reference quotas.",
-  "structure_note": "Select the manuscript question, study type and argument; adapt headings rather than filling a fixed domain hierarchy."
+  "document": "full review article (Nature Reviews / Chem Rev / Adv Mater / Nat Electron style)",
+  "length_words": [
+    8000,
+    12000
+  ],
+  "abstract_words": [
+    150,
+    250
+  ],
+  "title_words": [
+    6,
+    14
+  ],
+  "figures": [
+    8,
+    14
+  ],
+  "tables": [
+    1,
+    4
+  ],
+  "boxes": [
+    0,
+    4
+  ],
+  "references": [
+    120,
+    250
+  ],
+  "skeleton": [
+    "Introduction (context, technical gap, literature gap vs named reviews, scope, contribution)",
+    "Evaluation criteria and figures of merit",
+    "Body sections along a hierarchy or causal chain of the field (e.g. mechanism -> component -> system -> application)",
+    "Applications: property -> function -> best demonstration -> comparator -> next decisive result",
+    "Outlook mirroring the body with quantified targets"
+  ],
+  "must_have": [
+    "abstract stating the review's main finding as a claim (a synthesised number only when the body supports it)",
+    "original benchmark figure with stated normalisation",
+    "evidence-level labels",
+    "table with condition and scope columns",
+    "review voice: the field's progress told through key works (problem -> idea -> realisation -> result); no screening or counting narrative",
+    "subsection endings: synthesis or design implication plus a forward bridge; at most one numbered ending",
+    "comparison tables with a generated Year column, cited once and not restated in the text"
+  ],
+  "style": {
+    "median_sentence_words": [
+      16,
+      20
+    ],
+    "max_sentence_words": 30,
+    "paragraph_words": [
+      80,
+      180
+    ],
+    "attribution": "concept, mechanism or claim as the grammatical subject of the topic sentence, citation at the end of the clause; key works introduced with lead authors and year ('In 2024, A, B and colleagues reported ... [3]', then 'The same team ...'); reference-as-subject ('[3] reported') only where the venue uses it; one convention throughout (see references/review-architecture.md)",
+    "citations": "numbered by first citation"
+  },
+  "basis": "typical ranges for full reviews in Nature Reviews, Chemical Reviews, Advanced Materials and similar journals; take the binding limits from the target journal's author guide and two or three recent reviews in that journal"
 }

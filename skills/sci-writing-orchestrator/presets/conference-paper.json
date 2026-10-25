@@ -1,7 +1,29 @@
 {
-  "mode": "conference-paper",
-  "optional_scaffold": true,
-  "style_profile": "precise",
-  "venue_rules": "Check the actual target venue; no fixed word/figure/reference quotas.",
-  "structure_note": "Select the manuscript question, study type and argument; adapt headings rather than filling a fixed domain hierarchy."
+  "mode": "article",
+  "document": "conference paper (any field; follow the call for papers)",
+  "figures": [
+    5,
+    12
+  ],
+  "tables": [
+    1,
+    2
+  ],
+  "must_have": [
+    "normalised comparison table (the conditions that drive each metric, the definition of the unit or operation, what each figure includes)"
+  ],
+  "style": {
+    "median_sentence_words": [
+      16,
+      20
+    ],
+    "max_sentence_words": 30,
+    "paragraph_words": [
+      80,
+      180
+    ],
+    "attribution": "follow the venue: reference-as-subject ('[3] reported ...') in IEEE-style venues, author-year or concept-as-subject elsewhere; one convention throughout",
+    "citations": "numbered by first citation"
+  },
+  "pages": "venue-specific; take the page limit, template and anonymisation rules from the call for papers"
 }

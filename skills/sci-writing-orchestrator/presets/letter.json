@@ -1,7 +1,34 @@
 {
-  "mode": "letter",
-  "optional_scaffold": true,
-  "style_profile": "precise",
-  "venue_rules": "Check the actual target venue; no fixed word/figure/reference quotas.",
-  "structure_note": "Select the manuscript question, study type and argument; adapt headings rather than filling a fixed domain hierarchy."
+  "mode": "article",
+  "document": "letter / communication",
+  "length_words": [
+    1500,
+    3000
+  ],
+  "abstract_words": [
+    80,
+    150
+  ],
+  "figures": [
+    3,
+    4
+  ],
+  "skeleton": [
+    "gap and result in the first paragraph",
+    "one claim per figure",
+    "methods online"
+  ],
+  "style": {
+    "median_sentence_words": [
+      16,
+      20
+    ],
+    "max_sentence_words": 30,
+    "paragraph_words": [
+      80,
+      180
+    ],
+    "attribution": "concept, mechanism or claim as the grammatical subject, citation at the end of the clause; 'A et al. reported ... [3]' for landmark or disputed results; reference-as-subject ('[3] reported') only where the venue uses it; one convention throughout (see references/article-architecture.md)",
+    "citations": "numbered by first citation"
+  }
 }

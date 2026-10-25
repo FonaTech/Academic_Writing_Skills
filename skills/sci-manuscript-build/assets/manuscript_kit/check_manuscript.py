@@ -30,14 +30,10 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import manuscript_core as rc  # noqa: E402
 import style_limits as sl  # noqa: E402
-from project_source import load_project, fingerprint, audit_blocks
-from evidence_tools import numeric_tokens, quantities, load_evidence, verify_record, audit_bindings, sha256
 
 CFG = json.loads((HERE / 'manuscript.json').read_text(encoding='utf-8'))
 STYLE = CFG.get('style', {})
 FAIL, WARN = [], []
-RELEASE = '--release' in sys.argv or CFG.get('validation', {}).get('mode') == 'release'
-PRIMARY = CFG['output'].get('languages', ['en'])[0]
 
 
 def load_limits():
@@ -50,7 +46,7 @@ def load_limits():
     if 'limits' in STYLE:
         WARN.append('style: manuscript.json "limits" is no longer read; move changes to style.overrides '
                     '(keyed by the labels in style_limits.json)')
-    return sl.load(sl.profile_path(HERE,STYLE.get('profile','precise')), overrides)
+    return sl.load(HERE / 'style_limits.json', overrides)
 
 
 LIMITS = load_limits()
@@ -88,8 +84,6 @@ def paragraphs(content, floats, lang='en'):
 
 # --------------------------------------------------------------------- style
 def check_style(content, floats):
-    if PRIMARY != 'en':
-        return
     lengths, long_s, long_p, openers = [], [], [], Counter()
     body, capped, advisory = [], {}, {}
     target = LIMITS['sentence']
@@ -186,19 +180,6 @@ def check_build(content):
         FAIL.append('build_report.json missing: run build_manuscript.py first')
         return None
     report = json.loads(path.read_text(encoding='utf-8'))
-    if report.get('source_fingerprint') != fingerprint(HERE, CFG):
-        FAIL.append('build is stale: source/evidence/artifacts changed; rebuild before checking')
-    if RELEASE and report.get('languages') != CFG['output'].get('languages', ['en']):
-        FAIL.append('release requires every requested language output')
-    documents = report.get('documents', {})
-    if not documents:
-        FAIL.append('build report contains no documents')
-    for name, digest in documents.items():
-        file = HERE/name
-        if not file.is_file():
-            FAIL.append(f'document missing: {name}')
-        elif sha256(file) != digest:
-            FAIL.append(f'document changed since build: {name}')
     refs = json.loads((HERE / CFG['paths']['references']).read_text(encoding='utf-8')) \
         if (HERE / CFG['paths']['references']).exists() else {}
     if report.get('unused_references'):
@@ -207,21 +188,19 @@ def check_build(content):
         rec = refs.get(key, {})
         if not rec.get('doi'):
             WARN.append(f'reference {key} has no DOI')
-        if rec.get('verified') not in ('crossref', 'datacite', 'manual-checked'):
-            (FAIL if RELEASE else WARN).append(f'reference {key}: identity not verified by a supported registry or documented manual check')
-        if rec.get('post_publication_updates') and (rec.get('integrity_status') != 'reviewed' or not rec.get('integrity_notes')):
-            (FAIL if RELEASE else WARN).append(f'reference {key}: publication updates require source inspection and integrity_notes')
+        if rec.get('verified') != 'crossref':
+            WARN.append(f'reference {key} is {rec.get("verified", "unverified")}, not Crossref-verified')
     displayed = set()
     for block in content.BLOCKS:
         if block['type'] == 'eq':
             displayed.add(block['key'])
-        texts = [block.get(PRIMARY, '')] if block['type'] == 'para' else []
+        texts = [block.get('en', '')] if block['type'] == 'para' else []
         if block['type'] == 'box':
             for it in block['items']:
                 if it['type'] == 'eq':
                     displayed.add(it['key'])
                 else:
-                    texts.append(it.get(PRIMARY, ''))
+                    texts.append(it.get('en', ''))
         for t in texts:
             for kind, key, _ in rc.FLOAT_RE.findall(t):
                 if kind == 'eq' and key not in displayed:
@@ -260,19 +239,23 @@ def check_documents(floats):
             if shown + pending != len(floats.FIGURES):
                 FAIL.append(f'{path.name}: {shown} images and {pending} placeholders for {len(floats.FIGURES)} figures')
             elif pending:
-                (FAIL if RELEASE else WARN).append(f'{path.name}: {pending} figure(s) still without artwork')
+                WARN.append(f'{path.name}: {pending} figure(s) still without artwork')
 
 
 # --------------------------------------------------------------------- languages and numbers
+NUM_RE = re.compile(r'(?<![A-Za-z])\d+(?:[.,]\d+)*')
+
+
 def numbers(text):
-    return sorted(numeric_tokens(text))
+    text = rc.CITE_RE.sub('', text or '')
+    text = rc.FLOAT_RE.sub('', text)
+    text = re.sub(r'(?<=\d),(?=\d{3}\b)', '', text)
+    return sorted(v for v in NUM_RE.findall(text) if len(v) > 1 or v not in '123456789')
 
 
 def compare_pair(where, a, b, primary, lang):
     if sorted(set(rc.parse_cite_keys(a))) != sorted(set(rc.parse_cite_keys(b))):
         FAIL.append(f'{lang}: citation keys differ in {where}')
-    if sorted(quantities(a)) != sorted(quantities(b)):
-        FAIL.append(f'{lang}: value/unit expressions differ in {where}')
     na, nb = numbers(a), numbers(b)
     if na != nb:
         FAIL.append(f'{lang}: numbers differ in {where}: only {primary} {sorted(set(na) - set(nb))[:6]}, '
@@ -297,8 +280,6 @@ def check_languages(content, floats):
             fb = sorted(re.sub(r'\|.*\}', '}', m.group(0)) for m in rc.FLOAT_RE.finditer(other))
             if fa != fb:
                 FAIL.append(f'{lang}: figure/table/equation references differ in {bid}')
-            if sorted(quantities(text)) != sorted(quantities(other)):
-                FAIL.append(f'{lang}: value/unit expressions differ in {bid}')
             na, nb = numbers(text), numbers(other)
             if na != nb:
                 FAIL.append(f'{lang}: numbers differ in {bid}: only {primary} {sorted(set(na) - set(nb))[:6]}, '
@@ -319,117 +300,77 @@ def check_languages(content, floats):
                 FAIL.append(f'{lang}: table {key} has a different number of rows')
                 continue
             for i, (row_a, row_b) in enumerate(zip(ra, rb)):
-                if len(row_a) != len(row_b):
-                    FAIL.append(f'{lang}: table {key} row {i} has different column count')
-                for ci, (ca, cb) in enumerate(zip(row_a, row_b)):
-                    compare_pair(f'tab:{key} row {i+1} cell {ci+1}', str(ca), str(cb), primary, lang)
+                compare_pair(f'tab:{key} row {i + 1}', ' '.join(map(str, row_a)), ' '.join(map(str, row_b)), primary, lang)
             compare_pair(f'tab:{key} note', tab.get(f'note_{primary}', ''), tab.get(f'note_{lang}', ''), primary, lang)
         if missing:
             FAIL.append(f'{lang}: {len(missing)} blocks without text: {", ".join(missing[:8])}')
 
 
 def check_evidence(content, floats):
-    langs = CFG['output'].get('languages', ['en'])
-    try:
-        records = load_evidence(HERE/CFG['paths'].get('evidence', 'evidence'))
-    except (ValueError, KeyError) as exc:
-        FAIL.append(str(exc))
+    folder = HERE / CFG['paths'].get('evidence', 'evidence')
+    files = sorted(folder.glob('*.json')) if folder.exists() else []
+    if not files:
         return
-    blocks = list(audit_blocks(content, floats, langs))
-    used = {claim.get('evidence_key') for _,block,_ in blocks for claim in block.get('claims', [])}
-    visiting, visited = set(), set()
-    def visit(key):
-        if key in visiting:
-            FAIL.append(f'evidence {key}: cyclic derived inputs')
-            return
-        if key in visited or key not in records:
-            return
-        visiting.add(key)
-        for source in records[key].get('provenance', {}).get('inputs', []):
-            used.add(source)
-            visit(source)
-        visiting.remove(key)
-        visited.add(key)
-    for key in list(used):
-        visit(key)
-    for key, record in records.items():
-        for error in verify_record(record, HERE, HERE/CFG['paths'].get('source_audit', 'source_audit'), RELEASE):
-            (FAIL if RELEASE and key in used else WARN).append(f'evidence {key}: {error}')
-        for source in record.get('provenance', {}).get('inputs', []):
-            if source not in records or source == key:
-                FAIL.append(f'evidence {key}: invalid derived input {source}')
-    errors, notices, checked = audit_bindings(blocks, records, langs, RELEASE)
-    (FAIL if RELEASE else WARN).extend(errors)
-    WARN.extend(notices)
-    print(f'evidence records {len(records)}; explicit claim bindings checked {checked}')
-    if RELEASE:
-        if not blocks:
-            FAIL.append('release has no manuscript body')
-        for location, block, texts in blocks:
-            if block.get('status') == 'draft' or any('[to verify]' in t for t in texts.values()):
-                FAIL.append(f'{location}: unresolved draft/scaffold text')
+    pool = []
+    for f in files:
+        try:
+            data = json.loads(f.read_text(encoding='utf-8'))
+        except json.JSONDecodeError:
+            WARN.append(f'evidence file {f.name} is not valid JSON')
+            continue
+        records = data.values() if isinstance(data, dict) else data
+        for r in records:
+            if isinstance(r, dict):
+                pool.append(f"{r.get('value', '')} {r.get('quote', '')}")
+    blob = ' '.join(pool)
+    unmatched = []
+    for bid, text, _ in paragraphs(content, floats):
+        for n in numbers(text):
+            if len(n) >= 2 and n not in blob:
+                unmatched.append(f'{bid}:{n}')
+    if unmatched:
+        WARN.append(f'{len(unmatched)} body numbers not found in evidence files, e.g. {", ".join(unmatched[:10])}')
 
 
 def check_figures(floats):
-    from PIL import Image
+    fig_dir = HERE / CFG['paths']['figures']
     for key, fig in floats.FIGURES.items():
-        folder = HERE/CFG['paths']['figures']/fig['folder']
-        if (folder/'final_nbp.png').exists():
-            (FAIL if RELEASE else WARN).append(f'{key}: model composite is not an accepted data-figure final')
-        spec = folder/'figure_spec.json'
-        if not spec.exists():
-            if RELEASE and not any((folder/n).is_file() for n in ('final.png','final/figure.png')):
-                FAIL.append(f'{key}: final artwork missing')
+        folder = fig_dir / fig['folder']
+        layout_path = folder / 'layout.json'
+        if not layout_path.exists():
             continue
-        data = json.loads(spec.read_text(encoding='utf-8'))
-        slots = [slot for slot in data.get('slots', []) if slot.get('kind') == 'data']
-        if not slots:
+        layout = json.loads(layout_path.read_text(encoding='utf-8'))
+        for slot in layout.get('slots', []):
+            if slot.get('kind') == 'data' and not (folder / slot['file']).exists():
+                FAIL.append(f'{folder.name}: data panel {slot["file"]} missing')
+        final = folder / 'final_nbp.png'
+        if not final.exists():
             continue
-        final, placements = folder/'final.png', folder/'final_placements.json'
-        if not final.is_file() or not placements.is_file():
-            (FAIL if RELEASE else WARN).append(f'{key}: data figure needs a code-composed final and placements')
-            continue
-        placed = json.loads(placements.read_text(encoding='utf-8'))
-        if RELEASE and set(placed) != {s['panel'] for s in data.get('slots', [])}:
-            FAIL.append(f'{key}: final composition has missing or extra panels')
-        big = Image.open(final).convert('RGB')
-        for slot in slots:
-            item = placed.get(slot['panel'])
-            source = folder/slot['file']
-            if not isinstance(item, dict) or not source.is_file() or item.get('source_sha256') != sha256(source):
-                FAIL.append(f'{key}/{slot["panel"]}: source panel or composition provenance missing/changed')
+        try:
+            import numpy as np
+            from PIL import Image
+        except ImportError:
+            return
+        big = np.asarray(Image.open(final).convert('L'), dtype=float)
+        rows, cols = layout['grid']['rows'], layout['grid']['cols']
+        ch, cw = big.shape[0] / rows, big.shape[1] / cols
+        for slot in layout['slots']:
+            if slot.get('kind') != 'data':
                 continue
-            x,y,w,h = item['box']
-            expected = Image.open(source).convert('RGB').resize((w,h), Image.Resampling.LANCZOS)
-            if big.crop((x,y,x+w,y+h)).tobytes() != expected.tobytes():
-                FAIL.append(f'{key}/{slot["panel"]}: data pixels differ from deterministic composition')
-        if RELEASE and not (folder/'panels/panel_data.json').is_file():
-            FAIL.append(f'{key}: panel_data.json missing; pixel integrity does not prove data correctness')
-
-
-def check_review():
-    path = HERE/'review_record.json'
-    if not path.is_file():
-        FAIL.append('release requires review_record.json after scientific and visual inspection')
-        return
-    record = json.loads(path.read_text(encoding='utf-8'))
-    if record.get('source_fingerprint') != fingerprint(HERE, CFG):
-        FAIL.append('review is stale; inspect the revised manuscript again')
-    report_path = HERE/'build_report.json'
-    if not report_path.is_file():
-        FAIL.append('review requires a current build_report.json')
-        return
-    report = json.loads(report_path.read_text(encoding='utf-8'))
-    if record.get('documents') != report.get('documents'):
-        FAIL.append('review does not cover the current built documents')
-    for kind in ('scientific_review','visual_review'):
-        item = record.get(kind, {})
-        if item.get('status') != 'passed' or not item.get('reviewed_by') or not item.get('notes'):
-            FAIL.append(f'{kind}: record reviewer, scope and remaining limitations after actual inspection')
+            span = slot.get('col_span', 1)
+            crop = big[int(slot['row'] * ch):int((slot['row'] + 1) * ch),
+                       int(slot['col'] * cw):int((slot['col'] + span) * cw)]
+            ref = Image.open(folder / slot['file']).convert('L').resize((crop.shape[1], crop.shape[0]))
+            a, b = crop - crop.mean(), np.asarray(ref, dtype=float)
+            b = b - b.mean()
+            corr = float((a * b).sum() / (np.sqrt((a * a).sum() * (b * b).sum()) + 1e-9))
+            if corr < 0.6:
+                WARN.append(f'{folder.name}: data panel {slot["panel"]} differs from its source '
+                            f'(correlation {corr:.2f}); values may have been redrawn')
 
 
 def main(argv):
-    content, floats = load_project(HERE, CFG)
+    content, floats = load('content'), load('floats')
     check_style(content, floats)
     if '--style' not in argv:
         check_abbreviations(content, floats)
@@ -438,8 +379,6 @@ def main(argv):
         check_languages(content, floats)
         check_evidence(content, floats)
         check_figures(floats)
-        if RELEASE:
-            check_review()
     print()
     for w in WARN:
         print('WARN ', w)

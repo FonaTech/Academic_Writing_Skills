@@ -1,95 +1,145 @@
 #!/usr/bin/env python3
-"""Create a generic declarative manuscript project; never overwrite a nonempty directory."""
+"""Create a new manuscript project from the kit.
+
+Usage
+  new_project.py TARGET_DIR --slug Name --type review|article|letter|rebuttal|proposal|thesis-chapter
+                 [--title-en "..."] [--title-zh "..."] [--languages en zh] [--chapter N]
+
+Copies assets/manuscript_kit into TARGET_DIR (never over an existing manuscript.json),
+fills manuscript.json, writes a skeleton content.py for the document type, creates
+Figures/, evidence/ and archive/, and records the kit version. Then:
+
+  cd TARGET_DIR
+  python3 build_manuscript.py && python3 check_manuscript.py
+"""
 from __future__ import annotations
+
 import argparse
 import json
 import shutil
 import sys
+from datetime import date
 from pathlib import Path
 
-KIT = Path(__file__).resolve().parents[1] / 'assets/manuscript_kit'
-KIT_VERSION = '2.0.0'
-SKELETONS = {
-    'review': ['Introduction', 'Organizing framework', 'Evidence synthesis', 'Limitations and open questions', 'Conclusions'],
-    'narrative-review': ['Introduction', 'Scope and approach', 'Thematic synthesis', 'Limitations and open questions', 'Conclusions'],
-    'systematic-review': ['Introduction', 'Methods', 'Results', 'Discussion', 'Data and code availability'],
-    'scoping-review': ['Introduction', 'Methods', 'Evidence map', 'Gaps and limitations', 'Conclusions'],
-    'article': ['Introduction', 'Methods', 'Results', 'Discussion', 'Data and code availability'],
-    'letter': ['Main text', 'Methods', 'Data and code availability'],
-    'rebuttal': ['Summary of revisions', 'Reviewer comments and responses'],
-    'proposal': ['Research question and significance', 'Current evidence', 'Aims and approach', 'Risks and alternatives', 'Schedule and resources'],
-    'thesis-chapter': ['Chapter question', 'Methods or approach', 'Findings or synthesis', 'Discussion and connection to the thesis'],
-}
-ZH = {'Introduction':'引言','Organizing framework':'组织框架','Evidence synthesis':'证据综合',
-      'Limitations and open questions':'局限与开放问题','Conclusions':'结论','Scope and approach':'范围与方法',
-      'Thematic synthesis':'主题综合','Methods':'方法','Results':'结果','Discussion':'讨论',
-      'Data and code availability':'数据与代码可用性','Evidence map':'证据图谱','Gaps and limitations':'空白与局限',
-      'Main text':'正文','Summary of revisions':'修改概述','Reviewer comments and responses':'审稿意见与回复',
-      'Research question and significance':'研究问题与意义','Current evidence':'现有证据','Aims and approach':'目标与方法',
-      'Risks and alternatives':'风险与备选方案','Schedule and resources':'进度与资源','Chapter question':'本章问题',
-      'Methods or approach':'方法或途径','Findings or synthesis':'发现或综合','Discussion and connection to the thesis':'讨论及与全文的联系'}
+KIT = Path(__file__).resolve().parents[1] / 'assets' / 'manuscript_kit'
+KIT_VERSION = '1.1.0'
 
-def write(path, data):
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+SKELETONS = {
+    'review': [
+        ('h', 1, 'Introduction', '引言'),
+        ('p', 'State the field-level problem in one sentence, then the progress that makes a review timely, '
+              'then what this review covers and how it is organised.',
+              '一句话陈述领域问题，再说明哪些进展使综述适时，最后说明本综述覆盖什么、如何组织。'),
+        ('h', 1, 'Principles: the mechanism or concept the field builds on', '原理：领域赖以发展的机制或概念'),
+        ('h', 1, 'First line of progress (named by its idea, not by paper)', '第一条进展主线（以思路命名，而非按文献）'),
+        ('h', 1, 'Second line of progress', '第二条进展主线'),
+        ('h', 1, 'Shared challenges across the lines', '各主线共同面对的挑战'),
+        ('h', 1, 'Outlook', '展望'),
+    ],
+    'article': [
+        ('h', 1, 'Introduction', '引言'),
+        ('p', 'Context in two sentences; the specific gap; what we show, with the headline numbers.',
+              '两句背景；具体空白；本文展示了什么，给出关键数字。'),
+        ('h', 1, 'Results', '结果'),
+        ('h', 2, 'Declarative heading that states the first finding', '陈述第一项发现的标题'),
+        ('h', 2, 'Declarative heading that states the second finding', '陈述第二项发现的标题'),
+        ('h', 1, 'Discussion', '讨论'),
+        ('h', 1, 'Methods', '方法'),
+    ],
+    'letter': [
+        ('h', 1, 'Main text', '正文'),
+        ('p', 'Gap and result in the first paragraph; one figure per claim.', '第一段给出空白与结果；每个结论对应一张图。'),
+        ('h', 1, 'Methods', '方法'),
+    ],
+    'rebuttal': [
+        ('h', 1, 'Summary of changes', '修改概述'),
+        ('h', 1, 'Reviewer 1', '审稿人 1'),
+        ('p', 'Comment 1.1 (quoted verbatim). Response. Change made, with location.',
+              '意见 1.1（原文引用）。回复。所做修改及位置。'),
+        ('h', 1, 'Reviewer 2', '审稿人 2'),
+    ],
+    'proposal': [
+        ('h', 1, 'Aims and significance', '研究目标与意义'),
+        ('h', 1, 'Background and preliminary results', '研究基础与前期结果'),
+        ('h', 1, 'Research plan', '研究方案'),
+        ('h', 1, 'Risks and alternatives', '风险与备选方案'),
+        ('h', 1, 'Timeline and deliverables', '进度与成果'),
+    ],
+    'thesis-chapter': [
+        ('h', 1, 'Chapter title', '章标题'),
+        ('p', 'Chapter aim and how it connects to the previous chapter.', '本章目标及与上一章的衔接。'),
+        ('h', 2, 'Methods', '方法'),
+        ('h', 2, 'Results', '结果'),
+        ('h', 2, 'Summary', '小结'),
+    ],
+}
+
+
+def skeleton(doc_type: str, chapter) -> str:
+    lines = ['"""Manuscript text. See the kit README for the markup."""', 'from floats import BOXES', '',
+             f'CHAPTER = {chapter!r}', 'BLOCKS = []', '', '',
+             "def H(id, level, en, zh=''):",
+             "    BLOCKS.append(dict(id=id, type='heading', level=level, en=en, zh=zh))", '', '',
+             "def P(id, en, zh=''):",
+             "    BLOCKS.append(dict(id=id, type='para', en=' '.join(en.split()), zh=' '.join(zh.split()) if zh else ''))",
+             '', '',
+             'def EQ(id, key, latex):',
+             "    BLOCKS.append(dict(id=id, type='eq', key=key, latex=latex))", '', '',
+             'def BOX(id, name):',
+             '    box = BOXES[name]',
+             "    BLOCKS.append(dict(id=id, type='box', name=name, title_en=box['title_en'],",
+             "                       title_zh=box['title_zh'], items=box['items']))", '', '']
+    n = 0
+    for item in SKELETONS[doc_type]:
+        n += 1
+        if item[0] == 'h':
+            _, level, en, zh = item
+            lines.append(f"H('h{n}', {level}, {en!r}, {zh!r})")
+        else:
+            _, en, zh = item
+            lines.append(f"P('p{n}', {en!r}, {zh!r})")
+    return '\n'.join(lines) + '\n'
+
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(description=__doc__)
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('target')
     ap.add_argument('--slug', required=True)
-    ap.add_argument('--type', choices=sorted(SKELETONS), default='article')
-    ap.add_argument('--languages', nargs='+', default=['en'])
+    ap.add_argument('--type', default='review', choices=sorted(SKELETONS))
     ap.add_argument('--title-en', default='Working title')
     ap.add_argument('--title-zh', default='暂定题目')
-    ap.add_argument('--chapter', type=int)
-    ap.add_argument('--field',default='unspecified')
-    ap.add_argument('--style',choices=['precise','compact','explanatory','generic'],default='precise')
+    ap.add_argument('--languages', nargs='+', default=['en', 'zh'])
+    ap.add_argument('--chapter', type=int, default=None,
+                    help='number of the first level-1 heading (default 1 for review and thesis-chapter; '
+                         'other types are unnumbered unless given)')
     args = ap.parse_args(argv)
-    if not args.languages or len(args.languages) != len(set(args.languages)):
-        ap.error('languages must be nonempty and unique')
-    if not args.slug or any(c in args.slug for c in '/\\'):
-        ap.error('slug must be a filename component')
+    if args.chapter is None and args.type in ('review', 'thesis-chapter'):
+        args.chapter = 1
     target = Path(args.target)
-    if target.exists() and any(target.iterdir()):
-        ap.error('target directory is not empty; use a new directory')
+    if (target / 'manuscript.json').exists():
+        sys.exit(f'{target} already holds a manuscript project; not overwriting.')
     target.mkdir(parents=True, exist_ok=True)
-    for file in KIT.iterdir():
-        if file.is_file() and file.suffix in ('.py','.json','.md'):
-            shutil.copy2(file, target/file.name)
-    shutil.copytree(KIT/'style_profiles',target/'style_profiles')
-    cfg = json.loads((target/'manuscript.json').read_text(encoding='utf-8'))
+    for f in KIT.iterdir():
+        if f.is_file() and f.suffix in ('.py', '.json', '.md'):
+            shutil.copy2(f, target / f.name)
+    cfg = json.loads((target / 'manuscript.json').read_text(encoding='utf-8'))
     cfg['project'].update(slug=args.slug, doc_type=args.type, title_en=args.title_en, title_zh=args.title_zh)
-    cfg['source'] = dict(format='json', manifest='content.json', floats='floats.json')
     cfg['output']['languages'] = args.languages
-    cfg['style']['profile'] = args.style
-    cfg['writing_context'] = dict(field=args.field,study_type=args.type,perspectives=['domain researcher','scientific editor'],reader='to specify',current_task='planning and drafting')
-    if sys.platform == 'darwin':
-        cfg['fonts'].update(east_asian_body='Songti SC', east_asian_heading='Heiti SC')
-    elif sys.platform == 'win32':
-        cfg['fonts'].update(east_asian_body='SimSun', east_asian_heading='SimHei')
-    else:
-        cfg['fonts'].update(east_asian_body='Noto Serif CJK SC', east_asian_heading='Noto Sans CJK SC')
     cfg['kit_version'] = KIT_VERSION
-    write(target/'manuscript.json', cfg)
-    for name in ('sections','Figures','evidence','archive','source_audit','data','analysis'):
-        (target/name).mkdir(exist_ok=True)
-    sections = []
-    for index, heading in enumerate(SKELETONS[args.type],1):
-        filename = f'sections/{index:02d}.json'
-        sections.append(filename)
-        blocks = [dict(id=f'h{index}',type='heading',level=1,en=heading,zh=ZH.get(heading, heading)),
-                  dict(id=f'p{index}',type='para',status='draft',claims=[],en='[to verify] Draft this section from its evidence and argument plan.',
-                       zh='[to verify] 根据本节证据与论证计划起草。')]
-        write(target/filename, {'blocks':blocks})
-    write(target/'content.json', {'schema_version':2,'chapter':args.chapter,'sections':sections})
-    write(target/'floats.json', {'figures':{},'tables':{},'boxes':{}})
-    write(target/'references.json', {})
-    (target/'content.py').unlink(missing_ok=True)
-    (target/'floats.py').unlink(missing_ok=True)
-    print(f'Created {args.type} project at {target}')
-    print('Edit the ordered sections/*.json; scaffold text is not submission-ready.')
-    print('Preview: python3 pipeline.py --stage preview')
-    print('Validate final files: python3 pipeline.py --stage release')
-    return 0
+    cfg['created'] = date.today().isoformat()
+    (target / 'manuscript.json').write_text(json.dumps(cfg, ensure_ascii=False, indent=2), encoding='utf-8')
+    (target / 'content.py').write_text(skeleton(args.type, args.chapter), encoding='utf-8')
+    (target / 'floats.py').write_text('FIGURES = {}\nTABLES = {}\nBOXES = {}\n', encoding='utf-8')
+    (target / 'references.json').write_text('{}\n', encoding='utf-8')
+    for sub in ('Figures', 'evidence', 'archive', 'source_audit'):
+        (target / sub).mkdir(exist_ok=True)
+    print(f'Created {args.type} project "{args.slug}" in {target}')
+    if args.chapter is None:
+        print('Headings are unnumbered (CHAPTER = None in content.py); {sec:} references need a number.')
+    elif args.type == 'thesis-chapter':
+        print(f'Headings start at chapter {args.chapter}; pass --chapter N for the chapter\'s place in the thesis.')
+    print('Next: python3 build_manuscript.py && python3 check_manuscript.py')
+
 
 if __name__ == '__main__':
     sys.exit(main())

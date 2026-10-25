@@ -1,5 +1,5 @@
 {
-  "_comment": "Content is data; edit section files, float metadata and configuration, then run pipeline.py.",
+  "_comment": "Manuscript kit configuration. Edit this file, content.py and floats.py, then run build_manuscript.py and check_manuscript.py.",
   "project": {
     "slug": "My_Manuscript",
     "doc_type": "review",
@@ -10,41 +10,31 @@
   },
   "output": {
     "languages": [
-      "en"
+      "en",
+      "zh"
     ],
-    "no_citation_variant": false,
-    "references_only": false,
-    "reference_style": "numbered",
+    "no_citation_variant": true,
+    "references_only": true,
+    "reference_style": "nature",
     "citation_marker": "bracket",
     "figure_width_in": 6.6
   },
   "fonts": {
     "latin": "Times New Roman",
-    "east_asian_body": "Songti SC",
-    "east_asian_heading": "Heiti SC",
+    "east_asian_body": "宋体",
+    "east_asian_heading": "黑体",
     "body_pt": 12,
-    "line_spacing": 1.5,
-    "heading_color": "000000"
+    "line_spacing": 1.5
   },
   "paths": {
     "figures": "Figures",
     "evidence": "evidence",
     "references": "references.json",
-    "pandoc": "",
-    "source_audit": "source_audit"
+    "pandoc": ""
   },
   "style": {
-    "profile": "precise",
+    "note": "Caps, banned phrases and sentence targets live in style_limits.json (shared with prose_lint.py). Change an entry here by its label: a number sets a cap, null switches it off. List the manuscript's abbreviations in \"abbreviations\"; the checker fails any that is used before it is defined.",
     "abbreviations": [],
     "overrides": {}
-  },
-  "source": {
-    "format": "json",
-    "manifest": "content.json",
-    "floats": "floats.json"
-  },
-  "validation": {
-    "mode": "draft",
-    "require_visual_review": true
   }
 }

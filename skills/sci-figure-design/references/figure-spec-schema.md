@@ -1,23 +1,65 @@
-# figure_spec.json and data provenance
+# figure_spec.json
 
-One specification per figure folder. The raster helper reads slots for layout, sizes, schematic prompts and deterministic composition. Vector/externally assembled figures need their own explicit integrity method.
+One file per figure folder. `figure_kit.py` reads it for layouts, sizes, prompts, composition and verification; the manuscript builder reads the caption from the float definition, so keep both captions identical or generate one from the other.
 
 ```json
 {
-  "title": "Workflow and comparison",
-  "purpose": "Explain the design and compare the supported result",
-  "print_width_mm": 170,
-  "grid": {"rows": 1, "cols": 2},
+  "title": "Tensor and convolution acceleration",
+  "purpose": "One sentence: the argument this figure makes.",
+  "placement": "Section 6.1, after the first paragraph that cites it",
+  "print_width_mm": 180,
+  "gutter_mm": 2.0,
+  "letter_pt": 9,
+  "ratio": "16:9",
+  "domain": ["layers", "blocks", "flow"],
+  "hints": {"my_object": "Project-specific hint sentence for a recurring object."},
+  "grid": {"rows": 2, "cols": 2},
   "slots": [
-    {"panel": "a", "kind": "schematic", "row": 0, "col": 0,
-     "scene": "Describe only the scientifically correct conceptual geometry", "labels": ["Input", "Output"]},
-    {"panel": "b", "kind": "data", "row": 0, "col": 1, "file": "panels/comparison.png"}
-  ]
+    {
+      "panel": "a", "row": 0, "col": 0, "col_span": 1, "row_span": 1,
+      "kind": "schematic",
+      "title": "Stages of the process and their inputs",
+      "scene": "Physical layout, left to right, with counts, positions, colour roles and adjacency.",
+      "labels": ["Input", "Stage 1", "Stage 2", "Output"],
+      "domain": ["blocks"],
+      "ratio": "4:3",
+      "zh": "中文构图说明：对象、位置、配色含义。"
+    },
+    {
+      "panel": "c", "row": 1, "col": 0,
+      "kind": "data",
+      "file": "panels/fig5_c_metric_scope.png",
+      "title": "Metric and its scope"
+    }
+  ],
+  "caption_en": "Noun-phrase title naming the object and the measurement. **a**, ... **b**, ... Abbreviations.",
+  "caption_zh": "标题句。**a**，……缩写。"
 }
 ```
 
-Panel letters are unique; grid positions/spans must fit. Optional gutter_mm, letter_pt, ratio, domain and slot ratios configure the provided helper. Hardware domain hints and its palette are optional. Schematic finals under final/panel_a.png take precedence over model drafts under nbp/. Do not use an unreviewed model draft as a final unless the venue permits it and applicable disclosure/rights have been handled. The helper does not certify those decisions.
+| Field | Required | Notes |
+|---|---|---|
+| title | yes | used in previews and the prompt document, not drawn in the figure |
+| purpose | yes | the figure's argument in one sentence |
+| placement | yes | section and first citing paragraph |
+| print_width_mm | no | 180 (default, full width); use the journal's widths, e.g. Nature 89 mm single and 183 mm double column; Wiley 80 mm small and 180 mm large figures (Wiley figure guidelines, 2016); check the journal's current guide |
+| ratio | yes | whole-figure ratio; slot ratios follow from the grid unless given |
+| domain | no | keys of the hint library (built-in primitives or project hints), applied to every schematic slot |
+| hints | no | project-specific hint sentences, {key: sentence}; keys can then be used in `domain` |
+| grid | yes | rows and columns of equal cells |
+| slots[].kind | yes | `schematic` (image model) or `data` (code); `nbp` is accepted as an alias |
+| slots[].file | data | path relative to the figure folder |
+| slots[].scene | schematic | physical description; no numbers to draw |
+| slots[].labels | schematic | the whitelist; ≤ 6–8 labels of 1–3 words |
+| slots[].ratio | no | override when a slot must use a specific supported ratio |
+| caption_en / caption_zh | yes | see captions-and-tables.md |
 
-Store panels/panel_data.json with each plotted datum/series's evidence_key or raw-data/analysis provenance, exact value, unit, metric, object, conditions, result_method and accounting_scope where relevant. Use the literature v2 contract: result_method, source_role and access_status are different axes. Synthetic fixtures are explicitly synthetic, never mislabeled measured or simulated results.
+`panels/panel_data.json` accompanies the data panels:
 
-Final composition is final.png plus final_placements.json. Missing slots fail composition. Each placement stores source_file, source_sha256 and box [x,y,width,height]. Verification compares exact RGB pixels after the same declared deterministic resize; it certifies that operation only. Scientific data correctness, plot semantics and permitted schematic use still require inspection.
+```json
+{"panels": [{"panel": "c", "file": "fig5_c_metric_scope.png", "values": [
+  {"label": "Study A, condition 1", "value": 12.3, "unit": "unit per event", "exp_or_sim": "measured",
+   "scope": "system including overheads", "source": "authorYYYY", "page": 7}]}]}
+```
+
+Evidence levels use one vocabulary everywhere (evidence tables, `panel_data.json`, plots): `measured`, `simulated`, `projected`, `estimated`, `reported-survey`, `abstract-only`; plots add `comparator` and `model`. The field name is `exp_or_sim`, as in the evidence-table contract.

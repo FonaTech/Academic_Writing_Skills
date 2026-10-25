@@ -1,13 +1,11 @@
-# Migrating an existing manuscript
+# Migrating an existing manuscript into the kit
 
-Migrate only when repeated generation or coordinated variants justify it. A small Word edit need not migrate.
-
-1. Archive the current authoritative document, generator, figures and bibliography. Identify collaborators' edits and reconcile them.
-2. Extract or copy paragraphs, headings, equations, tables and captions. Preserve order and stable block IDs in content.json and section files; optional paragraph Markdown files carry prose.
-3. Map old reference numbers to verified keys and replace manual figure/equation numbers with markup. Check mappings against the actual supporting claim.
-4. Check reference identity and publication version through the applicable registry or primary source. Follow the venue's date and citation convention; preserve online/issue-date distinctions where relevant.
-5. Bind consequential claims to checked literature, raw data or explicit calculations, including units, objects, conditions and scope. Keep unknowns pending.
-6. Rebuild and compare old/new prose, equations, tables, captions and figures. Review semantic changes explicitly.
-7. Render and inspect all requested pages. Fix source/configuration, not regenerated output files. Archive the reviewed version and record remaining limits.
-
-Trusted legacy Python content remains supported via source.format=python. Importing it executes code; externally supplied Python must be reviewed before use. Do not import untrusted content merely to extract text.
+1. **Archive** the current files (`archive/vX.Y/`), including any generator script.
+2. **Extract** paragraphs, headings, captions and tables from the `.docx` with python-docx, or read them from the old generator's data structures.
+3. **Map citations.** Build `old_number → key` from the old reference list. Check every mapping against the claim it supports: insertions and deletions in the old list often shift numbers by one (the v1.4 review cited Molina-Lopez 2019 as [9] while reference 9 was Feng 2016).
+4. **Verify references** with `crossref_verify.py`; correct years (print year), venues (e.g. ISCA, not ASPLOS), volumes and article numbers.
+5. **Write blocks.** One `P()` per paragraph; keep ids stable (`s4.2-b`). Replace hand-typed numbers such as "Figure 3" with `{fig:key}` and "Eq. (5)" with `{eq:key}`.
+6. **Move derivations** into boxes when the main text only needs the result.
+7. **Remove duplication.** Old generators often held a "base" and an "advanced" version of the same section; merge them so each argument appears once.
+8. **Rebuild and compare.** Diff the new English text against the old (`difflib` on paragraph lists) to confirm nothing was lost, then run the checker.
+9. **Delete workarounds.** Remove image-patching code (white rectangles over wrong labels), placeholder paragraphs and dead assignments; regenerate figures properly.

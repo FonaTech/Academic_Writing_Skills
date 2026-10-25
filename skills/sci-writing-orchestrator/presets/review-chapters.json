@@ -1,7 +1,28 @@
 {
-  "mode": "review-chapters",
-  "optional_scaffold": true,
-  "style_profile": "precise",
-  "venue_rules": "Check the actual target venue; no fixed word/figure/reference quotas.",
-  "structure_note": "Select the manuscript question, study type and argument; adapt headings rather than filling a fixed domain hierarchy."
+  "mode": "review",
+  "document": "a block of chapters inside a longer review or book, numbered from CHAPTER",
+  "length_words": [
+    7000,
+    11000
+  ],
+  "figures": "one per major section plus one overview",
+  "tables": "one per major section",
+  "boxes": "for derivations; main text keeps results",
+  "style": {
+    "median_sentence_words": [
+      16,
+      20
+    ],
+    "max_sentence_words": 30,
+    "paragraph_words": [
+      80,
+      180
+    ],
+    "attribution": "concept, mechanism or claim as the grammatical subject of the topic sentence, citation at the end of the clause; key works introduced with lead authors and year ('In 2024, A, B and colleagues reported ... [3]', then 'The same team ...'); reference-as-subject ('[3] reported') only where the venue uses it; one convention throughout (see references/review-architecture.md)",
+    "citations": "numbered by first citation"
+  },
+  "must_have": [
+    "check whether the parent document has its own challenges or outlook chapter; if so, end the block on a short synthesis",
+    "cross-reference co-authors' chapters instead of repeating them"
+  ]
 }

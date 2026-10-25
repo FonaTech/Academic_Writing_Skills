@@ -1,7 +1,23 @@
-# Declarative manuscript kit v2
+# Manuscript kit
 
-Edit `content.json`, its ordered `sections/*.json` or referenced Markdown paragraph files, `floats.json`, evidence and references. Python assembles content; it does not write or certify the science.
+Single-source, bilingual manuscript builder. Copy with `scripts/new_project.py` (preferred) or copy this folder by hand.
 
-Run `python3 pipeline.py --stage preview` during drafting. Review sources/data and render every final page. Record real review scope with `record_review.py` (identify an AI reviewer as AI), then run `python3 pipeline.py --stage release`. Any content/evidence/artwork change invalidates prior build and review state.
+```bash
+python3 build_manuscript.py            # EN with citations, EN without citations, ZH, references, equations JSON
+python3 build_manuscript.py --en-only  # faster while drafting
+python3 check_manuscript.py            # FAIL / WARN report
+```
 
-See the installed manuscript-build skill references for the source contract and evidence bindings. Legacy trusted Python projects are supported by `source.format = "python"`. Additional languages require labels and visual validation. Final author acceptance remains human.
+| File | Edit? | Purpose |
+|---|---|---|
+| manuscript.json | yes | titles, languages, fonts, paths, reference style, abbreviations; `style.overrides` changes a style rule by its label (a number sets a cap, null switches it off) |
+| style_limits.json | no | caps, banned phrases and sentence targets shared with sci-prose-style's `prose_lint.py`; override per project in manuscript.json instead |
+| style_limits.py | no | loads the limits and applies overrides (shared with sci-prose-style) |
+| content.py | yes | ordered blocks: headings, paragraphs, display equations, boxes; `CHAPTER` numbers level-1 headings from that number (`None` leaves them unnumbered) |
+| floats.py | yes | figures, tables, box bodies |
+| references.json | generated | from `crossref_verify.py --emit-references` (sci-literature-evidence) |
+| manuscript_core.py | rarely | markup parser, numbering helpers, rich-text runs, fonts |
+| build_manuscript.py | rarely | two-pass builder |
+| check_manuscript.py | rarely | consistency, evidence and style checks |
+
+Markup summary: `[@key]` citations, `{fig:key|b}`, `{tab:key}`, `{eq:key}`, `{sec:id}`, `{box:name}`, `$...$` inline math, `CO~2~`, `cm^2 V^-1 s^-1`, `V_DS`, `**bold**`, `*italic*`. See the skill's `references/content-markup.md`.

@@ -10,9 +10,9 @@ https://openalex.org) or pass --api-key when the shared budget is exhausted (HTT
 PLAN.json
   {"from": "2018-01-01", "to": "2026-12-31",
    "types": ["review", "article"],                      # optional OpenAlex work types
-   "must_any": ["urban biodiversity", "species richness"], # optional title/abstract filter
-   "groups": {"urban_ecology": ["urban biodiversity monitoring", "urban species richness"],
-              "methods": ["biodiversity sampling methods", "ecological observation bias"]}}
+   "must_any": ["<subject term>", "<abbreviation>"],     # optional: keep only titles/abstracts hitting one
+   "groups": {"core":        ["<subject> <mechanism>", "<subject> <application>"],
+              "comparators": ["<competing approach> <application>"]}}
 
 Outputs (in --out)
   search_cache/*.json     raw API pages (re-used on re-runs)

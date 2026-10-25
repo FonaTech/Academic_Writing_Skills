@@ -1,7 +1,13 @@
 {
-  "mode": "thesis-chapter",
-  "optional_scaffold": true,
-  "style_profile": "precise",
-  "venue_rules": "Check the actual target venue; no fixed word/figure/reference quotas.",
-  "structure_note": "Select the manuscript question, study type and argument; adapt headings rather than filling a fixed domain hierarchy."
+  "mode": "thesis",
+  "document": "thesis or dissertation chapter",
+  "structure": [
+    "link to previous chapter",
+    "introduction",
+    "methods",
+    "results",
+    "discussion",
+    "summary and link forward"
+  ],
+  "numbering": "figures, tables and equations by chapter (Fig. 3.4)"
 }

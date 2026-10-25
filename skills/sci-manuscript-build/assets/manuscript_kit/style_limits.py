@@ -19,17 +19,6 @@ from pathlib import Path
 GROUPS = ('caps', 'banned', 'banned_openers', 'advisory')
 SENTENCE_KEYS = ('median_min', 'median_max', 'max_words', 'paragraph_max_words')
 
-def profile_path(folder, name='precise'):
-    name = {'group':'precise'}.get(name,name)  # compatibility alias
-    if name not in ('precise','generic','explanatory','compact'):
-        raise ValueError('unknown style profile: '+str(name))
-    selected = Path(folder)/'style_profiles'/f'{name}.json'
-    if selected.is_file():
-        return selected
-    if name == 'precise':
-        return Path(folder)/'style_limits.json'
-    raise FileNotFoundError(selected)
-
 
 def load(path, overrides=None):
     data = json.loads(Path(path).read_text(encoding='utf-8'))

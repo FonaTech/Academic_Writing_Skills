@@ -1,7 +1,48 @@
 {
-  "mode": "article-nature",
-  "optional_scaffold": true,
-  "style_profile": "precise",
-  "venue_rules": "Check the actual target venue; no fixed word/figure/reference quotas.",
-  "structure_note": "Select the manuscript question, study type and argument; adapt headings rather than filling a fixed domain hierarchy."
+  "mode": "article",
+  "document": "research article, Nature-family",
+  "length_words": [
+    3000,
+    5000
+  ],
+  "abstract_words": [
+    150,
+    200
+  ],
+  "title_words": [
+    8,
+    12
+  ],
+  "figures": [
+    4,
+    6
+  ],
+  "panels_per_figure_max": 6,
+  "skeleton": [
+    "unheaded introduction ending with 'Here, we ...' and the headline numbers",
+    "Results: one subsection per figure, evidence ladder of the field (see references/article-architecture.md, section 1)",
+    "Discussion: recap in ladder order, limitations, next step",
+    "Methods",
+    "Data and code availability"
+  ],
+  "must_have": [
+    "discriminating control for the mechanism",
+    "measured vs simulated labelled in the abstract",
+    "every abstract number matches the body with the same qualifier"
+  ],
+  "style": {
+    "median_sentence_words": [
+      16,
+      20
+    ],
+    "max_sentence_words": 30,
+    "paragraph_words": [
+      80,
+      180
+    ],
+    "attribution": "concept, mechanism or claim as the grammatical subject, citation at the end of the clause; 'A et al. reported ... [3]' for landmark or disputed results; reference-as-subject ('[3] reported') only where the venue uses it; one convention throughout (see references/article-architecture.md)",
+    "citations": "numbered by first citation"
+  },
+  "abstract_note": "journal-specific: check the current guide (for example Nature Communications and Nature Electronics set their own limits)",
+  "basis": "typical ranges for full reviews in Nature Reviews, Chemical Reviews, Advanced Materials and similar journals; take the binding limits from the target journal's author guide and two or three recent reviews in that journal"
 }

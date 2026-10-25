@@ -1,6 +1,6 @@
 interface:
   display_name: "Scientific Prose Style"
   short_description: "Expert English polishing without AI flavour"
-  default_prompt: "Use $sci-prose-style with the default precise profile to revise scientific prose naturally, preserving evidence and qualifiers; translate only requested languages."
+  default_prompt: "Use $sci-prose-style to rewrite this text in concise expert journal style and keep the Chinese version aligned."
 policy:
   allow_implicit_invocation: true
