@@ -1,0 +1,26 @@
+{
+  "name": "academic-writing-skills",
+  "owner": {
+    "name": "Yufeng Zhan"
+  },
+  "metadata": {
+    "description": "Evidence-traceable scientific writing: planning, literature and citation verification, expert prose, figures with image-model prompts, bilingual docx builds, and pre-submission review.",
+    "version": "1.1.0"
+  },
+  "plugins": [
+    {
+      "name": "academic-writing-skills",
+      "description": "Evidence-traceable scientific writing: planning, literature and citation verification, expert prose, figures with image-model prompts, bilingual docx builds, and pre-submission review.",
+      "source": "./",
+      "strict": true,
+      "skills": [
+        "./skills/sci-writing-orchestrator",
+        "./skills/sci-literature-evidence",
+        "./skills/sci-prose-style",
+        "./skills/sci-figure-design",
+        "./skills/sci-manuscript-build",
+        "./skills/sci-manuscript-review"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "academic-writing-skills",
+  "displayName": "Academic Writing Skills",
+  "description": "Evidence-traceable scientific writing: planning, literature and citation verification, expert prose, figures with image-model prompts, bilingual docx builds, and pre-submission review.",
+  "version": "1.1.0",
+  "author": {
+    "name": "Yufeng Zhan"
+  },
+  "license": "MIT",
+  "keywords": [
+    "scientific-writing",
+    "review-article",
+    "manuscript",
+    "literature",
+    "citations",
+    "crossref",
+    "figures",
+    "nano-banana-pro",
+    "docx",
+    "bilingual",
+    "peer-review",
+    "rebuttal",
+    "thesis",
+    "proposal"
+  ],
+  "skills": "./skills/"
+}
