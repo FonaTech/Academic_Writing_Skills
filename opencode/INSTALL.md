@@ -1,5 +1,10 @@
-# OpenCode target
+# OpenCode
 
-The installer provides an opencode target and Claude-compatible discovery options. Inspect python3 tools/install.py --status --targets opencode and the installed client's actual discovery settings before installation. Use one discovery location to avoid duplicated skill names.
+OpenCode (1.1.x) loads skills from `~/.config/opencode/{skill,skills}/**/SKILL.md` and, unless `OPENCODE_DISABLE_CLAUDE_CODE` or `OPENCODE_DISABLE_CLAUDE_CODE_SKILLS` is set, also from `~/.claude/skills/**/SKILL.md`. For global rules it reads `~/.config/opencode/AGENTS.md` if present, otherwise `~/.claude/CLAUDE.md`.
 
-python3 tools/install.py --targets opencode --no-inject installs skills without changing standing instructions. Omit --no-inject to update the marked instruction block. Existing destination skills are preserved in timestamped backups. External-client discovery and plugin behavior were not executed in this validation environment.
+```bash
+python3 tools/install.py --targets claude opencode
+```
+installs once into `~/.claude/skills` (seen by both tools) and injects the block into `~/.claude/CLAUDE.md`. If `~/.config/opencode/AGENTS.md` exists, the block is added there too, because that file takes precedence. With Claude compatibility disabled, the installer copies the skills to `~/.config/opencode/skills` instead.
+
+Check: `opencode debug skill` lists the six skills.

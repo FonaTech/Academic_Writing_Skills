@@ -126,11 +126,9 @@ def check_manifests(names):
 
 # Files that two skills each carry so that either works alone; the copies must match byte for byte.
 SHARED_COPIES = [
-    ('sci-literature-evidence/scripts/evidence_tools.py', 'sci-manuscript-build/assets/manuscript_kit/evidence_tools.py'),
     ('sci-prose-style/assets/style_limits.json', 'sci-manuscript-build/assets/manuscript_kit/style_limits.json'),
     ('sci-prose-style/scripts/style_limits.py', 'sci-manuscript-build/assets/manuscript_kit/style_limits.py'),
 ]
-SHARED_COPIES += [('sci-prose-style/assets/style_profiles/'+name+'.json', 'sci-manuscript-build/assets/manuscript_kit/style_profiles/'+name+'.json') for name in ('precise','generic','explanatory','compact')]
 
 
 def check_shared():
@@ -141,7 +139,7 @@ def check_shared():
             continue
         if pa.read_bytes() != pb.read_bytes():
             errors.append(f'shared copies differ: {a} and {b} (edit one, copy it over the other)')
-    path = SKILLS / 'sci-prose-style/assets/style_limits.json'
+    path = SKILLS / SHARED_COPIES[0][0]
     if path.exists():
         limits = json.loads(path.read_text(encoding='utf-8'))
         for group in ('caps', 'banned', 'banned_openers', 'advisory'):

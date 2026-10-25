@@ -13,7 +13,7 @@ Usage
 
 Where things go
   claude    ~/.claude/skills/<skill>        read by Claude Code; OpenCode also reads this folder
-  codex     $CODEX_HOME/skills/<skill>      Codex (some hosts discover both ~/.codex/skills and ~/.agents/skills;
+  codex     $CODEX_HOME/skills/<skill>      Codex CLI (0.159 reads both ~/.codex/skills and ~/.agents/skills;
                                             one copy is enough, and the installer uses ~/.codex/skills)
   opencode  ~/.config/opencode/skills/<skill>  only when OpenCode cannot see ~/.claude/skills
             (OPENCODE_DISABLE_CLAUDE_CODE[_SKILLS] set); otherwise skipped to avoid duplicates
@@ -91,21 +91,17 @@ def skill_roots(targets, project=None):
 
 
 def place(src: Path, dst: Path, mode: str):
-    import uuid
+    if dst.is_symlink() or dst.is_file():
+        dst.unlink()
+    elif dst.exists():
+        shutil.rmtree(dst)
     dst.parent.mkdir(parents=True, exist_ok=True)
-    token = datetime.now().strftime('%Y%m%d-%H%M%S') + '-' + uuid.uuid4().hex[:8]
-    staged = dst.with_name('.' + dst.name + '-' + token)
     if mode == 'symlink':
-        staged.symlink_to(src.resolve(), target_is_directory=True)
+        dst.symlink_to(src, target_is_directory=True)
     else:
-        shutil.copytree(src, staged, ignore=IGNORE)
-        (staged/'.installed-from').write_text(f'{src}\nversion {version()}\n', encoding='utf-8')
-    if dst.exists() or dst.is_symlink():
-        backup = dst.parent/'.academic-writing-backups'/token/dst.name
-        backup.parent.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(dst), str(backup))
-        print(f'  previous skill saved: {backup}')
-    staged.replace(dst)
+        shutil.copytree(src, dst, ignore=IGNORE)
+        (dst / '.installed-from').write_text(f'{src}\nversion {version()}\n{datetime.now().isoformat(timespec="seconds")}\n',
+                                             encoding='utf-8')
 
 
 def instruction_block():
@@ -173,13 +169,6 @@ def status(targets, project):
         present = [n for n in names if (root / n / 'SKILL.md').exists()]
         kind = 'symlink' if present and (root / present[0]).is_symlink() else 'copy' if present else '-'
         print(f'  {label:15s} {root}: {len(present)}/{len(names)} skills ({kind})')
-    if 'codex' in targets and not project:
-        alternate=HOME/'.agents'/'skills'
-        primary=Path(os.environ.get('CODEX_HOME',HOME/'.codex'))/'skills'
-        duplicate=[n for n in names if (alternate/n/'SKILL.md').is_file() and (primary/n/'SKILL.md').is_file()]
-        if duplicate:
-            print('  duplicate discovery copies: '+', '.join(duplicate))
-            print('  Inspect both copies and choose one location; no alternate directory is removed automatically.')
     for path, _ in instruction_files(targets):
         has = path.exists() and MARK_BEGIN in path.read_text(encoding='utf-8')
         print(f'  instructions    {path}: {"block present" if has else "no block" if path.exists() else "absent"}')

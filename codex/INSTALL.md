@@ -1,5 +1,8 @@
-# Codex installation
+# Codex CLI
 
-Inspect tools/install.py --status --targets codex. To install only the skills, run python3 tools/install.py --targets codex --no-inject. To also update the marked standing instructions, omit --no-inject. The installer uses CODEX_HOME/skills (default ~/.codex/skills); project-local installation uses --project DIR --no-inject and .agents/skills.
+```bash
+python3 tools/install.py --targets codex
+```
+Copies the skills to `$CODEX_HOME/skills` (default `~/.codex/skills`) and adds the instruction block to `~/.codex/AGENTS.md`. Each skill ships `agents/openai.yaml` with a display name, a short description and a default prompt (`$sci-writing-orchestrator`, …). Start a new Codex session; invoke explicitly with `$skill-name` or let Codex match the description.
 
-Use one skill-discovery directory per installation. If both ~/.agents/skills and ~/.codex/skills contain the same six names, inspect and resolve the duplicate deliberately; this installer does not delete another discovery directory. Existing destination skills are saved under timestamped .academic-writing-backups folders. Start a new session after installation. Exact discovery behavior depends on the host/client configuration.
+Codex 0.159 also reads `~/.agents/skills`. Do not install there as well (`--targets agents` together with `codex` is refused), or every skill appears twice. Use `--targets agents` only for other Agent-Skills tools, without `codex`.
