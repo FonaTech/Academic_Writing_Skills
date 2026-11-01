@@ -3,5 +3,10 @@
   "optional_scaffold": true,
   "style_profile": "precise",
   "venue_rules": "Check the actual target venue; no fixed word/figure/reference quotas.",
-  "structure_note": "Select the manuscript question, study type and argument; adapt headings rather than filling a fixed domain hierarchy."
+  "structure_note": "Select the manuscript question, study type and argument; adapt headings rather than filling a fixed domain hierarchy.",
+  "limits_source": "Use the current venue guide and the user’s actual constraints; no package range is binding.",
+  "editorial_guidance": [
+    "Question, actual methods/results, discriminating evidence and limits.",
+    "Abstract and captions retain the body’s numerical conditions and uncertainty."
+  ]
 }

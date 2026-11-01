@@ -1,85 +1,79 @@
 # Academic Writing Skills
 
-Evidence-traceable scientific writing for Claude Code, Codex and OpenCode: plan, research, draft, build, illustrate and review reviews, research articles, letters, rebuttals, theses and grant proposals in any field, in English and Chinese.
+Version **2.1.0** — merged release, 2026-11-01. Six reusable skills for evidence-traceable scientific writing across disciplines, with precise English and aligned Chinese when requested.
 
-The suite was distilled from a multi-round rebuild of a bilingual review in three length variants, with supervisor, editor and external-reviewer feedback, and from an analysis of published expert reviews and research papers. It encodes what made that work hold up: audit before writing, page-cited evidence for every number, one content source for both languages, a review voice that narrates the field's progress, image models for schematics only, and adversarial review before delivery. The skills carry no field-specific content; examples use placeholders (⟨method⟩, ⟨metric⟩) or constructed cases.
-
-## Skills
-
-| Skill | Use it for |
+| Skill | Responsibility |
 |---|---|
-| `sci-writing-orchestrator` | any manuscript project: mode routing, design brief, writing plan, milestones, delegation, definition of done |
-| `sci-literature-evidence` | literature search (OpenAlex), library curation, PDF text extraction with page markers, evidence tables, quote re-finding, Crossref DOI verification, citation audits, fair-comparison rules |
-| `sci-prose-style` | expert-journal English and aligned Chinese: house style, flow and review voice, no-hedging rules, revision passes, AI-flavour lexicon, section guides, terminology table, prose linter |
-| `sci-figure-design` | figure plans, print-size data panels with evidence semantics, figure specs, Nano Banana Pro prompts, composition that never touches data pixels, integrity checks, captions and tables |
-| `sci-manuscript-build` | single-source bilingual Word builds: numbered citations, auto-placed floats, native equations, boxes, section references, Year columns from reference metadata, length variants, no-citation and reference-only editions, checks, page rendering |
-| `sci-manuscript-review` | twelve-dimension audits (including review voice and variant sync), refutation pass, readiness rubric, referee simulation, triage of external reviews and author rewrites, response letters |
+| sci-writing-orchestrator | Question, scope, roles, argument, mode routing and a living writing plan |
+| sci-literature-evidence | Literature/search screening, source identity, page-cited evidence and raw/derived-data provenance |
+| sci-prose-style | Incremental drafting, linked precise prose, terminology, quantitative wording and translation |
+| sci-figure-design | Figure plans, sourced code-drawn panels, schematic prompts, captions and exact composition checks |
+| sci-manuscript-build | Declarative/legacy sources, numbering, citations, native equations, years, variants and review freshness |
+| sci-manuscript-review | Twelve review dimensions, source/method audits, review triage and point-by-point responses |
+
+## What is merged
+
+This release combines the functional Generic v2 implementation at commit `0457e77` with useful 1.1 editorial/build features in the installed skills and GitHub commit `b759d87`. It restores detailed review voice, article architecture, external-review triage and requested variant synchronization while retaining strict provenance, declarative sources and preview/release checks. It repairs the mixed-version upload, missing hidden plugin manifests, unsafe replacement installation and stale checksums. See [merge notes](MERGE_NOTES.md), [changelog](CHANGELOG.md) and [actual validation](VALIDATION.md).
+
+The default precise style targets one principal claim per sentence, one coherent question per paragraph, topic sentence first, and a 16–20-word English median with a ceiling around 30. Keep necessary scientific qualifications and technical meanings. Compact, explanatory and generic profiles are opt-in; none relaxes evidence requirements or predicts AI detection. A narrative review synthesizes the field; systematic/scoping reviews retain their actual search, selection and appraisal reporting.
 
 ## Install
 
-```bash
-python3 tools/install.py            # Claude Code + Codex + OpenCode, copies, global instructions injected
-python3 tools/install.py --status   # what is installed where
-python3 tools/install.py --mode symlink   # develop in the repo; installed skills follow edits
-python3 tools/install.py --uninstall
-```
-
-What the installer does:
-
-| Tool | Skills | Global instructions |
-|---|---|---|
-| Claude Code | `~/.claude/skills/<skill>` | marked block in `~/.claude/CLAUDE.md` |
-| OpenCode | reads `~/.claude/skills` and `~/.claude/CLAUDE.md` natively; a separate copy in `~/.config/opencode/skills` is made only if Claude-compatibility is disabled | block added to `~/.config/opencode/AGENTS.md` only if that file already exists |
-| Codex | `~/.codex/skills/<skill>` | marked block in `~/.codex/AGENTS.md` |
-
-The instruction block is short: which skill to use for which task, and seven standing norms (no invented facts, Crossref-verified citations, sentence and paragraph discipline, bilingual parity, schematics-only image models, edit sources not outputs, report what was verified). Files are backed up once before the first change, and the block is replaced, not duplicated, on re-install.
-
-Claude Code can also load the suite as a plugin: `claude plugin validate .` passes, and `.claude-plugin/marketplace.json` lists all six skills. See `claude-plugin/INSTALL.md`, `codex/INSTALL.md` and `opencode/INSTALL.md`.
-
-## Start a project
+Use Python 3.10+ and install only the dependencies needed:
 
 ```bash
-python3 skills/sci-manuscript-build/scripts/new_project.py ~/Papers/MyReview --slug MyReview --type review --chapter 4
-cd ~/Papers/MyReview && python3 build_manuscript.py && python3 check_manuscript.py
+python3 -m pip install -r requirements-core.txt
+python3 tools/install.py --status --targets codex
+python3 tools/install.py --targets codex --no-inject
 ```
 
-Then ask the agent, for example: "Use sci-writing-orchestrator to plan Sections 4–7 from the drafts in this folder and the literature in ../Library."
+Use `--targets claude` or `--targets opencode` for those clients. Omit `--no-inject` only when intentionally updating the marked standing instructions. Existing skills are moved to timestamped backups; other discovery locations are reported and never silently deleted. The default no-argument installer remains compatible and targets all three clients. A project-local copy uses `--project DIR --no-inject`. Start a new client session and inspect the discovered skill list.
 
-## Requirements
-Python 3.9+, python-docx, lxml, PyMuPDF, Pillow, matplotlib, numpy, PyYAML, requests; openpyxl for the library workbook; rapidfuzz (optional, faster title matching); scikit-image for figure verification; pandoc (or pypandoc-binary) for equations; optional: transformers + torch + ffmpeg for offline meeting transcription; Microsoft Word or LibreOffice for page rendering. An OpenAlex API key (`OPENALEX_API_KEY`) avoids the shared anonymous quota.
-
-## Validate
-
-```bash
-python3 tools/validate_skills.py
-```
-
-checks frontmatter against the Codex and OpenCode rules, folder–name agreement, every referenced file (including the files the orchestrator's mode router names), truncated files and unclosed code fences, agent metadata, script compilation and `--help`, the plugin manifests, and that the two copies of the shared style limits are identical.
-
-## Style rules
-
-Caps, banned phrases and sentence targets live in one file, `skills/sci-prose-style/assets/style_limits.json`. The prose linter and the manuscript kit's checker both read it; the kit carries an identical copy. Change a rule there (then copy it to `skills/sci-manuscript-build/assets/manuscript_kit/`), or override it for one project by label in `manuscript.json` under `style.overrides`.
-
-## Layout
+For Claude Code plugin installation with a supporting client:
 
 ```text
-skills/<skill>/SKILL.md         router: rules, workflow, which reference to load
-skills/<skill>/references/      detailed guides, loaded only when needed
-skills/<skill>/scripts/         tested command-line tools
-skills/<skill>/assets/          templates and data (manuscript kit, style_limits.json)
-skills/<skill>/agents/          Codex UI metadata
-skills/sci-writing-orchestrator/presets/        defaults per document type
-skills/sci-writing-orchestrator/case-studies/   worked cases
-tools/                          installer, validator, global instruction block
-provenance/                     source material the rules were distilled from (not installed, not in the release zip)
+/plugin install academic-writing-skills --marketplace FonaTech/Academic_Writing_Skills
 ```
 
-## Changes in 1.1.0
+Client-specific details: [Codex](codex/INSTALL.md), [Claude Code](claude-plugin/INSTALL.md), [OpenCode](opencode/INSTALL.md). Existing user instructions always take priority over package defaults.
 
-- All skills are field-neutral: domain examples were replaced by placeholders or constructed cases, and domain material moved to `provenance/`.
-- Prose: flow (linked sentences, no staccato chains or orphan paragraphs), no defensive sentences, field-level gap statements, review voice, named-actor convention, quantifier and arithmetic checks, subsection endings, tables cited once.
-- Build: `year_column` / `year_inline` table options filled from `references.json`; length-variant rules; Word lock-file check; upright function names (`\ln`, `\exp`) in inline math.
-- Review: D11 voice and D12 variant-sync dimensions; triage table for external reviews and author rewrites.
-- Linter: staccato runs, orphan paragraphs, defensive phrases, screening-report voice, "in a preprint", per-paper fault-finding; `--known` for a field's standard acronyms.
+## Start a manuscript
 
-README in Chinese: [README_zh.md](README_zh.md).
+```bash
+python3 skills/sci-manuscript-build/scripts/new_project.py ./Paper --slug Paper --type article --languages en zh
+cd Paper
+# Edit manuscript.json, sections/*.json, floats.json, evidence/ and references.json from actual materials.
+python3 pipeline.py --stage preview
+```
+
+The first requested language controls numbering; the program does not translate automatically. Defaults produce only requested primary outputs. Enable no-citation/reference-only variants in manuscript.json when needed. Trusted legacy Python sources remain supported; bounded Word/Markdown edits and venue-required LaTeX do not need migration.
+
+Tables can derive `year_column` and `year_inline` from checked reference metadata. Standard inline functions such as `\ln` and `\exp` stay upright; display OMML equations require Pandoc. All planned DOCX destinations are checked for Word lock files before writes. See [source markup](skills/sci-manuscript-build/references/content-markup.md).
+
+Render current documents with the build skill's render_check.py and inspect every final page. Only after actual scientific/visual reviews, record their identity, scope and limitations with record_review.py and run `python3 pipeline.py --stage release`. Hash freshness and a passed checker are not scientific certification or human author acceptance.
+
+## Figures, sources and style tools
+
+Data panels come from sourced values and code, with evidence records and units/conditions. An image model receives only schematic scenes or data-free layout blocks. Final composition is deterministic and checked by exact RGB/hash comparisons. Prompt helpers support label whitelists, text-free fallbacks and project-specific primitive hints.
+
+Literature quantities have exact quotes/pages. Original/derived quantities have input hashes, locators and analysis provenance. Result method, source role and access state are separate. DOI-bearing references are checked against Crossref; non-DOI sources retain stable identifiers and an explicit manual-check path. Token or hash matches never replace source-based semantic review.
+
+```bash
+python3 skills/sci-prose-style/scripts/prose_lint.py draft.md --json --known DNA,RNA
+python3 skills/sci-literature-evidence/scripts/verify_evidence_quotes.py evidence.json --text-dir source_audit
+```
+
+Style diagnostics are advisory. Acronym exceptions do not waive independent caption definitions. Optional research dependencies, offline transcription and native-equation requirements are documented in requirements-research.txt. The [16 teaching cases](skills/sci-writing-orchestrator/case-studies/INDEX.md) are hypothetical, with historical public-access records; they are not executed studies or an expert-quality benchmark.
+
+## Validate and upload
+
+```bash
+python3 tools/sync_plugin_manifests.py
+python3 tools/validate_skills.py
+python3 -m unittest discover -s tests -v
+python3 tools/checksums.py
+```
+
+The ZIP contains hidden `.claude-plugin/` and `.github/` files. Upload the directory contents at repository root, including hidden files, not the outer version folder. Visible `claude-plugin/*.json` mirrors support recovery after a browser upload: review them, then run `python3 tools/sync_plugin_manifests.py --write`. After intentional source edits, rerun checks and `python3 tools/checksums.py --write`.
+
+See [upload instructions](UPLOAD_zh.md). The package includes a GitHub Actions configuration; its hosted execution is pending upload. [MIT license](LICENSE), retaining both source notices. [中文说明](README_zh.md).

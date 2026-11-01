@@ -1,0 +1,17 @@
+{
+  "source_fingerprint": "fecc5e0cb403f7f92a50fb6b91795f045057a61a841c10e6085ed9f3cd982c69",
+  "documents": {
+    "Synthetic_Water_Temperature_EN_WithCitations.docx": "47a4dd0455212e59150857f22d965490ba261beec989061115d19c5d51d4a80d",
+    "Synthetic_Water_Temperature_ZH_WithCitations.docx": "4a252aa1f607f5d95bd9d99b3e371d0118e9fab366d2231612f992f621e62e6a"
+  },
+  "scientific_review": {
+    "status": "passed",
+    "reviewed_by": "Codex AI maintainer; disclosed sequential self-review",
+    "notes": "AI sequential self-review: inspected every raw synthetic CSV row, descriptive means 21/25 deg C and difference 4 deg C, units, all bilingual claim/table values and source bindings. Artificial fixture only; no empirical study, causal inference, statistical significance, literature verification, independent expert review or human author approval."
+  },
+  "visual_review": {
+    "status": "passed",
+    "reviewed_by": "Codex AI maintainer; disclosed sequential self-review",
+    "notes": "AI sequential visual self-review: opened both final rendered page-1 PNGs at readable size; EN and ZH each one page. Checked title/headings, Chinese glyphs, units, table, text fit and no observed clipping/overlap. System font discovery was configured before the successful final render. Limited to this short fixture; no complex equations/figures/multipage layout."
+  }
+}

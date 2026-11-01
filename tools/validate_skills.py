@@ -126,9 +126,16 @@ def check_manifests(names):
 
 # Files that two skills each carry so that either works alone; the copies must match byte for byte.
 SHARED_COPIES = [
+    ('sci-literature-evidence/scripts/evidence_tools.py', 'sci-manuscript-build/assets/manuscript_kit/evidence_tools.py'),
     ('sci-prose-style/assets/style_limits.json', 'sci-manuscript-build/assets/manuscript_kit/style_limits.json'),
     ('sci-prose-style/scripts/style_limits.py', 'sci-manuscript-build/assets/manuscript_kit/style_limits.py'),
+    ('sci-literature-evidence/scripts/evidence_tools.py', 'sci-manuscript-build/assets/manuscript_kit/evidence_tools.py'),
 ]
+SHARED_COPIES += [
+    (f'sci-prose-style/assets/style_profiles/{name}.json', f'sci-manuscript-build/assets/manuscript_kit/style_profiles/{name}.json')
+    for name in ('precise', 'compact', 'explanatory', 'generic')
+]
+SHARED_COPIES += [('sci-prose-style/assets/style_profiles/'+name+'.json', 'sci-manuscript-build/assets/manuscript_kit/style_profiles/'+name+'.json') for name in ('precise','generic','explanatory','compact')]
 
 
 def check_shared():
@@ -139,7 +146,7 @@ def check_shared():
             continue
         if pa.read_bytes() != pb.read_bytes():
             errors.append(f'shared copies differ: {a} and {b} (edit one, copy it over the other)')
-    path = SKILLS / SHARED_COPIES[0][0]
+    path = SKILLS / 'sci-prose-style/assets/style_limits.json'
     if path.exists():
         limits = json.loads(path.read_text(encoding='utf-8'))
         for group in ('caps', 'banned', 'banned_openers', 'advisory'):
@@ -175,6 +182,18 @@ def check_router():
 
 def main():
     names = []
+    version = (REPO/'VERSION').read_text(encoding='utf-8').strip()
+    for name in ('plugin.json', 'marketplace.json'):
+        hidden, visible = REPO/'.claude-plugin'/name, REPO/'claude-plugin'/name
+        if not hidden.is_file() or not visible.is_file():
+            errors.append(f'missing plugin metadata {name}; run tools/sync_plugin_manifests.py --write')
+            continue
+        if hidden.read_bytes() != visible.read_bytes():
+            errors.append(f'plugin metadata mirrors differ: {name}')
+        data = json.loads(hidden.read_text(encoding='utf-8'))
+        actual = data.get('version') if name == 'plugin.json' else data.get('metadata', {}).get('version')
+        if actual != version:
+            errors.append(f'{name}: version {actual} differs from VERSION {version}')
     check_shared()
     check_router()
     for skill in sorted(p for p in SKILLS.iterdir() if (p / 'SKILL.md').exists()):

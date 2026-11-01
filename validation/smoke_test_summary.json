@@ -1,0 +1,38 @@
+{
+  "version": "2.1.0",
+  "category": "synthetic descriptive smoke test, not research findings",
+  "fresh_preview": {
+    "failures": 0,
+    "warnings": 0
+  },
+  "fresh_release": {
+    "failures": 0,
+    "warnings": 0
+  },
+  "evidence_records": 9,
+  "claim_bindings": 7,
+  "references": 0,
+  "figures": 0,
+  "display_equations": 0,
+  "english_body_words": 252,
+  "english_sentences": 14,
+  "english_sentence_median": 18,
+  "english_sentence_max": 20,
+  "visual_review": {
+    "reviewer": "Codex AI maintainer; sequential self-review",
+    "independent": false,
+    "pages_inspected": {
+      "en": 1,
+      "zh": 1
+    },
+    "observations": "Final title/headings, Chinese glyphs, units, table and text readable; no observed clipping/overlap.",
+    "font_issue": "Initial headless Chinese rendering lacked fonts; configured existing system font discovery and re-rendered before the final inspection."
+  },
+  "human_author_acceptance": "pending",
+  "files": {
+    "Synthetic_Water_Temperature_EN_WithCitations.docx": "47a4dd0455212e59150857f22d965490ba261beec989061115d19c5d51d4a80d",
+    "Synthetic_Water_Temperature_EN_WithCitations.pdf": "17c167e93d0e7c43698f82a883a18fbc8023d7ecba09b0604644b4faf4cc7ddf",
+    "Synthetic_Water_Temperature_ZH_WithCitations.docx": "4a252aa1f607f5d95bd9d99b3e371d0118e9fab366d2231612f992f621e62e6a",
+    "Synthetic_Water_Temperature_ZH_WithCitations.pdf": "c2342aabf2125df1f8aba806647abfbc117daa534f9628a23ddfe0c957c462f2"
+  }
+}

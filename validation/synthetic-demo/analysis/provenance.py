@@ -21,7 +21,7 @@ for line, row in enumerate(csv.DictReader((ROOT / raw_path).open(encoding="utf-8
                         metric="synthetic temperature value", entity="synthetic condition " + row["condition"],
                         result_method="synthetic", provenance={"artifacts": [raw_artifact],
                         "locator": f"CSV line {line}, column temperature_C, condition {row['condition']}, replicate {row['replicate']}",
-                        "method": "Values supplied by the user as artificial test records; read without conversion", "environment": result["environment"]})
+                        "method": "Packaged artificial test records; read without conversion", "environment": result["environment"]})
 artifacts = [raw_artifact] + [{"path": p, "sha256": digest(p)} for p in ("analysis/summarize.py", "analysis/results.json")]
 for condition, values in result["conditions"].items():
     inputs = [key for key in records if key.startswith(condition + ".record.")]

@@ -1,0 +1,7 @@
+English sentences 14; median 18 words; mean 18.0; max 20; >30 words: 0; <=8 words: 0
+English body words (paragraphs and boxes): 252
+references 0, figures 0, tables 1, equations 0
+evidence records 9; explicit claim bindings checked 7
+
+
+0 failures, 0 warnings

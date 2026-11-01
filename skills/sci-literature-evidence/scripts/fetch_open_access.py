@@ -4,12 +4,15 @@
 Usage
   fetch_open_access.py LIST.csv|LIST.json --out library/ [--email you@uni.edu] [--max-urls 10] [--only ID ...]
 
-LIST rows need: id, doi, title (optional: year, venue, folder). CSV may be the screening
+LIST rows need: id, title (optional: doi, year, venue, folder). Rows without DOI remain
+visible as manual-required; this helper does not query DOI services with empty identifiers.
+CSV may be the screening
 sheet written by search_openalex.py (rows with decision = include are used when that column
 is filled). Downloads run one at a time. Routes, in order: publisher open-access patterns,
 OpenAlex locations, Unpaywall, Crossref full-text links, Europe PMC, Semantic Scholar, OpenAIRE,
 and PDF links found on landing pages. A file is accepted only if
-  - its title matches (fuzzy partial ratio >= 84, or DOI found with >= 75% title tokens, or >= 95% tokens),
+  - its normalized complete title is present, or a nonempty matching DOI accompanies
+    fuzzy title ratio >= 84 and >= 75% title-token coverage (a candidate identity check, not final certification),
   - it is not supplementary material, has >= 2 pages, is not encrypted, has > 2500 characters of text,
   - its first and last pages render.
 Every attempt is appended to OUT/download_attempts.jsonl; results go to OUT/library_status.csv
@@ -46,7 +49,7 @@ S.headers.update(UA)
 
 
 def norm(s):
-    return re.sub(r'[^a-z0-9]', '', unicodedata.normalize('NFKD', s or '').lower())
+    return ''.join(c for c in unicodedata.normalize('NFKC', s or '').casefold() if c.isalnum())
 
 
 def slug(s, n=80):
@@ -60,11 +63,16 @@ def validate(path: Path, row):
                 return False, 'fewer than 2 pages or encrypted'
             texts = [p.get_text() for p in doc]
             front = ' '.join(texts[:2])
-            ratio = partial_ratio(norm(row['title']), norm(front[:14000]))
-            doi_hit = norm(row['doi']) in norm(front)
+            title_norm = norm(row.get('title', ''))
+            if not title_norm:
+                return False, 'missing title; manual identity check required'
+            ratio = partial_ratio(title_norm, norm(front[:14000]))
+            doi_norm = norm(row.get('doi', ''))
+            doi_hit = bool(doi_norm) and doi_norm in norm(front)
             tokens = set(re.findall(r'[a-z]{4,}', row['title'].lower())) - {'with', 'from', 'based', 'using', 'review'}
             coverage = sum(t in front.lower().replace('-\n', '') for t in tokens) / max(1, len(tokens))
-            if ratio < 84 and not (doi_hit and coverage >= 0.75) and coverage < 0.95:
+            exact_title = title_norm in norm(front[:14000])
+            if not exact_title and not (doi_hit and ratio >= 84 and coverage >= 0.75):
                 return False, f'title mismatch (fuzzy {ratio:.0f}, tokens {coverage:.2f}, DOI {doi_hit})'
             lead = ' '.join(texts[0].split())[:800].lower()
             if re.search(r'^(?:electronic )?supporting information|^supplementary|^electronic supplementary', lead):
@@ -182,7 +190,7 @@ def load_rows(path: Path):
             rows = list(csv.DictReader(fh))
         if rows and 'decision' in rows[0] and any(r.get('decision') for r in rows):
             rows = [r for r in rows if (r.get('decision') or '').lower() in ('include', 'yes', 'y', '1', '纳入')]
-    return [r for r in rows if r.get('doi') and r.get('title')]
+    return [r for r in rows if r.get('title')]
 
 
 def main(argv=None):
@@ -203,7 +211,12 @@ def main(argv=None):
     status = []
     for i, row in enumerate(rows, 1):
         rid = row.get('id') or f'D{i:04d}'
-        row['doi'] = row['doi'].replace('https://doi.org/', '').strip().lower()
+        row['doi'] = re.sub(r'^https?://(?:dx\.)?doi\.org/', '', row.get('doi', '').strip(), flags=re.I).lower()
+        if not row['doi']:
+            status.append(dict(id=rid, doi='', title=row['title'], status='manual-required', file='',
+                               note='No DOI; retrieve and verify the appropriate source manually. Record is retained.'))
+            print(f'{rid:8s} --  no DOI; manual retrieval/identity check required')
+            continue
         folder = out / (row.get('folder') or '')
         folder.mkdir(parents=True, exist_ok=True)
         dest = folder / f'{rid}_{slug(row["title"])}.pdf'

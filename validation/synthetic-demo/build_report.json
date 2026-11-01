@@ -1,0 +1,18 @@
+{
+  "references": {},
+  "figures": {},
+  "tables": {
+    "temperature_summary": 1
+  },
+  "equations": {},
+  "unused_references": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "source_fingerprint": "fecc5e0cb403f7f92a50fb6b91795f045057a61a841c10e6085ed9f3cd982c69",
+  "documents": {
+    "Synthetic_Water_Temperature_EN_WithCitations.docx": "47a4dd0455212e59150857f22d965490ba261beec989061115d19c5d51d4a80d",
+    "Synthetic_Water_Temperature_ZH_WithCitations.docx": "4a252aa1f607f5d95bd9d99b3e371d0118e9fab366d2231612f992f621e62e6a"
+  }
+}

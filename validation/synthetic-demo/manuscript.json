@@ -24,7 +24,8 @@
     "east_asian_body": "Songti SC",
     "east_asian_heading": "Heiti SC",
     "body_pt": 11,
-    "line_spacing": 1.15
+    "line_spacing": 1.15,
+    "heading_color": "000000"
   },
   "paths": {
     "figures": "Figures",
@@ -47,7 +48,7 @@
     "mode": "draft",
     "require_visual_review": true
   },
-  "kit_version": "2.0.0",
+  "kit_version": "2.1.0",
   "writing_context": {
     "field": "environmental measurement",
     "subfield": "water temperature description",
@@ -64,7 +65,7 @@
       "analysis/results.json",
       "evidence/temperature.json"
     ],
-    "source_owner": "user-supplied artificial CSV; local declarative prose source",
+    "source_owner": "Packaged synthetic test fixture; not empirical data from this user task",
     "completion_scope": "descriptive arithmetic and checked draft; human author acceptance pending",
     "phase_roles": {
       "drafting": "environmental measurement researcher and scientific editor",

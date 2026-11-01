@@ -31,3 +31,5 @@
 
 ## Identifiers
 R### reviews, P### primary, X### preprints, C### comparators (optional). Keep ids stable; manuscript evidence records refer to them.
+
+DOI is optional for library membership. Included sources without DOI retain stable source/title keys and a pending identity status; books, archives and other sources need the appropriate manual identity check. The automatic retrieval helper marks these rows manual-required and retains them in its status table rather than dropping them. Kind guesses are filing suggestions, not evidence-level judgments. Short, scanned or nonstandard documents may require manual retrieval/OCR and page verification; the conservative automatic PDF filter does not establish that a source is unusable.

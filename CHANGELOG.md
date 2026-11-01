@@ -1,3 +1,16 @@
+# 2.1.0 — 2026-11-01
+
+- Merge the working Generic v2 implementation with 1.1 editorial/build features; remove mixed-version release claims.
+- Restore detailed review/article writing, external-review triage, twelve audit dimensions and requested variant synchronization.
+- Add checked table years, stable inline-year indices and preserved table widths; preserve legacy Python and declarative sources.
+- Restore upright standard inline functions and Word-lock preflight; fail unclosed inline script groups.
+- Combine custom schematic hints with data-free model layout inputs and deterministic final-panel verification.
+- Combine selectable style profiles with --known and advisory short/staccato diagnostics.
+- Restore hidden plugin metadata, retain visible upload mirrors, synchronize versions, preserve install backups and report duplicate discovery.
+- Add release checksum tooling, functional merge regressions, CI configuration and current validation/merge/upload records.
+
+See VALIDATION.md for performed checks and limits. No client installation, GitHub push or human author approval is implied.
+
 # Generic v2.0 — 2026-10-03
 
 - Generic scope and mode-specific architecture; optional languages, default precise style, alternative profiles and cross-domain public-reference teaching cases.

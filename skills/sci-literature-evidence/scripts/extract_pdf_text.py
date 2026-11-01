@@ -168,7 +168,7 @@ def prose_blocks(doc, first_page=1, last_page=None, min_words=60):
     """Paragraph-like text blocks (page, text), skipping captions, front matter and reference lists."""
     out = []
     last_page = last_page or len(doc)
-    for pno in range(first_page, last_page + 1):
+    for pno in range(max(1, first_page), min(len(doc), last_page) + 1):
         for block in blocks_text(doc[pno - 1]):
             flat = ' '.join(block.replace('-\n', '').split())
             if len(flat.split()) < min_words or CAPTION_RE.match(flat) or is_front_matter(flat):
@@ -204,7 +204,7 @@ def digest(doc, texts, rec):
         blocks = prose_blocks(doc, 1, min(3, len(doc)))
         after = [b for _, b in blocks if b != abstract_block]
         intro = ' '.join(' '.join(after).split()[:450])
-    body = prose_blocks(doc, max(2, len(doc) // 4), max(2, (3 * len(doc)) // 4), min_words=110)
+    body = prose_blocks(doc, min(len(doc), max(1, len(doc) // 4)), min(len(doc), max(1, (3 * len(doc)) // 4)), min_words=110)
     samples = body[::max(1, len(body) // 4)][:4] if body else []
     closing, closing_head = '', ''
     for h in reversed(heads):
@@ -267,6 +267,7 @@ def process(pdf: Path, out: Path, want_digest: bool, seen: dict):
         (out / f"{rec['id']}.digest.md").write_text(md, encoding='utf-8')
         rec['headings'] = len(heads)
         rec['captions'] = len(captions)
+    doc.close()
     return rec
 
 
@@ -300,7 +301,7 @@ def main(argv=None):
     manifest_path.write_text(json.dumps(records, ensure_ascii=False, indent=1), encoding='utf-8')
     errors = [r for r in records if 'error' in r]
     print(f'{added} new PDFs extracted; {len(records)} in manifest; {len(errors)} unreadable -> {out}')
-    return 0
+    return 1 if errors else 0
 
 
 if __name__ == '__main__':

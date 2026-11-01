@@ -1,4 +1,4 @@
-"""Rendering core of the manuscript kit.
+"""Rendering core for repeatable scientific Word construction.
 
 Markup parsing, citation and float resolution, rich-text runs and document defaults.
 Numbering and rendering live in build_manuscript.py.
@@ -147,7 +147,7 @@ def _tokenize_plain(text: str) -> list[tuple[str, str]]:
     """Split plain text into (text, style) runs.
 
     Styles: '' plain, 'bold', 'italic', 'sub', 'sup'. Outside math, chemical
-    subscripts use ~x~ (CO~2~), unit exponents use ^ (cm^2, s^-1, 10^{4}) and
+    subscripts use ~x~ (MoS~2~), unit exponents use ^ (cm^2, s^-1, 10^{4}) and
     symbol subscripts use _ after a letter (V_DS, I_on).
     """
     out, i = [], 0
@@ -199,6 +199,8 @@ def _tokenize_math(expr: str) -> list[tuple[str, str]]:
             script = 'sub' if char == '_' else 'sup'
             if expr[i + 1] == '{':
                 end = expr.find('}', i + 2)
+                if end < 0:
+                    raise ValueError('unclosed inline math subscript/superscript group')
                 body = expr[i + 2:end]
                 i = end + 1
             else:
@@ -285,7 +287,7 @@ TEAL = '18757E'
 SLATE = '425A64'
 
 
-def set_doc_defaults(doc):
+def set_doc_defaults(doc, fonts=None):
     sec = doc.sections[0]
     sec.top_margin = Inches(0.85)
     sec.bottom_margin = Inches(0.85)
@@ -293,21 +295,29 @@ def set_doc_defaults(doc):
     sec.right_margin = Inches(0.9)
     styles = doc.styles
     normal = styles['Normal']
-    normal.font.name = 'Times New Roman'
-    normal._element.rPr.rFonts.set(qn('w:eastAsia'), '宋体')
-    normal.font.size = Pt(12)
-    normal.paragraph_format.line_spacing = 1.5
+    fonts = fonts or {}
+    normal.font.name = fonts.get('latin', 'Times New Roman')
+    normal._element.rPr.rFonts.set(qn('w:eastAsia'), fonts.get('east_asian_body', 'Songti SC'))
+    normal.font.size = Pt(fonts.get('body_pt', 12))
+    normal.paragraph_format.line_spacing = fonts.get('line_spacing', 1.5)
     normal.paragraph_format.space_after = Pt(6)
     for name, size, bold, color in [('Title', 16, True, NAVY),
                                     ('Heading 1', 14, True, NAVY),
                                     ('Heading 2', 12, True, TEAL),
                                     ('Heading 3', 12, True, SLATE)]:
         st = styles[name]
-        st.font.name = 'Times New Roman'
-        st._element.rPr.rFonts.set(qn('w:eastAsia'), '黑体')
+        st.font.name = fonts.get('latin', 'Times New Roman')
+        st._element.rPr.rFonts.set(qn('w:eastAsia'), fonts.get('east_asian_heading', 'Heiti SC'))
         st.font.size = Pt(size)
         st.font.bold = bold
-        st.font.color.rgb = RGBColor.from_string(color)
+        st.font.color.rgb = RGBColor.from_string(fonts.get('heading_color', '000000'))
+        st.paragraph_format.keep_with_next = True
+        # Word's built-in Title can carry a decorative bottom rule.
+        ppr = st._element.find(qn('w:pPr'))
+        if ppr is not None:
+            borders = ppr.find(qn('w:pBdr'))
+            if borders is not None:
+                ppr.remove(borders)
 
 
 def add_title(doc, title, subtitle=None):

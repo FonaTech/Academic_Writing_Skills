@@ -1,0 +1,94 @@
+{
+  "version": 2,
+  "profile": "compact",
+  "about": "compact scientific prose; evidence and meaning take priority over diagnostics.",
+  "reference_words": 10000,
+  "sentence": {
+    "median_min": 12,
+    "median_max": 18,
+    "max_words": 26,
+    "paragraph_max_words": 160
+  },
+  "caps": [
+    {
+      "label": "must",
+      "pattern": "\\bmust\\b",
+      "source": "default writing preference",
+      "fix": "Use for an actual logical or methodological necessity; avoid repeated prescriptions.",
+      "max": 3
+    },
+    {
+      "label": "inference connectors",
+      "pattern": "\\b(?:therefore|thus|hence)\\b",
+      "source": "default writing preference",
+      "fix": "Keep a connector when the inference needs it; avoid repeated automatic transitions.",
+      "max": 10
+    },
+    {
+      "label": "dash asides",
+      "pattern": "(?<=\\w)\\s—\\s(?=\\w)|\\w—\\w",
+      "source": "default writing preference",
+      "fix": "Integrate the qualification or use ordinary punctuation.",
+      "max": 2
+    }
+  ],
+  "banned": [
+    {
+      "label": "stock opening",
+      "pattern": "\\bin (?:today.s|this) (?:rapidly evolving|ever.changing) (?:landscape|world)\\b",
+      "source": "default writing preference",
+      "fix": "Name the actual scientific problem."
+    },
+    {
+      "label": "delve",
+      "pattern": "\\bdelv(?:e|es|ed|ing)\\b",
+      "source": "default writing preference",
+      "fix": "Use the specific action: analyze, compare, estimate or test."
+    },
+    {
+      "label": "empty praise",
+      "pattern": "\\b(?:groundbreaking|revolutionary|game.changing|unprecedented)\\b",
+      "source": "default writing preference",
+      "fix": "State the supported novelty or comparison with its scope."
+    },
+    {
+      "label": "empty emphasis",
+      "pattern": "\\b(?:it is worth noting that|needless to say|plays a pivotal role|underscores the importance of)\\b",
+      "source": "default writing preference",
+      "fix": "State the object and supported claim directly."
+    },
+    {
+      "label": "generic promise",
+      "pattern": "\\b(?:paves? the way|opens? new avenues|unlocks? the potential|expand(?:s)? the horizons)\\b",
+      "source": "default writing preference",
+      "fix": "Name the specific implication and what remains untested."
+    }
+  ],
+  "banned_openers": [
+    {
+      "label": "vague paratext",
+      "pattern": "^\\s*(?:This (?:paper|review|section) (?:aims|seeks|attempts) to)",
+      "source": "default writing preference",
+      "fix": "State the finding, question or concrete scope."
+    }
+  ],
+  "advisory": [
+    {
+      "label": "blanket importance",
+      "pattern": "\\b(?:significant|crucial|important|robust|remarkable)\\b",
+      "source": "default writing preference",
+      "fix": "Check context: statistical significance and domain-specific technical meanings are legitimate."
+    }
+  ],
+  "flagged_openers": [
+    "Furthermore",
+    "Moreover",
+    "Additionally",
+    "Notably",
+    "Importantly"
+  ],
+  "manual": [
+    "Assess clarity, logical qualification and paragraph purpose in context.",
+    "Preserve measured conditions, uncertainty and necessary technical terms."
+  ]
+}

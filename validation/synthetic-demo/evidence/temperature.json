@@ -20,7 +20,7 @@
         }
       ],
       "locator": "CSV line 2, column temperature_C, condition A, replicate 1",
-      "method": "Values supplied by the user as artificial test records; read without conversion",
+      "method": "Packaged artificial test records; read without conversion",
       "environment": {
         "python": "3.12.14",
         "arithmetic": "decimal.Decimal"
@@ -48,7 +48,7 @@
         }
       ],
       "locator": "CSV line 3, column temperature_C, condition A, replicate 2",
-      "method": "Values supplied by the user as artificial test records; read without conversion",
+      "method": "Packaged artificial test records; read without conversion",
       "environment": {
         "python": "3.12.14",
         "arithmetic": "decimal.Decimal"
@@ -76,7 +76,7 @@
         }
       ],
       "locator": "CSV line 4, column temperature_C, condition B, replicate 1",
-      "method": "Values supplied by the user as artificial test records; read without conversion",
+      "method": "Packaged artificial test records; read without conversion",
       "environment": {
         "python": "3.12.14",
         "arithmetic": "decimal.Decimal"
@@ -104,7 +104,7 @@
         }
       ],
       "locator": "CSV line 5, column temperature_C, condition B, replicate 2",
-      "method": "Values supplied by the user as artificial test records; read without conversion",
+      "method": "Packaged artificial test records; read without conversion",
       "environment": {
         "python": "3.12.14",
         "arithmetic": "decimal.Decimal"
