@@ -1,6 +1,6 @@
 # Academic Writing Skills
 
-Version **2.2.0** — drafting-chain integration, 2026-11-25. Six reusable skills for evidence-traceable scientific writing across disciplines, with precise English and aligned Chinese when requested.
+Version **2.3.1** — validator and method-study integration, 2026-11-25. Six reusable skills for evidence-traceable scientific writing across disciplines, with precise English and aligned Chinese when requested.
 
 | Skill | Responsibility |
 |---|---|
@@ -89,3 +89,9 @@ python3 tools/checksums.py
 The ZIP contains hidden `.claude-plugin/` and `.github/` files. Upload the directory contents at repository root, including hidden files, not the outer version folder. Visible `claude-plugin/*.json` mirrors support recovery after a browser upload: review them, then run `python3 tools/sync_plugin_manifests.py --write`. After intentional source edits, rerun checks and `python3 tools/checksums.py --write`.
 
 See [upload instructions](UPLOAD_zh.md). The package includes a GitHub Actions configuration; its hosted execution is pending upload. [MIT license](LICENSE), retaining both source notices. [中文说明](README_zh.md).
+
+## Selected 2.3 improvements in 2.3.1
+
+This revision starts from 2.2.0 and integrates only the reviewed validator/index/organization improvements from the supplied 2.3.0 archive. Every profile's English and Chinese patterns and required diagnostic blocks are checked. Numbered method studies must have real links in their index; dangling numbered links fail. The method bank now lives under method-studies/, separately from the domain cases, with a compatibility redirect at its former index.
+
+The full precise rule table, detailed editorial guides/scaffolds, occurrence-based connective statistics, short-question detection and figure-reference prose classification remain from 2.2.0. Evidence, build, backup and integrity engines are retained. See [integration details](MERGE_2.3.1.md) and [actual validation](VALIDATION.md). Original 2.3.0 is not installed or pushed wholesale.

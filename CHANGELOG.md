@@ -1,3 +1,11 @@
+# 2.3.1 — 2026-11-25
+
+- Selectively integrate the reviewed 2.3 validator/index organization into the 2.2 baseline; do not replace the runtime with the original archive.
+- Compile English and Chinese style regexes across every profile and the default limits, validate shared copies and required rhythm/zh blocks, and remove duplicate shared-file checks.
+- Validate method-index coverage and missing numbered link targets; move the same sixteen method cases into method-studies/ and retain a former-index redirect.
+- Preserve all 2.2 regressions, complete precise rules, detailed guides and scaffolds, domain cases, evidence/build/backup engines and source freshness gates.
+- Add negative tests for invalid regexes, missing configuration/index entries, dangling links and disconnected checker hooks; update validation and integrity records.
+
 # 2.2.0 — 2026-11-25
 
 - Merge the supplied 1.3.0 facts-first drafting chain with the 2.1 runtime and preserve standing norm 8 across all six skills.

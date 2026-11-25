@@ -127,7 +127,6 @@ def check_manifests(names):
 
 # Files that two skills each carry so that either works alone; the copies must match byte for byte.
 SHARED_COPIES = [
-    ('sci-literature-evidence/scripts/evidence_tools.py', 'sci-manuscript-build/assets/manuscript_kit/evidence_tools.py'),
     ('sci-prose-style/assets/style_limits.json', 'sci-manuscript-build/assets/manuscript_kit/style_limits.json'),
     ('sci-prose-style/scripts/style_limits.py', 'sci-manuscript-build/assets/manuscript_kit/style_limits.py'),
     ('sci-literature-evidence/scripts/evidence_tools.py', 'sci-manuscript-build/assets/manuscript_kit/evidence_tools.py'),
@@ -136,7 +135,6 @@ SHARED_COPIES += [
     (f'sci-prose-style/assets/style_profiles/{name}.json', f'sci-manuscript-build/assets/manuscript_kit/style_profiles/{name}.json')
     for name in ('precise', 'compact', 'explanatory', 'generic')
 ]
-SHARED_COPIES += [('sci-prose-style/assets/style_profiles/'+name+'.json', 'sci-manuscript-build/assets/manuscript_kit/style_profiles/'+name+'.json') for name in ('precise','generic','explanatory','compact')]
 
 
 def check_shared():
@@ -147,18 +145,55 @@ def check_shared():
             continue
         if pa.read_bytes() != pb.read_bytes():
             errors.append(f'shared copies differ: {a} and {b} (edit one, copy it over the other)')
-    path = SKILLS / 'sci-prose-style/assets/style_limits.json'
-    if path.exists():
+    assets = SKILLS / 'sci-prose-style/assets'
+    paths = [assets / 'style_limits.json'] + sorted((assets / 'style_profiles').glob('*.json'))
+    for path in paths:
+        if not path.is_file():
+            errors.append(f'style configuration missing: {path.relative_to(SKILLS)}')
+            continue
+        origin = path.relative_to(assets)
         limits = json.loads(path.read_text(encoding='utf-8'))
         for group in ('caps', 'banned', 'banned_openers', 'advisory'):
             labels = [e['label'] for e in limits.get(group, [])]
             if len(labels) != len(set(labels)):
-                errors.append(f'style_limits.json: duplicate labels in {group}')
+                errors.append(f'{origin}: duplicate labels in {group}')
             for entry in limits.get(group, []):
                 try:
                     re.compile(entry['pattern'])
                 except re.error as exc:
-                    errors.append(f'style_limits.json: {group} "{entry["label"]}" does not compile: {exc}')
+                    errors.append(f'{origin}: {group} "{entry["label"]}" does not compile: {exc}')
+        zh = limits.get('zh', {})
+        if not isinstance(zh, dict):
+            zh = {}
+        patterns = [(entry['label'], entry['pattern']) for entry in zh.get('template', [])]
+        patterns += [(key, zh[key]) for key in ('question', 'ordinal') if zh.get(key)]
+        if zh.get('connective'):
+            patterns.append(('connective', zh['connective']['pattern']))
+        for label, pattern in patterns:
+            try:
+                re.compile(pattern)
+            except re.error as exc:
+                errors.append(f'{origin}: zh "{label}" does not compile: {exc}')
+        for key in ('rhythm', 'zh'):
+            if not isinstance(limits.get(key), dict):
+                errors.append(f'{origin}: {key} block missing or invalid; common drafting-chain diagnostics require it')
+
+
+def check_method_studies():
+    """Every canonical numbered method study must be linked from the method index."""
+    studies = SKILLS / 'sci-writing-orchestrator/method-studies'
+    index = studies / 'INDEX.md'
+    if not index.is_file():
+        errors.append('method-studies/INDEX.md is missing')
+        return
+    links = re.findall(r'\]\(([^)#\s]+)', index.read_text(encoding='utf-8'))
+    listed = {Path(link).name for link in links if not link.startswith(('http:', 'https:', 'mailto:'))}
+    for study in sorted(studies.glob('[0-9][0-9]-*.md')):
+        if study.name not in listed:
+            errors.append(f'method-studies/INDEX.md does not link to {study.name}')
+    for link in links:
+        if re.fullmatch(r'(?:\./)?[0-9][0-9]-[^/]+\.md', link) and not (studies/link).is_file():
+            errors.append(f'method-studies/INDEX.md links to missing {link}')
 
 
 def check_router():
@@ -202,16 +237,6 @@ def check_drafting_chain():
         main = next((n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main'), None)
         if main is None or not any(isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id == 'check_line_of_thought' for n in ast.walk(main)):
             errors.append('check_manuscript.py: main does not call the shared drafting-chain diagnostics')
-    limits_path = SKILLS/'sci-prose-style/assets/style_limits.json'
-    if limits_path.is_file():
-        limits = json.loads(limits_path.read_text(encoding='utf-8'))
-        zh = limits.get('zh', {})
-        patterns = [entry['pattern'] for entry in zh.get('template', [])]
-        patterns += [zh[key] for key in ('question', 'ordinal') if zh.get(key)]
-        if zh.get('connective'): patterns.append(zh['connective']['pattern'])
-        for pattern in patterns:
-            try: re.compile(pattern)
-            except re.error as exc: errors.append(f'Chinese drafting-chain pattern fails to compile: {exc}')
 
 
 def main():
@@ -230,6 +255,7 @@ def main():
             errors.append(f'{name}: version {actual} differs from VERSION {version}')
     check_shared()
     check_drafting_chain()
+    check_method_studies()
     check_router()
     for skill in sorted(p for p in SKILLS.iterdir() if (p / 'SKILL.md').exists()):
         names.append(skill.name)

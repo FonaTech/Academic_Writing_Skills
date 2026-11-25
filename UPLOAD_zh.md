@@ -1,11 +1,11 @@
-# 上传与安装 2.2.0
+# 上传与安装 2.3.1
 
 此目录是完整仓库内容，不是只包含六个 SKILL.md 的简包。上传时应保留 skills、tools、tests、validation、三个客户端说明、VERSION、校验和，以及隐藏的 .claude-plugin、.github 和 .gitignore。
 
 ## 推荐上传方式
 
-1. 解压 Academic_Writing_Skills_v2.2.0.zip。
-2. 将版本目录中的内容放到 GitHub 仓库工作区的根目录，不要再嵌套一层 Academic_Writing_Skills_v2.2.0。
+1. 解压 Academic_Writing_Skills_v2.3.1.zip。
+2. 将版本目录中的内容放到 GitHub 仓库工作区的根目录，不要再嵌套一层 Academic_Writing_Skills_v2.3.1。
 3. 保留自己仍需使用的私人 provenance/；它未包含在公开技能包中。对正在编辑的同名文件先归档。
 4. 运行下面的验证命令，再通过 GitHub Desktop 或 git 提交和推送。此包没有替你上传。
 

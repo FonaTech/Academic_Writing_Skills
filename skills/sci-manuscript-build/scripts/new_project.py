@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 KIT = Path(__file__).resolve().parents[1] / 'assets/manuscript_kit'
-KIT_VERSION = '2.2.0'
+KIT_VERSION = '2.3.1'
 SKELETONS = {
     'review': ['Introduction', 'Organizing framework', 'Evidence synthesis', 'Limitations and open questions', 'Conclusions'],
     'narrative-review': ['Introduction', 'Scope and approach', 'Thematic synthesis', 'Limitations and open questions', 'Conclusions'],

@@ -1,4 +1,8 @@
-# Current merge: 2.2.0
+# Current merge: 2.3.1
+
+See [MERGE_2.3.1.md](MERGE_2.3.1.md) for the current selective integration. Earlier notes below retain their historical version scopes.
+
+# Prior merge: 2.2.0
 
 The current 1.3 authoring / 2.1 runtime merge is documented in [MERGE_1.3.0.md](MERGE_1.3.0.md). The notes below describe the historical 2.1 packaging stage before its later GitHub push.
 
@@ -37,3 +41,5 @@ The current 1.3 authoring / 2.1 runtime merge is documented in [MERGE_1.3.0.md](
 ## 升级方式
 
 先核对 VALIDATION.md 与上传说明。旧 Python 项目继续显式选 source.format=python；新项目默认 JSON/Markdown。不要把新模板直接复制覆盖作者正在编辑的项目。归档旧源后迁移，重建并重查所需语言/版本。全局重复安装应另行备份、择一处理，本包不静默删除另一套。
+
+Current 2.3.1 selection and preservation details are in [MERGE_2.3.1.md](MERGE_2.3.1.md). Earlier merge notes retain their historical version scopes.

@@ -30,6 +30,15 @@ test_empty_identifier_and_unicode_title_do_not_false_match (test_optional_librar
 ok
 test_no_doi_source_is_retained_with_stable_id (test_optional_library.OptionalLibraryTests) ... ok
 test_single_page_pdf_digest (test_optional_library.OptionalLibraryTests) ... ok
+test_all_chinese_profiles_reject_invalid_regexes (test_validator_improvements.ValidatorImprovementTests) ... ok
+test_all_english_profiles_reject_invalid_regexes (test_validator_improvements.ValidatorImprovementTests) ... ok
+test_cli_exits_nonzero_for_invalid_alternative_profile (test_validator_improvements.ValidatorImprovementTests) ... ok
+test_dangling_numbered_method_link_is_rejected (test_validator_improvements.ValidatorImprovementTests) ... ok
+test_default_limits_reject_invalid_chinese_pattern (test_validator_improvements.ValidatorImprovementTests) ... ok
+test_method_name_in_plain_text_is_not_enough (test_validator_improvements.ValidatorImprovementTests) ... ok
+test_missing_common_blocks_are_reported_for_each_profile (test_validator_improvements.ValidatorImprovementTests) ... ok
+test_missing_method_index_is_rejected (test_validator_improvements.ValidatorImprovementTests) ... ok
+test_removing_checker_call_still_fails_wiring_check (test_validator_improvements.ValidatorImprovementTests) ... ok
 test_complete_quote_and_decimal (test_workflow.EvidenceTests) ... ok
 test_complete_tail (test_workflow.EvidenceTests) ... ok
 test_cross_page_quote (test_workflow.EvidenceTests) ... ok
@@ -62,7 +71,7 @@ test_small_bilingual_value_difference (test_workflow.ProjectTests) ... ok
 test_table_cell_swap (test_workflow.ProjectTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 59 tests in 4.855s
+Ran 68 tests in 16.385s
 
 OK
   previous skill saved: <temporary-path>

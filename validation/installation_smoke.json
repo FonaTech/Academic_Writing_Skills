@@ -1,8 +1,8 @@
 {
-  "version": "2.2.0",
-  "installed_skills": 6,
-  "preserved_previous_skills": 6,
-  "no_inject": true,
+  "version": "2.3.1",
   "scope": "temporary project only",
+  "installed": 6,
+  "old_skills_backed_up": 6,
+  "no_inject": true,
   "passed": true
 }

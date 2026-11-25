@@ -1,33 +1,26 @@
-# 2.2.0 验证记录
+# 2.3.1 验证记录
 
-日期：2026-11-25。输入 1.3.0 压缩包与本机 .codex 六个技能的 103 个文件一致；与本机 .agents 的旧副本不同。GitHub 合并基线为 086d3a5。
+日期：2026-11-25。基线为 GitHub 2.2.0 提交 4c374565d29f8143d63f0da9336fb15aeec76633。本版选择合入原始 2.3.0 的校验与目录组织改进，保留 2.2 规则、代码与回归修复。
 
-本次在隔离检出中执行结构/引用/共享副本检查、官方技能格式检查、行为回归、临时安装测试与文件哈希检查。实际机器结果和日志位于 validation/；不以旧版报告替代本次运行结果。
-
-新增行为回归检查数字堆叠、中英文短问句、思考自述、计数概述、模板短语、均匀句长、连接词出现次数统计、全部 profile 的共同检查、表格/参考文献排除、Figure 引用开头的正文识别、完整精确风格表，以及 JSON/Markdown 内容通过文稿 checker 调用同一检查函数。linter 不改写文件；所有测试输入明确为人工夹具。
-
-原有 45 项证据、原话页码、单位、原始哈希、局部绑定、双语逐格差异、文档/源/审查过期、精确图像拼接、年份、公式函数、Word 锁文件、安装备份与校验回归继续运行。风格规则需语义审查，不能自动删除限定或科学事实。
-
-## 验证边界
-
-- 不以 AI 检测器分数证明作者身份、写作质量或投稿合规；未执行任何商业检测器测试，没有承诺降分或固定分数下限。
-- 未重新执行联网检索、Crossref/PDF 获取全链路、Pandoc 展示公式转换或跨客户端实际发现。
-- 未在本次创建新的交付 DOCX/PDF，也未把旧视觉审查记为 2.2 审查。validation/synthetic-demo 保留 2.1 的完整历史快照与明确的自审身份，旧验证记录在 validation/history/2.1.0。
-- 没有执行独立领域专家审查，32 个领域/方法教学案例没有作为真实研究完成；没有修改真实全局 skills 或 AGENTS.md。
-- GitHub Actions 的实际结果以推送后对应提交的运行记录为准；本地运行不能写成已通过托管 CI。
-
-复现命令：python3 tools/validate_skills.py；python3 -m unittest discover -s tests -v；python3 tools/sync_plugin_manifests.py；python3 tools/checksums.py。
-
-## 本次实际结果
-
-| 检查 | 结果 |
+| 检查 | 本次实际结果 |
 |---|---|
-| Python 3.10 行为回归 | 59 通过，0 失败/报错/跳过 |
-| 工作区 Python 3.12 行为回归 | 56 通过，3 个可选 PDF/文献测试因缺依赖跳过，0 失败/报错 |
-| 六个技能结构及共享副本 | 0 errors、0 warnings |
-| 官方 quick_validate | 六个全部通过 |
-| Claude 插件清单校验 | 通过；可选市场图标提示不影响清单结果 |
-| 临时安装两次 | 六个技能均安装，旧六套目录均保留，版本 2.2.0；没有注入全局规范 |
-| 受保护 runtime 源码 | 证据工具、构建引擎/溯源/review、拼图、安装/备份与完整性工具逐文件核对，保留为 2.1 原实现 |
+| Python 3.10 回归 | 68 项通过，0 失败、0 报错、0 跳过 |
+| Python 3.12 回归 | 65 项通过，3 项因缺少可选 PDF/文献依赖跳过，0 失败、0 报错 |
+| 六个技能结构/链接/共享副本/写作链 | 0 errors、0 warnings |
+| 官方 skill-creator quick_validate | 六个全部通过 |
+| Claude 插件清单校验 | 通过，可选市场图标提示不影响结果 |
+| 临时安装与再次安装 | 六个安装成功，旧六套均备份，版本 2.3.1；未注入真实全局规范 |
+| 方法案例迁移 | 16 个正文文件与 2.2 逐字节相同，内部链接有效，旧索引保留跳转 |
+| 2.2 runtime/配置保留 | 所有技能 Python/资产配置及安装/哈希工具逐文件核对；除新项目版本常量外保持原字节 |
 
-格式、行为与插件检查日志在 validation/logs；安装与文件核对结果在 validation/test_results.json。负例测试打印的 missing.docx 或 no converter 是受控模拟，不代表本次尝试创建/渲染了新文档。
+新增 9 项测试包含每个 profile 的英文/中文坏正则、默认表的坏中文模式、缺失/空值/错误类型的 rhythm 与 zh 块、案例仅出现名称但没有链接、无效编号链接、缺少索引、移除 checker 实际调用，以及真实 CLI 对无效 profile 的非零退出。原有 59 项回归继续覆盖短问句、连接词实际次数、Figure 引用开头的正文、完整规则表、证据/构建/备份等。
+
+日志和机器结果在 validation/logs 与 validation/test_results.json。Python 3.12 的新增校验测试需要 PyYAML；首次运行发现工作区 runtime 缺少该核心依赖，随后在隔离 venv 内补齐并复测，没有修改全局 Python。测试中的 missing.docx/no converter 是受控负例，不是本次交付渲染失败。
+
+## 范围与未执行项
+
+本次没有全局安装，没有新建交付 DOCX/PDF，没有执行新的视觉审查、商业 AI 检测器、线上检索/Crossref/PDF 全链路、Pandoc 展示公式转换或独立领域专家审查。32 个方法/领域案例仍是教学材料，不作为真实研究或专家质量验证。历史 2.1 与 2.2 的审查/测试分别保留于 validation/history，不能作为本次独立审查。
+
+风格诊断需语义审查，不能证明作者身份、科学有效性或保证投稿/检测结果。GitHub 托管 CI 的结果以本次推送后对应提交的实际运行记录为准。
+
+复现：python3 tools/validate_skills.py；python3 -m unittest discover -s tests -v；python3 tools/sync_plugin_manifests.py；python3 tools/checksums.py。

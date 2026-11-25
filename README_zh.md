@@ -1,6 +1,6 @@
 # Academic Writing Skills 学术写作技能包
 
-**2.2.0 合并版，2026-11-25。** 六个写作技能，支持不同学科的综述、研究论文、学位论文、申请书和审稿回复；按需求生成英文或中英文稿。
+**2.3.1 整合修订版，2026-11-25。** 六个写作技能，支持不同学科的综述、研究论文、学位论文、申请书和审稿回复；按需求生成英文或中英文稿。
 
 2.1 基线以通过测试的 Generic v2 实现为基础，合入本机 1.1 与 GitHub 当前版本中有用的写作规则和构建功能。恢复详细综述叙事、文章结构、审稿意见分流、长短稿联动、自动年份和数学函数排版，同时保留严格证据溯源、声明式内容源、双语检查和真实审查记录。具体取舍见 [合并说明](MERGE_NOTES.md)，实测范围见 [验证记录](VALIDATION.md)。
 
@@ -21,7 +21,7 @@
 
 本版保留 1.3.0 完整精确风格表：42 条 banned 规则、7 项频次限制及中文/节奏配置，不再将它们缩减成 2.1 的精简表。科学条件、否定、必要不确定性和准确术语仍需按语境保留；检测结果是诊断，不是作者身份或文稿质量证明。
 
-标题摘要、引言、提案、学位论文等详细指南已补回；[16 个方法案例](skills/sci-writing-orchestrator/case-studies/methods/INDEX.md)与原有 16 个领域案例分别保留；[详细文体脚手架](skills/sci-writing-orchestrator/presets/editorial-1.3/INDEX.md)作为可选参考，不冒充当前期刊/机构的正式规定。证据溯源、JSON/Markdown 与可信旧 Python 构建、安装备份、哈希与产物完整性检查均保留。
+标题摘要、引言、提案、学位论文等详细指南已补回；[16 个方法案例](skills/sci-writing-orchestrator/method-studies/INDEX.md)与原有 16 个领域案例分别保留；[详细文体脚手架](skills/sci-writing-orchestrator/presets/editorial-1.3/INDEX.md)作为可选参考，不冒充当前期刊/机构的正式规定。证据溯源、JSON/Markdown 与可信旧 Python 构建、安装备份、哈希与产物完整性检查均保留。
 
 原包关于检测分数固定下限的概括改为按实际报告核算；不承诺降分。逐文件处理见[合并记录](MERGE_1.3.0.md)，实测范围见[验证记录](VALIDATION.md)。本次没有改动真实全局安装目录。
 
@@ -90,3 +90,9 @@ python3 tools/checksums.py
 ZIP 包含隐藏 .claude-plugin 与 .github 文件。上传到仓库根目录时保留隐藏文件，不要多嵌套一层版本目录。网页上传漏掉隐藏插件清单时，可核对可见镜像后运行 python3 tools/sync_plugin_manifests.py --write。每次有意修改源码后重新验证，再运行 python3 tools/checksums.py --write。
 
 详见 [上传说明](UPLOAD_zh.md)。已附 GitHub Actions 配置，托管运行等待上传后执行。原有两份 MIT 署名均保留于 [LICENSE](LICENSE)。
+
+## 2.3.1 的选择性合并
+
+本版以 2.2.0 为基线，合入原始 2.3.0 的多 profile 正则校验、方法案例索引覆盖与目录整理。所有 profile 的中英文模式和必需配置块均检查；案例漏列和编号链接指向不存在文件均失败。16 个方法案例的正文逐字节保留，移入独立 method-studies/，旧索引提供跳转；16 个领域案例、详细文体脚手架继续保留。
+
+保留 42 条禁词、7 项频次限制，以及短问句、连接词实际次数统计、Figure 引用开头正文识别等 2.2 修复。证据、构建、备份和校验引擎没有用原始 2.3 的旧实现覆盖。具体取舍见 [合并说明](MERGE_2.3.1.md)，本次实际结果见 [验证记录](VALIDATION.md)。

@@ -1,0 +1,66 @@
+test_all_profiles_keep_common_english_and_chinese_checks (test_drafting_chain.DraftingChainTests.test_all_profiles_keep_common_english_and_chinese_checks) ... ok
+test_builder_uses_chain_diagnostics_for_json_and_markdown (test_drafting_chain.DraftingChainTests.test_builder_uses_chain_diagnostics_for_json_and_markdown) ... ok
+test_chinese_connective_rate_counts_occurrences (test_drafting_chain.DraftingChainTests.test_chinese_connective_rate_counts_occurrences) ... ok
+test_chinese_templates_are_detected (test_drafting_chain.DraftingChainTests.test_chinese_templates_are_detected) ... ok
+test_connective_rate_counts_occurrences (test_drafting_chain.DraftingChainTests.test_connective_rate_counts_occurrences) ... ok
+test_full_incoming_style_rules_remain_available (test_drafting_chain.DraftingChainTests.test_full_incoming_style_rules_remain_available) ... ok
+test_markdown_data_and_references_are_not_rewritten_as_prose (test_drafting_chain.DraftingChainTests.test_markdown_data_and_references_are_not_rewritten_as_prose) ... ok
+test_number_inventory_is_flagged (test_drafting_chain.DraftingChainTests.test_number_inventory_is_flagged) ... ok
+test_number_profile_and_float_references (test_drafting_chain.DraftingChainTests.test_number_profile_and_float_references) ... ok
+test_short_chinese_questions_are_not_dropped (test_drafting_chain.DraftingChainTests.test_short_chinese_questions_are_not_dropped) ... ok
+test_short_english_questions_are_not_dropped (test_drafting_chain.DraftingChainTests.test_short_english_questions_are_not_dropped) ... ok
+test_thinking_aloud_and_counted_overview (test_drafting_chain.DraftingChainTests.test_thinking_aloud_and_counted_overview) ... ok
+test_uniform_chinese_rhythm_and_connective_chain (test_drafting_chain.DraftingChainTests.test_uniform_chinese_rhythm_and_connective_chain) ... ok
+test_uniform_english_rhythm (test_drafting_chain.DraftingChainTests.test_uniform_english_rhythm) ... ok
+test_inline_function_names_are_upright (test_merge_features.MergedBuildTests.test_inline_function_names_are_upright) ... ok
+test_inline_year_indices_refer_to_original_columns (test_merge_features.MergedBuildTests.test_inline_year_indices_refer_to_original_columns) ... ok
+test_legacy_python_source_keeps_year_generation (test_merge_features.MergedBuildTests.test_legacy_python_source_keeps_year_generation) ... ok
+test_missing_reference_year_fails (test_merge_features.MergedBuildTests.test_missing_reference_year_fails) ... ok
+test_unclosed_inline_math_group_fails_promptly (test_merge_features.MergedBuildTests.test_unclosed_inline_math_group_fails_promptly) ... ok
+test_word_lock_preserves_existing_outputs (test_merge_features.MergedBuildTests.test_word_lock_preserves_existing_outputs) ... ok
+test_year_column_both_languages_and_no_citation (test_merge_features.MergedBuildTests.test_year_column_both_languages_and_no_citation) ... ok
+test_browser_upload_metadata_can_be_restored (test_merge_features.MergedToolTests.test_browser_upload_metadata_can_be_restored) ... ok
+test_known_acronyms_and_profile_coexist (test_merge_features.MergedToolTests.test_known_acronyms_and_profile_coexist) ... ok
+test_project_schematic_hints_override_defaults (test_merge_features.MergedToolTests.test_project_schematic_hints_override_defaults) ... ok
+test_release_checksums_detect_changes_and_unlisted_files (test_merge_features.MergedToolTests.test_release_checksums_detect_changes_and_unlisted_files) ... ok
+test_staccato_diagnostic_is_advisory (test_merge_features.MergedToolTests.test_staccato_diagnostic_is_advisory) ... ok
+test_empty_identifier_and_unicode_title_do_not_false_match (test_optional_library.OptionalLibraryTests.test_empty_identifier_and_unicode_title_do_not_false_match) ... skipped 'Optional PDF/library dependencies unavailable'
+test_no_doi_source_is_retained_with_stable_id (test_optional_library.OptionalLibraryTests.test_no_doi_source_is_retained_with_stable_id) ... skipped 'Optional PDF/library dependencies unavailable'
+test_single_page_pdf_digest (test_optional_library.OptionalLibraryTests.test_single_page_pdf_digest) ... skipped 'Optional PDF/library dependencies unavailable'
+test_complete_quote_and_decimal (test_workflow.EvidenceTests.test_complete_quote_and_decimal) ... ok
+test_complete_tail (test_workflow.EvidenceTests.test_complete_tail) ... ok
+test_cross_page_quote (test_workflow.EvidenceTests.test_cross_page_quote) ... ok
+test_declared_units_across_fields (test_workflow.EvidenceTests.test_declared_units_across_fields) ... ok
+test_empty_record_set_fails (test_workflow.EvidenceTests.test_empty_record_set_fails) ... ok
+test_no_binding_fails_even_when_number_exists (test_workflow.EvidenceTests.test_no_binding_fails_even_when_number_exists) ... ok
+test_numeric_token_not_substring (test_workflow.EvidenceTests.test_numeric_token_not_substring) ... ok
+test_page_and_missing_fields (test_workflow.EvidenceTests.test_page_and_missing_fields) ... ok
+test_provenance_hash_change (test_workflow.EvidenceTests.test_provenance_hash_change) ... ok
+test_table_header_unit_inheritance_and_wrong_header (test_workflow.EvidenceTests.test_table_header_unit_inheritance_and_wrong_header) ... ok
+test_unbound_numeric_table_cell (test_workflow.EvidenceTests.test_unbound_numeric_table_cell) ... ok
+test_wrong_metric_same_number_is_not_support (test_workflow.EvidenceTests.test_wrong_metric_same_number_is_not_support) ... ok
+test_exact_pixels_and_color_changes (test_workflow.FigureAndInstallTests.test_exact_pixels_and_color_changes) ... ok
+test_install_preserves_previous_skill (test_workflow.FigureAndInstallTests.test_install_preserves_previous_skill) ... ok
+test_missing_composition_slot_fails (test_workflow.FigureAndInstallTests.test_missing_composition_slot_fails) ... ok
+test_missing_final_fails (test_workflow.FigureAndInstallTests.test_missing_final_fails) ... ok
+test_model_layout_input_never_contains_data_panel (test_workflow.FigureAndInstallTests.test_model_layout_input_never_contains_data_panel) ... ok
+test_render_failure_is_nonzero_and_stale_pdf_removed (test_workflow.FigureAndInstallTests.test_render_failure_is_nonzero_and_stale_pdf_removed) ... ok
+test_bilingual_unit_difference (test_workflow.ProjectTests.test_bilingual_unit_difference) ... ok
+test_chinese_primary_does_not_overwrite_english (test_workflow.ProjectTests.test_chinese_primary_does_not_overwrite_english) ... ok
+test_configured_heading_fonts (test_workflow.ProjectTests.test_configured_heading_fonts) ... ok
+test_cross_domain_case_bank_and_private_history_exclusion (test_workflow.ProjectTests.test_cross_domain_case_bank_and_private_history_exclusion) ... ok
+test_default_style_and_opt_in_profiles (test_workflow.ProjectTests.test_default_style_and_opt_in_profiles) ... ok
+test_markdown_source_and_stale_build (test_workflow.ProjectTests.test_markdown_source_and_stale_build) ... ok
+test_missing_document (test_workflow.ProjectTests.test_missing_document) ... ok
+test_new_project_never_overwrites_local_files (test_workflow.ProjectTests.test_new_project_never_overwrites_local_files) ... ok
+test_release_positive_control_and_stale_review (test_workflow.ProjectTests.test_release_positive_control_and_stale_review) ... ok
+test_release_rejects_unbound_quantity_and_unperformed_reviews (test_workflow.ProjectTests.test_release_rejects_unbound_quantity_and_unperformed_reviews) ... ok
+test_small_bilingual_value_difference (test_workflow.ProjectTests.test_small_bilingual_value_difference) ... ok
+test_table_cell_swap (test_workflow.ProjectTests.test_table_cell_swap) ... ok
+
+----------------------------------------------------------------------
+Ran 59 tests in 6.279s
+
+OK (skipped=3)
+  previous skill saved: <temporary-path>
+missing.docx: no converter available (install LibreOffice or run on macOS with Word)

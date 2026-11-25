@@ -7,14 +7,14 @@
       "target": ".claude-plugin/marketplace.json",
       "decision": "adapted_or_merged",
       "incoming_sha256": "a0e57760cf91a9519fe5859ca8e4982d63284a90af216de70dfa5f7e2e918c37",
-      "merged_sha256": "9b355fda49d1cda1a20c90d9bca6a25d1eef447a3371def016c21f947fac5e97"
+      "merged_sha256": "ba11142d93b5b6b41443183d4bf0b05d4479c4d7135370a2961ff1c53fc3f150"
     },
     {
       "incoming": ".claude-plugin/plugin.json",
       "target": ".claude-plugin/plugin.json",
       "decision": "adapted_or_merged",
       "incoming_sha256": "fc2405bc7440e56466ee8c7f9828dc3b4248044598a06206ce9ec7fd447797a0",
-      "merged_sha256": "52d87f7d34d92703b3cce29f20c963589d993b0145178057f9609dba20622aee"
+      "merged_sha256": "0d0583094b96d4693809dbb06bd8d8c22ea5e1efe13fec8480475a096a24a220"
     },
     {
       "incoming": "LICENSE",
@@ -28,14 +28,14 @@
       "target": "README.md",
       "decision": "adapted_or_merged",
       "incoming_sha256": "96c41e3dd65b3d67977ed321c155fba7bc1ae245fdd56003d650a407ad5dcb7b",
-      "merged_sha256": "df1527ee32a32f6981edb046cb5efaf303b3a807b91f3da541737104b6bf33c1"
+      "merged_sha256": "f3612f944194d0e11e335e3ebe52f1812e4734831169c83c83a85d88116ec29b"
     },
     {
       "incoming": "README_zh.md",
       "target": "README_zh.md",
       "decision": "adapted_or_merged",
       "incoming_sha256": "67609cfb030c27187300ab8fd217de0afd94fa41c732aa1d23213a1914886b18",
-      "merged_sha256": "472ec28e39a7748edcc3efa3ea5e63aa581c9755293b6a997b7f789a32f42dd1"
+      "merged_sha256": "db1a9424c8cd1d0051b20848dfeeb846e979685b3d5cef4c6d7eec79b9c9325e"
     },
     {
       "incoming": "claude-plugin/INSTALL.md",
@@ -336,7 +336,7 @@
       "target": "skills/sci-manuscript-build/scripts/new_project.py",
       "decision": "adapted_or_merged",
       "incoming_sha256": "c2c79ef35e3b4f52645cafb689ea21c8a4db850a3983489a758f1fc1eff8dff8",
-      "merged_sha256": "81bd9c6cdf1c964c39a1aa2fe55234dd81067b092667e8186124e5db4279064a"
+      "merged_sha256": "21c67129b2ec3af22c73de338aeef159cf90eca6aa2cd26fa538e1d1a1898185"
     },
     {
       "incoming": "skills/sci-manuscript-build/scripts/render_check.py",
@@ -448,7 +448,7 @@
       "target": "skills/sci-prose-style/references/human-line-of-thought.md",
       "decision": "adapted_or_merged",
       "incoming_sha256": "b065fa535194adb711ec39d90859c5f04f029e92baa50085980d2baf3217a3b6",
-      "merged_sha256": "9852c247bee3edd93d9ee1f163fdcdb15c59498fed61739b58ac25b6f710edf3"
+      "merged_sha256": "8a01b9119141ad93b6de6b952319085f99c4d5069f9416e7b62e36807e27bc23"
     },
     {
       "incoming": "skills/sci-prose-style/references/introductions.md",
@@ -529,122 +529,156 @@
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/01-review-rebuild-and-variants.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/01-review-rebuild-and-variants.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/01-review-rebuild-and-variants.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "377b78bc3b112052487edaae71d84f5d9eba12627c55c6eb23355282179bdcf1",
-      "merged_sha256": "377b78bc3b112052487edaae71d84f5d9eba12627c55c6eb23355282179bdcf1"
+      "merged_sha256": "377b78bc3b112052487edaae71d84f5d9eba12627c55c6eb23355282179bdcf1",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/01-review-rebuild-and-variants.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/02-new-research-article.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/02-new-research-article.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/02-new-research-article.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "381bfe8c3b8fbac80b82e481854e2bf7ad539ec309f74b347a588c9ac92e26b6",
-      "merged_sha256": "381bfe8c3b8fbac80b82e481854e2bf7ad539ec309f74b347a588c9ac92e26b6"
+      "merged_sha256": "381bfe8c3b8fbac80b82e481854e2bf7ad539ec309f74b347a588c9ac92e26b6",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/02-new-research-article.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/03-reviewer-response.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/03-reviewer-response.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/03-reviewer-response.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "01c11ee33ccbd27068720c7a34552e1384290ba39ccaa6a55280882d0bc8fe86",
-      "merged_sha256": "01c11ee33ccbd27068720c7a34552e1384290ba39ccaa6a55280882d0bc8fe86"
+      "merged_sha256": "01c11ee33ccbd27068720c7a34552e1384290ba39ccaa6a55280882d0bc8fe86",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/03-reviewer-response.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/04-paragraph-polish.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/04-paragraph-polish.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/04-paragraph-polish.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "cb5e009ff075eb599c3b6d2c062bfec7fb7fb8ae3a04ee7a9a0c3f3a69a8febd",
-      "merged_sha256": "cb5e009ff075eb599c3b6d2c062bfec7fb7fb8ae3a04ee7a9a0c3f3a69a8febd"
+      "merged_sha256": "cb5e009ff075eb599c3b6d2c062bfec7fb7fb8ae3a04ee7a9a0c3f3a69a8febd",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/04-paragraph-polish.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/05-detector-guided-revision.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/05-detector-guided-revision.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/05-detector-guided-revision.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "36754f15210a01fe57b97752bf95987194acb3856126da5e1e72f64517b2e324",
-      "merged_sha256": "36754f15210a01fe57b97752bf95987194acb3856126da5e1e72f64517b2e324"
+      "merged_sha256": "36754f15210a01fe57b97752bf95987194acb3856126da5e1e72f64517b2e324",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/05-detector-guided-revision.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/06-one-fact-set-three-drafts.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/06-one-fact-set-three-drafts.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/06-one-fact-set-three-drafts.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "35e9ae4b7b743a1ed2deba3aadfcc62d01cfcc372242f2ef14e67f85b3264ca7",
-      "merged_sha256": "35e9ae4b7b743a1ed2deba3aadfcc62d01cfcc372242f2ef14e67f85b3264ca7"
+      "merged_sha256": "35e9ae4b7b743a1ed2deba3aadfcc62d01cfcc372242f2ef14e67f85b3264ca7",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/06-one-fact-set-three-drafts.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/07-guarded-batch-rewrite.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/07-guarded-batch-rewrite.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/07-guarded-batch-rewrite.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "f4324698f02a9243d8559c4c684477a07ac9d1a5680bd95c11a8cec5242fe3a9",
-      "merged_sha256": "f4324698f02a9243d8559c4c684477a07ac9d1a5680bd95c11a8cec5242fe3a9"
+      "merged_sha256": "f4324698f02a9243d8559c4c684477a07ac9d1a5680bd95c11a8cec5242fe3a9",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/07-guarded-batch-rewrite.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/08-figure-panels-from-published-sources.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/08-figure-panels-from-published-sources.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/08-figure-panels-from-published-sources.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "7e79084cbf290a6fdb2121a0cec33705614527ac109e18c9f8471ea13b78b165",
-      "merged_sha256": "7e79084cbf290a6fdb2121a0cec33705614527ac109e18c9f8471ea13b78b165"
+      "merged_sha256": "7e79084cbf290a6fdb2121a0cec33705614527ac109e18c9f8471ea13b78b165",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/08-figure-panels-from-published-sources.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/09-results-and-discussion-across-fields.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/09-results-and-discussion-across-fields.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/09-results-and-discussion-across-fields.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "61d695c87b30abca2cbb63335adaf7987bd88c642bde2fe4bbcfd8a3edd9946f",
-      "merged_sha256": "61d695c87b30abca2cbb63335adaf7987bd88c642bde2fe4bbcfd8a3edd9946f"
+      "merged_sha256": "61d695c87b30abca2cbb63335adaf7987bd88c642bde2fe4bbcfd8a3edd9946f",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/09-results-and-discussion-across-fields.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/10-introductions-abstracts-titles.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/10-introductions-abstracts-titles.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/10-introductions-abstracts-titles.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "0dfc5154870cc6f17eaf262ee1c244cfabc3b61fd0ff4e5690113ba0b950603f",
-      "merged_sha256": "0dfc5154870cc6f17eaf262ee1c244cfabc3b61fd0ff4e5690113ba0b950603f"
+      "merged_sha256": "0dfc5154870cc6f17eaf262ee1c244cfabc3b61fd0ff4e5690113ba0b950603f",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/10-introductions-abstracts-titles.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/11-proposal-aims-and-feasibility.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/11-proposal-aims-and-feasibility.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/11-proposal-aims-and-feasibility.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "0901b1e6392fa658fc3d3322b8cafa3a48c85d27f6745166e443c404f6234931",
-      "merged_sha256": "0901b1e6392fa658fc3d3322b8cafa3a48c85d27f6745166e443c404f6234931"
+      "merged_sha256": "0901b1e6392fa658fc3d3322b8cafa3a48c85d27f6745166e443c404f6234931",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/11-proposal-aims-and-feasibility.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/12-thesis-from-published-papers.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/12-thesis-from-published-papers.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/12-thesis-from-published-papers.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "8d4db513986759a3b41078a9e5c4fd34b99445cda0288383a1ee375f0382e11a",
-      "merged_sha256": "8d4db513986759a3b41078a9e5c4fd34b99445cda0288383a1ee375f0382e11a"
+      "merged_sha256": "8d4db513986759a3b41078a9e5c4fd34b99445cda0288383a1ee375f0382e11a",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/12-thesis-from-published-papers.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/13-editing-an-authors-draft.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/13-editing-an-authors-draft.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/13-editing-an-authors-draft.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "422a979584a039b33e3a28f7cd19cc778078ab0c6a5fdcb73c49ceca423147ca",
-      "merged_sha256": "422a979584a039b33e3a28f7cd19cc778078ab0c6a5fdcb73c49ceca423147ca"
+      "merged_sha256": "422a979584a039b33e3a28f7cd19cc778078ab0c6a5fdcb73c49ceca423147ca",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/13-editing-an-authors-draft.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/14-chinese-native-scientific-prose.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/14-chinese-native-scientific-prose.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/14-chinese-native-scientific-prose.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "1968522793e12244a8ed10e1d4548041a20d94e49492711bb20eee68557d72a1",
-      "merged_sha256": "1968522793e12244a8ed10e1d4548041a20d94e49492711bb20eee68557d72a1"
+      "merged_sha256": "1968522793e12244a8ed10e1d4548041a20d94e49492711bb20eee68557d72a1",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/14-chinese-native-scientific-prose.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/15-rebuttal-hard-comments.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/15-rebuttal-hard-comments.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/15-rebuttal-hard-comments.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "8516ea2f1658ac2f42bcb9797aa9bf1e9d56e6197115a57e341457f2810948b4",
-      "merged_sha256": "8516ea2f1658ac2f42bcb9797aa9bf1e9d56e6197115a57e341457f2810948b4"
+      "merged_sha256": "8516ea2f1658ac2f42bcb9797aa9bf1e9d56e6197115a57e341457f2810948b4",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/15-rebuttal-hard-comments.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/16-safe-delivery-and-versioning.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/16-safe-delivery-and-versioning.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/16-safe-delivery-and-versioning.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "25a913a3187ff9b5b4b569a47f1a3a1df87a623c9750678abd307bfe9797f6a4",
-      "merged_sha256": "25a913a3187ff9b5b4b569a47f1a3a1df87a623c9750678abd307bfe9797f6a4"
+      "merged_sha256": "25a913a3187ff9b5b4b569a47f1a3a1df87a623c9750678abd307bfe9797f6a4",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/16-safe-delivery-and-versioning.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/case-studies/INDEX.md",
-      "target": "skills/sci-writing-orchestrator/case-studies/methods/INDEX.md",
+      "target": "skills/sci-writing-orchestrator/method-studies/INDEX.md",
       "decision": "preserved_in_method_bank",
       "incoming_sha256": "296aad17ade50092aa19c89b0e1e6b34d70cbe5a18279b84d3a0c323589c5c07",
-      "merged_sha256": "296aad17ade50092aa19c89b0e1e6b34d70cbe5a18279b84d3a0c323589c5c07"
+      "merged_sha256": "6fd7530dd5fd559c8246d4226dcd5d4676ad49ce3d515a46e4654695fcfa108b",
+      "previous_target_2_2": "skills/sci-writing-orchestrator/case-studies/methods/INDEX.md",
+      "relocation_release": "2.3.1"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/presets/INDEX.md",
@@ -728,7 +762,7 @@
       "target": "skills/sci-writing-orchestrator/references/article-architecture.md",
       "decision": "adapted_or_merged",
       "incoming_sha256": "2122050713ef507dd7afd9cfc5ae5f69859a5d231aba04d87f113c21afea9adf",
-      "merged_sha256": "7605ea9896f9056f5f6398fd574c0b0e7331d052340d73e57cb8ae2387be8a36"
+      "merged_sha256": "c0348d41fd369c59d6fb70057bd9319285ec597b8c2e7658048a1fd22e8582c4"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/references/meeting-to-decisions.md",
@@ -742,28 +776,28 @@
       "target": "skills/sci-writing-orchestrator/references/proposal-and-thesis.md",
       "decision": "adapted_or_merged",
       "incoming_sha256": "d473925780684e8da743888418a4cc099eff4319467c495a82fbe38f52ba0af6",
-      "merged_sha256": "b15ad5be94171846818e334e82d39dd67eb2e1b50b714216e17cc31003de0813"
+      "merged_sha256": "4f3f3f453631d1b94385c2256525f2400f60a0cff71901d40cc42d6d70d4eafc"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/references/rebuttal-and-cover-letter.md",
       "target": "skills/sci-writing-orchestrator/references/rebuttal-and-cover-letter.md",
       "decision": "adapted_or_merged",
       "incoming_sha256": "f4a8cc15b04f54fc1a6e73f9fabd4be34510e0ff92870082dcc08e5898838679",
-      "merged_sha256": "d5a4dcb8645c38489f2e2f8f0b64865680d5c1c7485880fa00057274f38ad86e"
+      "merged_sha256": "eabfcd134277e182c8ab523976280d546bac6d87b3993a1ed670e576b62c46d9"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/references/review-architecture.md",
       "target": "skills/sci-writing-orchestrator/references/review-architecture.md",
       "decision": "adapted_or_merged",
       "incoming_sha256": "a5df4c0ed9970a47c9f8c2e5b1f905b52b6e11ca8aeed1ac799002e1db07cb5c",
-      "merged_sha256": "c4c13c8bd33a49e69bfa7470bd5e06f80a309b91f93f79dd8a7edcb10c20780e"
+      "merged_sha256": "3c151d38836646de31780ae045b24becba2259760d9f0f4da641a3d833576510"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/references/writing-mode-router.md",
       "target": "skills/sci-writing-orchestrator/references/writing-mode-router.md",
       "decision": "adapted_or_merged",
       "incoming_sha256": "fbf3bf9dc28d5628b8fa7017f7c46a2157e5bc85c54e449a575605b3a35f738b",
-      "merged_sha256": "ad36b5d11dc97130e2f9a55dcd5c80408b3f0326b9bb7a1c8e927640c08d9625"
+      "merged_sha256": "8988731ee626bb0ffa368109c83428c77592adf3943cdc6d2526f5e4d540fdb0"
     },
     {
       "incoming": "skills/sci-writing-orchestrator/references/writing-plan-contract.md",
@@ -798,7 +832,8 @@
       "target": "tools/validate_skills.py",
       "decision": "adapted_or_merged",
       "incoming_sha256": "0e8ff149f2356e55307728b2230880146fdf822926d1178616e27b5a58e857df",
-      "merged_sha256": "0f1758d04f79278d46b88c150baa7ba853af551fd4705c5ed37ba6893e9f5590"
+      "merged_sha256": "b9f23cbaba28a31906a13c13e685b4c8d4860e06fef305c8bdcd6282bf11102f"
     }
-  ]
+  ],
+  "current_release": "2.3.1"
 }

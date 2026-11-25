@@ -177,4 +177,4 @@ Open each subsection with its scientific question. Develop a linked account of t
 State gaps at the level the evidence supports. Preserve negative findings and necessary uncertainty. Avoid claiming that a field has never addressed a question unless a documented search supports that absence claim. A proposed experiment stays proposed.
 
 
-All paragraph drafting follows [human-line-of-thought.md](../../sci-prose-style/references/human-line-of-thought.md). Named venue/agency structures are optional scaffolds until checked against the actual current instructions; scientific content is never invented to complete a template. Method-case numbers refer to case-studies/methods/; default generic presets and the separate domain cases are retained.
+All paragraph drafting follows [human-line-of-thought.md](../../sci-prose-style/references/human-line-of-thought.md). Named venue/agency structures are optional scaffolds until checked against the actual current instructions; scientific content is never invented to complete a template. Method-case numbers refer to method-studies/; default generic presets and the separate domain cases are retained.

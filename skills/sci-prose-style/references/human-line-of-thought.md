@@ -133,4 +133,4 @@ The orchestrator skill (sci-writing-orchestrator, case-studies folder) applies t
 
 
 ## Method-case locations
-The numbered workflow cases referenced above are under [the method-case index](../../sci-writing-orchestrator/case-studies/methods/INDEX.md). The separate domain case bank remains available. Quoted reviewer questions, a research question in source evidence and required protocol reporting must retain their original meaning; do not rewrite source quotations to satisfy a prose preference.
+The numbered workflow cases referenced above are under [the method-case index](../../sci-writing-orchestrator/method-studies/INDEX.md). The separate domain case bank remains available. Quoted reviewer questions, a research question in source evidence and required protocol reporting must retain their original meaning; do not rewrite source quotations to satisfy a prose preference.

@@ -26,4 +26,4 @@ The full guidance lives in the review skill: `sci-manuscript-review/references/r
 7. Cover letter for the resubmission: what changed in three to five points, and thanks in one sentence.
 
 
-All paragraph drafting follows [human-line-of-thought.md](../../sci-prose-style/references/human-line-of-thought.md). Named venue/agency structures are optional scaffolds until checked against the actual current instructions; scientific content is never invented to complete a template. Method-case numbers refer to case-studies/methods/; default generic presets and the separate domain cases are retained.
+All paragraph drafting follows [human-line-of-thought.md](../../sci-prose-style/references/human-line-of-thought.md). Named venue/agency structures are optional scaffolds until checked against the actual current instructions; scientific content is never invented to complete a template. Method-case numbers refer to method-studies/; default generic presets and the separate domain cases are retained.

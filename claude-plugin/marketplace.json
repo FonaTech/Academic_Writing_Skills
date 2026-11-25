@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Evidence-traceable scientific writing: planning, literature and citation verification, expert prose, figures with image-model prompts, bilingual docx builds, and pre-submission review.",
-    "version": "2.2.0"
+    "version": "2.3.1"
   },
   "plugins": [
     {
