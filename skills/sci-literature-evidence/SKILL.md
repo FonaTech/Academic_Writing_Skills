@@ -31,3 +31,7 @@ python3 scripts/crossref_verify.py keys.json --out references_verified.json --em
 ```
 
 Do not bypass access controls. Do not infer research quality from venue, citation count or successful download. If sources fan out, use scoped extraction and independent refutation when available, then verify the records centrally.
+
+
+## Default Drafting Chain for prose
+Before drafting or revising prose, use sci-prose-style's [human-line-of-thought.md](../sci-prose-style/references/human-line-of-thought.md): facts list first; argument-driven order and named actors; varied sentence lengths; explanation connectives near 8 per 100 sentences; no questions, musings, counted overviews or template phrases; end paragraphs on a fact. Run prose_lint.py on a task-local copy of the delivered prose, including chat-only prose. Preserve quantities, qualifiers, citations and requested language/variant parity. This route does not replace this skill's evidence, build, figure or review responsibilities.

@@ -1,0 +1,60 @@
+{
+  "version": "2.1.0",
+  "date": "2026-11-01",
+  "skill_count": 6,
+  "sources": {
+    "github_head": "b759d8779d731b10f13133830313c4c30629738d",
+    "implementation_baseline": "0457e77",
+    "local_installed_versions": [
+      "1.0.0",
+      "1.1.0"
+    ]
+  },
+  "structure_validator": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "official_skill_format": {
+    "passed": 6
+  },
+  "python310": {
+    "version": "3.10.20",
+    "total": 45,
+    "passed": 45,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "python312": {
+    "version": "3.12.14",
+    "total": 45,
+    "passed": 42,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 3,
+    "skip_reason": "Optional local PDF/library tests require PyMuPDF/requests not available in bundled runtime."
+  },
+  "claude_plugin_validation": {
+    "cli_version": "2.1.316",
+    "passed": true,
+    "advisory": "No optional plugin listing icon; not an installation/manifest error."
+  },
+  "temporary_install": {
+    "scope": "Temporary project only; real global skills/instructions unchanged",
+    "installed_skills": 6,
+    "preserved_previous_skills": 6,
+    "version": "2.1.0",
+    "instructions_injected": false,
+    "passed": true
+  },
+  "independent_review": false,
+  "human_author_acceptance": "pending",
+  "not_executed": [
+    "Online search/Crossref/PDF acquisition full end-to-end workflow",
+    "Pandoc native display-equation conversion",
+    "Complex multipage scientific manuscript/figure visual validation",
+    "Actual Codex/OpenCode/plugin installation and discovery",
+    "Hosted GitHub Actions runs",
+    "Human expert assessment of all sixteen teaching cases"
+  ]
+}

@@ -1,3 +1,17 @@
+test_all_profiles_keep_common_english_and_chinese_checks (test_drafting_chain.DraftingChainTests.test_all_profiles_keep_common_english_and_chinese_checks) ... ok
+test_builder_uses_chain_diagnostics_for_json_and_markdown (test_drafting_chain.DraftingChainTests.test_builder_uses_chain_diagnostics_for_json_and_markdown) ... ok
+test_chinese_connective_rate_counts_occurrences (test_drafting_chain.DraftingChainTests.test_chinese_connective_rate_counts_occurrences) ... ok
+test_chinese_templates_are_detected (test_drafting_chain.DraftingChainTests.test_chinese_templates_are_detected) ... ok
+test_connective_rate_counts_occurrences (test_drafting_chain.DraftingChainTests.test_connective_rate_counts_occurrences) ... ok
+test_full_incoming_style_rules_remain_available (test_drafting_chain.DraftingChainTests.test_full_incoming_style_rules_remain_available) ... ok
+test_markdown_data_and_references_are_not_rewritten_as_prose (test_drafting_chain.DraftingChainTests.test_markdown_data_and_references_are_not_rewritten_as_prose) ... ok
+test_number_inventory_is_flagged (test_drafting_chain.DraftingChainTests.test_number_inventory_is_flagged) ... ok
+test_number_profile_and_float_references (test_drafting_chain.DraftingChainTests.test_number_profile_and_float_references) ... ok
+test_short_chinese_questions_are_not_dropped (test_drafting_chain.DraftingChainTests.test_short_chinese_questions_are_not_dropped) ... ok
+test_short_english_questions_are_not_dropped (test_drafting_chain.DraftingChainTests.test_short_english_questions_are_not_dropped) ... ok
+test_thinking_aloud_and_counted_overview (test_drafting_chain.DraftingChainTests.test_thinking_aloud_and_counted_overview) ... ok
+test_uniform_chinese_rhythm_and_connective_chain (test_drafting_chain.DraftingChainTests.test_uniform_chinese_rhythm_and_connective_chain) ... ok
+test_uniform_english_rhythm (test_drafting_chain.DraftingChainTests.test_uniform_english_rhythm) ... ok
 test_inline_function_names_are_upright (test_merge_features.MergedBuildTests.test_inline_function_names_are_upright) ... ok
 test_inline_year_indices_refer_to_original_columns (test_merge_features.MergedBuildTests.test_inline_year_indices_refer_to_original_columns) ... ok
 test_legacy_python_source_keeps_year_generation (test_merge_features.MergedBuildTests.test_legacy_python_source_keeps_year_generation) ... ok
@@ -45,7 +59,7 @@ test_small_bilingual_value_difference (test_workflow.ProjectTests.test_small_bil
 test_table_cell_swap (test_workflow.ProjectTests.test_table_cell_swap) ... ok
 
 ----------------------------------------------------------------------
-Ran 45 tests in 7.347s
+Ran 59 tests in 6.279s
 
 OK (skipped=3)
   previous skill saved: <temporary-path>

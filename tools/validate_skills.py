@@ -14,6 +14,7 @@ Exit code 1 on any error.
 from __future__ import annotations
 
 import json
+import ast
 import py_compile
 import re
 import subprocess
@@ -180,6 +181,39 @@ def check_router():
                         errors.append(f'writing-mode-router.md names {token} in {skill}, which does not exist')
 
 
+def check_drafting_chain():
+    """The default drafting chain stays wired in: prose skill, the skills that write prose, the global block."""
+    prose = SKILLS / 'sci-prose-style' / 'SKILL.md'
+    if prose.exists():
+        text = prose.read_text(encoding='utf-8')
+        if '## Default Drafting Chain' not in text or 'references/human-line-of-thought.md' not in text:
+            errors.append('sci-prose-style/SKILL.md: the Default Drafting Chain section or its guide link is missing')
+    for name in ('sci-writing-orchestrator', 'sci-figure-design', 'sci-manuscript-review', 'sci-manuscript-build',
+                 'sci-literature-evidence'):
+        path = SKILLS / name / 'SKILL.md'
+        if path.exists() and 'human-line-of-thought' not in path.read_text(encoding='utf-8'):
+            errors.append(f'{name}/SKILL.md: prose this skill writes is not routed through the drafting chain')
+    block = REPO / 'tools' / 'global_instructions.md'
+    if block.exists() and 'human-line-of-thought' not in block.read_text(encoding='utf-8'):
+        errors.append('tools/global_instructions.md: the drafting-chain norm is missing')
+    checker = SKILLS/'sci-manuscript-build/assets/manuscript_kit/check_manuscript.py'
+    if checker.is_file():
+        tree = ast.parse(checker.read_text(encoding='utf-8'))
+        main = next((n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main'), None)
+        if main is None or not any(isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id == 'check_line_of_thought' for n in ast.walk(main)):
+            errors.append('check_manuscript.py: main does not call the shared drafting-chain diagnostics')
+    limits_path = SKILLS/'sci-prose-style/assets/style_limits.json'
+    if limits_path.is_file():
+        limits = json.loads(limits_path.read_text(encoding='utf-8'))
+        zh = limits.get('zh', {})
+        patterns = [entry['pattern'] for entry in zh.get('template', [])]
+        patterns += [zh[key] for key in ('question', 'ordinal') if zh.get(key)]
+        if zh.get('connective'): patterns.append(zh['connective']['pattern'])
+        for pattern in patterns:
+            try: re.compile(pattern)
+            except re.error as exc: errors.append(f'Chinese drafting-chain pattern fails to compile: {exc}')
+
+
 def main():
     names = []
     version = (REPO/'VERSION').read_text(encoding='utf-8').strip()
@@ -195,6 +229,7 @@ def main():
         if actual != version:
             errors.append(f'{name}: version {actual} differs from VERSION {version}')
     check_shared()
+    check_drafting_chain()
     check_router()
     for skill in sorted(p for p in SKILLS.iterdir() if (p / 'SKILL.md').exists()):
         names.append(skill.name)

@@ -31,3 +31,10 @@ Read [figure-spec-schema.md](references/figure-spec-schema.md) for the tool form
 
 ## Schematic controls and captions
 The prompt helper supports neutral visual primitives plus project-specific hints in figure_spec.json. Data-free layout blocks are the only model layout input; final data panels are placed by code and checked against deterministic RGB/hash composition. Read [image-model-prompting.md](references/image-model-prompting.md) for label whitelists and text-free fallbacks. Captions define abbreviations independently and distinguish each result's evidence method and conditions.
+
+
+## Default Drafting Chain for prose
+Before drafting or revising prose, use sci-prose-style's [human-line-of-thought.md](../sci-prose-style/references/human-line-of-thought.md): facts list first; argument-driven order and named actors; varied sentence lengths; explanation connectives near 8 per 100 sentences; no questions, musings, counted overviews or template phrases; end paragraphs on a fact. Run prose_lint.py on a task-local copy of the delivered prose, including chat-only prose. Preserve quantities, qualifiers, citations and requested language/variant parity. This route does not replace this skill's evidence, build, figure or review responsibilities.
+
+
+For layout-only requests, prepare panel sources/licences, captions and a data-free layout draft for the author to compose. Do not generate a final composite unless requested. Caption/table notes may describe shading, bold, hatch or color only when that styling is present in the built output. Data panels still use code; an author-composed final requires the same provenance and integrity review.

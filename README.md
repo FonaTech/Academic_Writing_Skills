@@ -1,6 +1,6 @@
 # Academic Writing Skills
 
-Version **2.1.0** — merged release, 2026-11-01. Six reusable skills for evidence-traceable scientific writing across disciplines, with precise English and aligned Chinese when requested.
+Version **2.2.0** — drafting-chain integration, 2026-11-25. Six reusable skills for evidence-traceable scientific writing across disciplines, with precise English and aligned Chinese when requested.
 
 | Skill | Responsibility |
 |---|---|
@@ -11,9 +11,21 @@ Version **2.1.0** — merged release, 2026-11-01. Six reusable skills for eviden
 | sci-manuscript-build | Declarative/legacy sources, numbering, citations, native equations, years, variants and review freshness |
 | sci-manuscript-review | Twelve review dimensions, source/method audits, review triage and point-by-point responses |
 
+## Drafting-chain integration in 2.2
+
+The supplied Academic_Writing_Skills_v1.3.0.zip matches all 103 scientific-skill files in the current local .codex installation. The GitHub base was 2.1.0. This release merges the 1.3 authoring method into that runtime rather than replacing either package wholesale.
+
+Every prose-producing skill routes to [the facts-first drafting guide](skills/sci-prose-style/references/human-line-of-thought.md). Prepare the facts list, order sentences by the scientific argument and named actors, vary sentence lengths, use explanation connectives sparingly, avoid voiced questions/musings/template overviews, and end on the last relevant fact. Run prose_lint.py before delivery, including a task-local copy of chat-only prose. Preserve evidence, necessary qualifiers, terms and bilingual meaning. The English/Chinese functions are shared by the linter and the manuscript checker; other profiles do not silently disable them.
+
+The precise default restores the full incoming style table: 42 banned-pattern entries, 7 capped entries and its Chinese/rhythm settings. The three alternative profiles and --known remain available. Diagnostics are editorial preferences; no finding automatically deletes a technical term or evidence qualifier, and no result establishes authorship or predicts detector scores.
+
+Detailed prose guides, genre/agency scaffolds and all 16 method cases are available alongside the original 16 domain scenarios. The [case-bank index](skills/sci-writing-orchestrator/case-studies/INDEX.md) separates the two banks; the [detailed editorial preset index](skills/sci-writing-orchestrator/presets/editorial-1.3/INDEX.md) preserves the incoming scaffolds as optional examples subject to actual venue rules. Templates remain checklists rather than a fixed sentence sequence.
+
+Raw/derived provenance, declarative and legacy builds, requested-language output, exact data-panel composition, Word-lock preflight, installer backups, release freshness, hidden metadata and checksums remain in place. See [the file-by-file merge record](MERGE_1.3.0.md) and [validation](VALIDATION.md). No global installation was performed.
+
 ## What is merged
 
-This release combines the functional Generic v2 implementation at commit `0457e77` with useful 1.1 editorial/build features in the installed skills and GitHub commit `b759d87`. It restores detailed review voice, article architecture, external-review triage and requested variant synchronization while retaining strict provenance, declarative sources and preview/release checks. It repairs the mixed-version upload, missing hidden plugin manifests, unsafe replacement installation and stale checksums. See [merge notes](MERGE_NOTES.md), [changelog](CHANGELOG.md) and [actual validation](VALIDATION.md).
+The 2.1 base combined the functional Generic v2 implementation at commit `0457e77` with useful 1.1 editorial/build features in the installed skills and GitHub commit `b759d87`. It restores detailed review voice, article architecture, external-review triage and requested variant synchronization while retaining strict provenance, declarative sources and preview/release checks. It repairs the mixed-version upload, missing hidden plugin manifests, unsafe replacement installation and stale checksums. See [merge notes](MERGE_NOTES.md), [changelog](CHANGELOG.md) and [actual validation](VALIDATION.md).
 
 The default precise style targets one principal claim per sentence, one coherent question per paragraph, topic sentence first, and a 16–20-word English median with a ceiling around 30. Keep necessary scientific qualifications and technical meanings. Compact, explanatory and generic profiles are opt-in; none relaxes evidence requirements or predicts AI detection. A narrative review synthesizes the field; systematic/scoping reviews retain their actual search, selection and appraisal reporting.
 

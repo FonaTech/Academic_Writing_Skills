@@ -1,3 +1,12 @@
+# 2.2.0 — 2026-11-25
+
+- Merge the supplied 1.3.0 facts-first drafting chain with the 2.1 runtime and preserve standing norm 8 across all six skills.
+- Restore the complete precise style table, detailed prose guides, 16 method cases and optional detailed editorial scaffolds; retain 16 domain cases and all runtime profiles.
+- Share English/Chinese chain diagnostics between prose_lint and check_manuscript; count connective occurrences, retain short questions and distinguish figure-reference prose from delimited captions.
+- Preserve evidence provenance, declarative/legacy builds, freshness/release checks, exact composition, installer backups, metadata and integrity tooling.
+- Remove unsupported detector efficacy/fixed-floor claims, and keep score reports conditional on actual supplied data.
+- Add targeted regressions, file-by-file coverage and current validation records; keep older artifacts explicitly historical.
+
 # 2.1.0 — 2026-11-01
 
 - Merge the working Generic v2 implementation with 1.1 editorial/build features; remove mixed-version release claims.

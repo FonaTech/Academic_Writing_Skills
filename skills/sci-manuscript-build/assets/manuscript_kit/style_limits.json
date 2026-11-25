@@ -1,7 +1,6 @@
 {
   "version": 2,
-  "profile": "precise",
-  "about": "Default precise, natural scientific prose; style diagnostics are preferences, not validity laws.",
+  "about": "Full 1.3 editorial rules, with common English/Chinese drafting-chain diagnostics; all findings require contextual review.",
   "reference_words": 10000,
   "sentence": {
     "median_min": 16,
@@ -13,82 +12,437 @@
     {
       "label": "must",
       "pattern": "\\bmust\\b",
-      "source": "default writing preference",
-      "fix": "Use for an actual logical or methodological necessity; avoid repeated prescriptions.",
-      "max": 3
+      "max": 3,
+      "source": "user",
+      "fix": "keep for physical or logical necessity; advice to the field reads better as \"needs\" or \"should\""
     },
     {
-      "label": "inference connectors",
-      "pattern": "\\b(?:therefore|thus|hence)\\b",
-      "source": "default writing preference",
-      "fix": "Keep a connector when the inference needs it; avoid repeated automatic transitions.",
-      "max": 10
+      "label": "therefore",
+      "pattern": "\\btherefore\\b",
+      "max": 5,
+      "source": "user",
+      "fix": "keep for a real inference; otherwise order the sentences so no connector is needed"
     },
     {
-      "label": "dash asides",
-      "pattern": "(?<=\\w)\\s—\\s(?=\\w)|\\w—\\w",
-      "source": "default writing preference",
-      "fix": "Integrate the qualification or use ordinary punctuation.",
-      "max": 2
+      "label": "thus/hence",
+      "pattern": "\\b(?:thus|hence)\\b",
+      "max": 5,
+      "source": "kit",
+      "fix": "same budget as therefore, so the cap cannot be met by swapping words"
+    },
+    {
+      "label": "contrast (rather than, X, not Y)",
+      "pattern": "\\brather than\\b|,\\s+not\\s+(?!only\\b|just\\b|merely\\b|necessarily\\b|always\\b|all\\b|surprisingly\\b|shown\\b|least\\b|to\\b|even\\b|reported\\b|applicable\\b|available\\b|specified\\b)[\\w\\-]+",
+      "max": 4,
+      "source": "user",
+      "fix": "keep for contrasts that are the finding; otherwise state the positive claim"
+    },
+    {
+      "label": "boundary",
+      "pattern": "\\bboundar(?:y|ies)\\b",
+      "max": 3,
+      "source": "kit",
+      "fix": "name the accounting scope once (the unit a value is counted over), then use that word"
+    },
+    {
+      "label": "dash aside",
+      "pattern": "(?<=\\w)\\s—\\s(?=\\w)|\\w—\\w|(?<=\\w)\\s--\\s(?=\\w)|(?<=[A-Za-z])\\s–\\s(?=[A-Za-z])",
+      "max": 2,
+      "source": "user",
+      "fix": "fold the aside into the sentence, use a comma pair or brackets, or cut it"
+    },
+    {
+      "label": "meta-commentary (this review aims to)",
+      "pattern": "\\bthis (?:review|paper|article|section|chapter) (?:aims|seeks|attempts) to\\b",
+      "max": 1,
+      "source": "kit",
+      "fix": "say what the section shows"
     }
   ],
   "banned": [
     {
-      "label": "stock opening",
-      "pattern": "\\bin (?:today.s|this) (?:rapidly evolving|ever.changing) (?:landscape|world)\\b",
-      "source": "default writing preference",
-      "fix": "Name the actual scientific problem."
+      "label": "useful",
+      "pattern": "\\buseful(?:ly|ness)?\\b",
+      "source": "user",
+      "fix": "say what it allows: \"sets the read margin\""
+    },
+    {
+      "label": "credible",
+      "pattern": "\\bcredib(?:le|ly|ility)\\b",
+      "source": "user",
+      "fix": "give the evidence level and the condition"
+    },
+    {
+      "label": "decisive",
+      "pattern": "\\bdecisive(?:ly)?\\b",
+      "source": "user",
+      "fix": "give the measured difference"
+    },
+    {
+      "label": "This is why",
+      "pattern": "\\bthis is why\\b",
+      "source": "user",
+      "fix": "join cause and effect in one sentence with \"because\" or \"so\""
     },
     {
       "label": "delve",
       "pattern": "\\bdelv(?:e|es|ed|ing)\\b",
-      "source": "default writing preference",
-      "fix": "Use the specific action: analyze, compare, estimate or test."
+      "source": "user",
+      "fix": "analyse, compare or measure"
     },
     {
-      "label": "empty praise",
-      "pattern": "\\b(?:groundbreaking|revolutionary|game.changing|unprecedented)\\b",
-      "source": "default writing preference",
-      "fix": "State the supported novelty or comparison with its scope."
+      "label": "pivotal",
+      "pattern": "\\bpivotal\\b",
+      "source": "user",
+      "fix": "say what it controls"
     },
     {
-      "label": "empty emphasis",
-      "pattern": "\\b(?:it is worth noting that|needless to say|plays a pivotal role|underscores the importance of)\\b",
-      "source": "default writing preference",
-      "fix": "State the object and supported claim directly."
+      "label": "underscore",
+      "pattern": "\\bunderscor(?:e|es|ed|ing)\\b",
+      "source": "user",
+      "fix": "shows, or delete"
     },
     {
-      "label": "generic promise",
-      "pattern": "\\b(?:paves? the way|opens? new avenues|unlocks? the potential|expand(?:s)? the horizons)\\b",
-      "source": "default writing preference",
-      "fix": "Name the specific implication and what remains untested."
-    }
-  ],
-  "banned_openers": [
+      "label": "notably",
+      "pattern": "\\bnotably\\b",
+      "source": "user",
+      "fix": "delete; the content carries the weight"
+    },
     {
-      "label": "vague paratext",
-      "pattern": "^\\s*(?:This (?:paper|review|section) (?:aims|seeks|attempts) to)",
-      "source": "default writing preference",
-      "fix": "State the finding, question or concrete scope."
+      "label": "landscape",
+      "pattern": "\\blandscapes?\\b",
+      "source": "user",
+      "fix": "name the field or the set of works"
+    },
+    {
+      "label": "intricate",
+      "pattern": "\\bintricate(?:ly)?\\b",
+      "source": "user",
+      "fix": "name the parts that interact"
+    },
+    {
+      "label": "furthermore",
+      "pattern": "\\bfurthermore\\b",
+      "source": "user",
+      "fix": "delete; order sentences from known to new"
+    },
+    {
+      "label": "not only ... but also",
+      "pattern": "\\bnot only\\b",
+      "source": "user",
+      "fix": "two plain statements, or \"both ... and\""
+    },
+    {
+      "label": "evaluative triplet",
+      "pattern": "\\b(?:(?:highly|very|extremely|ultra)[- ]?)?(?:fast|faster|efficient|energy-efficient|scalable|robust|reliable|stable|flexible|versatile|accurate|compact|low-cost|cheap|simple|powerful|promising|sustainable|practical|effective|cost-effective|high-performance|lightweight|adaptive|intelligent|secure|reproducible|seamless|elegant), (?:(?:highly|very|extremely|ultra)[- ]?)?(?:fast|faster|efficient|energy-efficient|scalable|robust|reliable|stable|flexible|versatile|accurate|compact|low-cost|cheap|simple|powerful|promising|sustainable|practical|effective|cost-effective|high-performance|lightweight|adaptive|intelligent|secure|reproducible|seamless|elegant),? and (?:(?:highly|very|extremely|ultra)[- ]?)?(?:fast|faster|efficient|energy-efficient|scalable|robust|reliable|stable|flexible|versatile|accurate|compact|low-cost|cheap|simple|powerful|promising|sustainable|practical|effective|cost-effective|high-performance|lightweight|adaptive|intelligent|secure|reproducible|seamless|elegant)\\b|\\b(?:speed|efficiency|scalability|robustness|reliability|stability|flexibility|versatility|accuracy|compactness|sustainability|performance|cost|adaptability|security|simplicity|practicality|effectiveness), (?:speed|efficiency|scalability|robustness|reliability|stability|flexibility|versatility|accuracy|compactness|sustainability|performance|cost|adaptability|security|simplicity|practicality|effectiveness),? and (?:speed|efficiency|scalability|robustness|reliability|stability|flexibility|versatility|accuracy|compactness|sustainability|performance|cost|adaptability|security|simplicity|practicality|effectiveness)\\b",
+      "source": "user",
+      "fix": "keep only the property you then support with a number; lists of measured quantities are fine"
+    },
+    {
+      "label": "colon reveal",
+      "pattern": "\\b(?:is|are|was|were|seems|becomes) (?:clear|simple|straightforward|twofold|threefold|obvious|striking):|\\b(?:the|one|a|this) (?:answer|reason|lesson|catch|problem|point|result|message|takeaway|verdict|bottom line|trade-off|challenge|question|conclusion|implication|picture|pattern|story|upshot)(?: (?:is|was|here))?:",
+      "source": "user",
+      "fix": "state the claim as the sentence"
+    },
+    {
+      "label": "crucial",
+      "pattern": "\\bcrucial(?:ly)?\\b",
+      "source": "kit",
+      "fix": "necessary, main, or the reason"
+    },
+    {
+      "label": "paramount",
+      "pattern": "\\bparamount\\b",
+      "source": "kit",
+      "fix": "necessary, or the reason"
+    },
+    {
+      "label": "leverage",
+      "pattern": "\\bleverag(?:e|es|ed|ing)\\b",
+      "source": "kit",
+      "fix": "use"
+    },
+    {
+      "label": "revolutionise",
+      "pattern": "\\brevolutioni[sz](?:e|es|ed|ing)\\b|\\brevolutionary\\b",
+      "source": "kit",
+      "fix": "the comparison with its number"
+    },
+    {
+      "label": "game-changing",
+      "pattern": "\\bgame[- ]chang\\w*",
+      "source": "kit",
+      "fix": "the comparison with its number"
+    },
+    {
+      "label": "pave the way",
+      "pattern": "\\bpav(?:e|es|ed|ing) the way\\b",
+      "source": "kit",
+      "fix": "the next measurable step"
+    },
+    {
+      "label": "plays a ... role",
+      "pattern": "\\bplays? an? (?:vital|crucial|key|pivotal|important|significant|central) role\\b",
+      "source": "kit",
+      "fix": "what it does"
+    },
+    {
+      "label": "holds promise",
+      "pattern": "\\bholds? (?:great |immense |tremendous )?promise\\b",
+      "source": "kit",
+      "fix": "the next measurable step"
+    },
+    {
+      "label": "unprecedented",
+      "pattern": "\\bunprecedented\\b",
+      "source": "kit",
+      "fix": "the comparison with its number"
+    },
+    {
+      "label": "groundbreaking",
+      "pattern": "\\bgroundbreaking\\b",
+      "source": "kit",
+      "fix": "the comparison with its number"
+    },
+    {
+      "label": "realm",
+      "pattern": "\\brealms?\\b",
+      "source": "kit",
+      "fix": "the field by name"
+    },
+    {
+      "label": "it is worth noting",
+      "pattern": "\\bit is worth (?:noting|mentioning|emphasi[sz]ing)\\b|\\bit should be noted that\\b",
+      "source": "kit",
+      "fix": "state the fact"
+    },
+    {
+      "label": "should be read as",
+      "pattern": "\\bshould be read (?:as|together with)\\b",
+      "source": "kit",
+      "fix": "say what the figure shows"
+    },
+    {
+      "label": "tapestry",
+      "pattern": "\\btapestr(?:y|ies)\\b",
+      "source": "kit",
+      "fix": "name the parts"
+    },
+    {
+      "label": "paradigm shift",
+      "pattern": "\\bparadigm shifts?\\b",
+      "source": "kit",
+      "fix": "say what changes and by how much"
+    },
+    {
+      "label": "cutting-edge",
+      "pattern": "\\bcutting[- ]edge\\b",
+      "source": "kit",
+      "fix": "the best reported value with its conditions"
+    },
+    {
+      "label": "state-of-the-art",
+      "pattern": "\\bstate[- ]of[- ]the[- ]art\\b",
+      "source": "kit",
+      "fix": "name the reference: \"the best reported value, X (conditions) [ref]\""
+    },
+    {
+      "label": "seamless",
+      "pattern": "\\bseamless(?:ly)?\\b",
+      "source": "kit",
+      "fix": "the specific interaction"
+    },
+    {
+      "label": "novel and unique",
+      "pattern": "\\b(?:novel|new),? (?:and )?(?:unique|innovative)\\b",
+      "source": "kit",
+      "fix": "say what is new"
+    },
+    {
+      "label": "opens new avenues",
+      "pattern": "\\bopen(?:s|ed|ing)? (?:up )?(?:new|novel) (?:avenues?|horizons?|doors?|possibilities|opportunities)\\b|\\bopen(?:s|ed|ing)? (?:up )?(?:a|the) door\\b",
+      "source": "kit",
+      "fix": "the next measurable step"
+    },
+    {
+      "label": "next frontier",
+      "pattern": "\\b(?:next|new|final) frontiers?\\b",
+      "source": "kit",
+      "fix": "name the open problem"
+    },
+    {
+      "label": "vast potential",
+      "pattern": "\\b(?:vast|great|huge|enormous|immense|tremendous) potential\\b",
+      "source": "kit",
+      "fix": "the measured gain and its condition"
+    },
+    {
+      "label": "superb, impactful, meticulous",
+      "pattern": "\\bsuperb(?:ly)?\\b|\\bimpactful\\b|\\bmeticulous(?:ly)?\\b",
+      "source": "kit",
+      "fix": "the metric and value, or delete"
+    },
+    {
+      "label": "shaping the future",
+      "pattern": "\\bshap(?:e|es|ed|ing) the future\\b",
+      "source": "kit",
+      "fix": "what changes and by how much"
+    },
+    {
+      "label": "continues to evolve",
+      "pattern": "\\bcontinu(?:e|es|ed|ing) to evolve\\b",
+      "source": "kit",
+      "fix": "what changed, with dates or numbers"
+    },
+    {
+      "label": "screening-report voice",
+      "pattern": "\\b(?:of|among|across) the (?:\\d+|[a-z]+-?[a-z]*) (?:papers|studies|works|articles|reports) (?:we )?(?:examined|reviewed|screened|surveyed|analy[sz]ed|read|included)\\b|\\bnone of the (?:papers|studies|works|reports)\\b|\\bwe (?:screened|counted|graded|audited)\\b",
+      "source": "user",
+      "fix": "narrate the field's progress (problem, idea, realisation, result); the search protocol belongs in Methods or the cover letter"
+    },
+    {
+      "label": "in a preprint",
+      "pattern": "\\b(?:in|from) (?:a|an|the|their|this|one) (?:\\d{4} )?preprint\\b|\\bthe preprint (?:of|by|from)\\b|\\ba \\d{4} preprint\\b",
+      "source": "user",
+      "fix": "cite directly; the reference list shows preprint status"
+    },
+    {
+      "label": "per-paper fault-finding",
+      "pattern": "\\bet al\\.?(?:\\s*\\[[^\\]]*\\])? (?:did not|do not|does not|failed to|neglected to|omitted to) (?:state|report|give|specify|mention|measure|disclose)\\b",
+      "source": "user",
+      "fix": "state the gap at field level with citations (\"X is rarely reported with Y [@a; @b]\"); a table may mark n.s."
     }
   ],
   "advisory": [
     {
-      "label": "blanket importance",
-      "pattern": "\\b(?:significant|crucial|important|robust|remarkable)\\b",
-      "source": "default writing preference",
-      "fix": "Check context: statistical significance and domain-specific technical meanings are legitimate."
+      "label": "colon before a lowercase clause",
+      "pattern": "\\w: (?-i:[a-z])",
+      "max": 3,
+      "source": "kit",
+      "fix": "lists after a colon are fine; a colon that reveals a claim is banned, so check each one"
+    },
+    {
+      "label": "defensive phrase",
+      "pattern": "\\bso far\\b|\\bto date\\b|\\bnot yet\\b|\\b(?:has|have) not (?:yet )?been\\b|\\bremains? (?:missing|unclear|unknown|unexplored|limited|lacking|to be (?:shown|demonstrated|seen))\\b|\\bcannot yet\\b|\\bstill (?:lacks?|needs?|requires?|missing|limited)\\b",
+      "max": 0,
+      "source": "user",
+      "fix": "state what was done, then the next experiment or design implication (\"the next demonstration would…\"); keep evidence labels next to the number"
+    },
+    {
+      "label": "only (limiting)",
+      "pattern": "\\bonly (?:a few|one|two|three|\\d+|small|single)\\b",
+      "max": 1,
+      "source": "user",
+      "fix": "give the number without the apology (\"three samples\", not \"only three samples\") unless the limit is the point"
+    },
+    {
+      "label": "explanation connective (so, because, since, then)",
+      "pattern": "\\bso\\b(?!-called)|\\bbecause\\b|\\bsince\\b|\\bthen\\b",
+      "max": 40,
+      "source": "user",
+      "fix": "an even chain of so/because/then reads as generated text; let the order of sentences carry the cause, name the actor and the result, and keep a connective only where the reader would otherwise miss the link"
     }
   ],
   "flagged_openers": [
-    "Furthermore",
+    "Importantly",
+    "Interestingly",
+    "Remarkably",
     "Moreover",
     "Additionally",
-    "Notably",
-    "Importantly"
+    "Consequently",
+    "Ultimately",
+    "Overall",
+    "In conclusion",
+    "Indeed",
+    "In recent years",
+    "With the rapid development",
+    "As we all know"
+  ],
+  "banned_openers": [
+    {
+      "label": "In summary opener",
+      "pattern": "^(?:In summary|To summari[sz]e|To sum up)\\b",
+      "source": "user",
+      "fix": "end the section on its consequence; no summary signpost"
+    }
   ],
   "manual": [
-    "Assess clarity, logical qualification and paragraph purpose in context.",
-    "Preserve measured conditions, uncertainty and necessary technical terms."
-  ]
+    "coined jargon (user rule): every technical term appears in the cited literature or the terminology table",
+    "one idea per sentence; no stacked clauses and no fragments",
+    "paragraph order: topic sentence, quantitative evidence with conditions, one-sentence implication",
+    "review voice (user rule): reviews narrate the field's progress through key works; no screening, counting or grading of papers",
+    "flow (user rule): link each sentence to the previous one by a connective or a shared subject; prose_lint reports staccato runs and orphan paragraphs",
+    "quantifiers (user rule): keep the source's about, up to, estimated, total; never add motives or mechanisms the source lacks; check every derived magnitude arithmetically"
+  ],
+  "rhythm": {
+    "about": "A paragraph of min_sentences or more whose sentence lengths all fall within max_range words (English) or max_range_zh characters (Chinese) is flagged as uniform-rhythm. check_manuscript.py warns when explanation connectives (so, because, since, then, therefore, thus, hence; 因此、从而、进而一类) exceed max_connectives_per_100 per 100 sentences in either language; aim for about 8.",
+    "min_sentences": 5,
+    "max_range": 8,
+    "max_range_zh": 12,
+    "fix": "let the content set the length: a long sentence for a mechanism with its conditions, a short one for a plain result",
+    "max_connectives_per_100": 10
+  },
+  "zh": {
+    "about": "Checks for Chinese paragraphs (prose_lint.py). Template phrases are weight 2; the connective, ordinal and question checks follow the English line-of-thought rules.",
+    "long_sentence_chars": 90,
+    "connective": {
+      "label": "zh explanation connective",
+      "pattern": "因此|从而|进而|所以|由此|于是|因而|故而",
+      "min_sentences": 4,
+      "max_share": 0.4,
+      "fix": "因果主要由句序和具名的研究者承担，只在读者会漏掉关系的地方保留连接词"
+    },
+    "question": "[？?]$|^(如何|为何|为什么|是否|哪些|什么|怎样|能否)",
+    "question_fix": "不用设问和内嵌问句，直接写出结论或依赖关系",
+    "ordinal": "首先.{0,300}其次|一方面.{0,300}另一方面",
+    "ordinal_fix": "并列内容没有先后时，按区分各组的依据命名各组",
+    "template": [
+      {
+        "label": "值得注意的是",
+        "pattern": "值得(注意|一提|关注|指出)的是",
+        "fix": "删去，直接写事实"
+      },
+      {
+        "label": "综上所述",
+        "pattern": "综上所述|总而言之|总的来说|总之，",
+        "fix": "删去总结语，结论写成带依据和范围的陈述"
+      },
+      {
+        "label": "提供了新思路",
+        "pattern": "提供了?(一种|一条)?(新的?|全新的?)(思路|途径|视角|可能|方向)",
+        "fix": "写出具体做到了什么、在什么条件下"
+      },
+      {
+        "label": "奠定了基础",
+        "pattern": "奠定了?(坚实的?|重要的?|良好的?)?基础",
+        "fix": "写出下一步具体可以做什么"
+      },
+      {
+        "label": "发挥着重要作用",
+        "pattern": "(发挥|起)着?(重要|关键|至关重要|核心)的?作用|扮演着?(重要|关键|核心)的?角色",
+        "fix": "写出它具体做什么"
+      },
+      {
+        "label": "引起了广泛关注",
+        "pattern": "(引起|受到|吸引)了?(广泛|大量|越来越多|极大)的?(关注|兴趣|重视)",
+        "fix": "删去，或写出具体的研究进展"
+      },
+      {
+        "label": "具有重要意义",
+        "pattern": "具有(重要|深远|重大|广泛)的?(意义|价值)|(广阔|巨大|良好)的?应用前景",
+        "fix": "写出具体的用途和条件"
+      },
+      {
+        "label": "随着……的发展",
+        "pattern": "随着.{1,20}的(快速|迅速|飞速|不断|蓬勃)?发展",
+        "fix": "从具体的问题或事实开头"
+      },
+      {
+        "label": "为……提供了有力支撑",
+        "pattern": "提供了?(有力|坚实|重要)的?(支撑|支持|保障)",
+        "fix": "写出证据本身"
+      }
+    ]
+  },
+  "profile": "precise"
 }

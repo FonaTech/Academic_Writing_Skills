@@ -1,0 +1,804 @@
+{
+  "input_sha256": "506f9599ae06c18dc437b7a608ea9c60848c417728c83648020010bc354a274e",
+  "github_base": "086d3a5cc8d1a002a1f0dcb8df4d193b8423eb1f",
+  "entries": [
+    {
+      "incoming": ".claude-plugin/marketplace.json",
+      "target": ".claude-plugin/marketplace.json",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "a0e57760cf91a9519fe5859ca8e4982d63284a90af216de70dfa5f7e2e918c37",
+      "merged_sha256": "9b355fda49d1cda1a20c90d9bca6a25d1eef447a3371def016c21f947fac5e97"
+    },
+    {
+      "incoming": ".claude-plugin/plugin.json",
+      "target": ".claude-plugin/plugin.json",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "fc2405bc7440e56466ee8c7f9828dc3b4248044598a06206ce9ec7fd447797a0",
+      "merged_sha256": "52d87f7d34d92703b3cce29f20c963589d993b0145178057f9609dba20622aee"
+    },
+    {
+      "incoming": "LICENSE",
+      "target": "LICENSE",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "482c0a77adba55e5afce4d0c79b9f52c4acc76f1310ec945ef6ea651206560cf",
+      "merged_sha256": "9cc82c1930da87ad62428fe8c73fdf840403e397ff7edb9cc1e7ea82f9c06117"
+    },
+    {
+      "incoming": "README.md",
+      "target": "README.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "96c41e3dd65b3d67977ed321c155fba7bc1ae245fdd56003d650a407ad5dcb7b",
+      "merged_sha256": "df1527ee32a32f6981edb046cb5efaf303b3a807b91f3da541737104b6bf33c1"
+    },
+    {
+      "incoming": "README_zh.md",
+      "target": "README_zh.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "67609cfb030c27187300ab8fd217de0afd94fa41c732aa1d23213a1914886b18",
+      "merged_sha256": "472ec28e39a7748edcc3efa3ea5e63aa581c9755293b6a997b7f789a32f42dd1"
+    },
+    {
+      "incoming": "claude-plugin/INSTALL.md",
+      "target": "claude-plugin/INSTALL.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "eb7b16a02de6f7c1d1b4dd1c3c0c3262e8a45ec45da58266e624947d1fbc22c4",
+      "merged_sha256": "98fd76da849bab3be6ecf8d9c30d6e939b91febcd400bb7840b58a78845d4bf6"
+    },
+    {
+      "incoming": "codex/INSTALL.md",
+      "target": "codex/INSTALL.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "535d3af7a115adfb834417183eda42f455bc01bfca0979ba4a921c27a28f79bb",
+      "merged_sha256": "6876743720cc1a00adf27b6ccf8fba828f45277dea450d429b7a9862014d3d21"
+    },
+    {
+      "incoming": "opencode/INSTALL.md",
+      "target": "opencode/INSTALL.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "d2d94ef0f8a4618ca08c62c19530123c1664b67f60f1a7e2bd1c91c8c9551100",
+      "merged_sha256": "d451d709066150c7a08d14a0f115a379f8e9bea23f3547fb3dcc73b6f0a5742f"
+    },
+    {
+      "incoming": "skills/sci-figure-design/SKILL.md",
+      "target": "skills/sci-figure-design/SKILL.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "276d79f9a376e18f1078bf803384519e19b0378cca40eb48b64eecb258ea167f",
+      "merged_sha256": "71616905a9167abf0d5b829eae7a0ec68b9b4d6ec605bc9fce5174f3cb0f5e1a"
+    },
+    {
+      "incoming": "skills/sci-figure-design/agents/openai.yaml",
+      "target": "skills/sci-figure-design/agents/openai.yaml",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "ea968c21823fdbc4bddac264577e534158f69ca9931705e10032672c0f8ed7c2",
+      "merged_sha256": "045e2ba663e1651336bb1e2bdcff23469b1524ac1de05203be4da7504401450d"
+    },
+    {
+      "incoming": "skills/sci-figure-design/references/captions-and-tables.md",
+      "target": "skills/sci-figure-design/references/captions-and-tables.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "05ec906f78294136604b179f04f9c8086fb70ca640a40d042b7184cbedad757e",
+      "merged_sha256": "591ad46ac7b0a9f412b8cd0e323774b8d67978c066cf75fccdf024aec00bc2be"
+    },
+    {
+      "incoming": "skills/sci-figure-design/references/figure-planning.md",
+      "target": "skills/sci-figure-design/references/figure-planning.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "40b1f01c03f5032b555275de7942a75dd2960e83a077e2287693e23dd1c29c52",
+      "merged_sha256": "1899cc280178b1eba8e0f165ea8c7214d62a7ff22f1485c5ec4e6ad75717ff1b"
+    },
+    {
+      "incoming": "skills/sci-figure-design/references/figure-spec-schema.md",
+      "target": "skills/sci-figure-design/references/figure-spec-schema.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "63a96dc2e51e9c31f5baed3e092ab33cd74813ed17bca76f656e344c220be50a",
+      "merged_sha256": "c1fb298784afb978355117498c9c23e1d2df98ce0965d82cdb4b9711971a14b4"
+    },
+    {
+      "incoming": "skills/sci-figure-design/references/image-model-prompting.md",
+      "target": "skills/sci-figure-design/references/image-model-prompting.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "0db4a68eb069e6dfe7f0e4262fabba316ca163667bcfd0f3851be8793ed90b38",
+      "merged_sha256": "01f78958748597062258c0680e82844b1c10037a415d6b83ba914a410f8f3d25"
+    },
+    {
+      "incoming": "skills/sci-figure-design/references/journal-ai-policies.md",
+      "target": "skills/sci-figure-design/references/journal-ai-policies.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "c60669e54bd22d831ff5a305b07d6398208281112455bb93eb7b2d7d4fca1d4c",
+      "merged_sha256": "f16acc6acaddbb06c66db2f80261506da7931fc7eb356174aca2bf718aa724e2"
+    },
+    {
+      "incoming": "skills/sci-figure-design/scripts/figure_kit.py",
+      "target": "skills/sci-figure-design/scripts/figure_kit.py",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "894a03d968e4d74048a6e96bede0e3219c1d71156f13a1b66809a2b4c4b6402b",
+      "merged_sha256": "a4a9eb7a72e8a02c157a07c937125204e6fec10789b97b301c8a64b487d0beec"
+    },
+    {
+      "incoming": "skills/sci-figure-design/scripts/plot_style.py",
+      "target": "skills/sci-figure-design/scripts/plot_style.py",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "eabcbe385d37f11bebd825e9bcecaf00e50037c8654adede4b98d1ad27bab9bb",
+      "merged_sha256": "1692eb83617f1bf6e38ce091f982d3d22ca672b6d4a4cc4fab6d564c73b551da"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/SKILL.md",
+      "target": "skills/sci-literature-evidence/SKILL.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "028e0b8e3ffc229e898d0ff3889128b28d81656d5375a663bf8cb870e55d0df1",
+      "merged_sha256": "b48936cf5aa9626b16a34d52c58540ee5e70284abdbd5ac03583be50316bf0f8"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/agents/openai.yaml",
+      "target": "skills/sci-literature-evidence/agents/openai.yaml",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "98252790bb55377455a811be70f0c58e50fa582e372be3e433cc107f9bb46afa",
+      "merged_sha256": "3f94c406a48702a7b173ac74f1abff6dce9842b5a727ebd61a1730c28051394e"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/references/citation-audit.md",
+      "target": "skills/sci-literature-evidence/references/citation-audit.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "1563427f9c7f74ad67164beaae6c1a009159991c3407628a189f0576c22e38b7",
+      "merged_sha256": "86d7fc8f0701ac425d63b4533ab59f3957bf8399a6ce75d871345a4b07c038c1"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/references/comparison-fairness.md",
+      "target": "skills/sci-literature-evidence/references/comparison-fairness.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "c553e210864698a9cebd2b3c931c63c83877964d26376162fd5e7a5f03a996da",
+      "merged_sha256": "2f529ab02f0976351f9495f9f81cbf4484202cf2f7cf0520810d381acc53aa50"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/references/evidence-table-contract.md",
+      "target": "skills/sci-literature-evidence/references/evidence-table-contract.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "9563f825fe7cac70b4c8e57eb98c7911b21f894d8164397577d8d884303f9444",
+      "merged_sha256": "8cab785704e0290ad61bd26b03f972cc5c2390e8ec6eb7e871edc8e55ced3ec3"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/references/library-layout.md",
+      "target": "skills/sci-literature-evidence/references/library-layout.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "a7b1e71274e2ec1576c65d1d3374814b4c369e3be9d292fc434186e8379d62b0",
+      "merged_sha256": "a9a3cab40bee0e45419bc9badffe176c73f6ec3364e93770f8cb979304068b9a"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/references/search-protocol.md",
+      "target": "skills/sci-literature-evidence/references/search-protocol.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "96b5076ac011886a303a4c836034351854fd44ed0f499ba885cb4e6713934b37",
+      "merged_sha256": "5da41cdd2883b9522a792707b02b14629f7173d2e25815e347529b6d67b88c87"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/scripts/build_library_tables.py",
+      "target": "skills/sci-literature-evidence/scripts/build_library_tables.py",
+      "decision": "retained_2_1_evidence_runtime",
+      "incoming_sha256": "688bd398a4fc4fa930af74e9e769b35622a96dbf521037961a7b088c3b8ba8c7",
+      "merged_sha256": "61aa3394d429f3dc8bfeff11feddc61cc2acff0b47d673d849c603ecfca8ebf3"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/scripts/crossref_verify.py",
+      "target": "skills/sci-literature-evidence/scripts/crossref_verify.py",
+      "decision": "retained_2_1_evidence_runtime",
+      "incoming_sha256": "942fa5e3f9b0adf4036979e4e16929761ba6e7a993c41b458f05ea58f1f1b1f8",
+      "merged_sha256": "72917e2f3d434b5915d4e4511f83dbd5e08e20378f37cbb829a3545894e7dc14"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/scripts/extract_pdf_text.py",
+      "target": "skills/sci-literature-evidence/scripts/extract_pdf_text.py",
+      "decision": "retained_2_1_evidence_runtime",
+      "incoming_sha256": "c6980854aa989cdef88a409718173c2078a9e061a53d745eb6f3199a2f0f702a",
+      "merged_sha256": "4387f9b77976569b20361a3c972aa88ad7d4c2d228f476e59a238400953076e3"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/scripts/fetch_open_access.py",
+      "target": "skills/sci-literature-evidence/scripts/fetch_open_access.py",
+      "decision": "retained_2_1_evidence_runtime",
+      "incoming_sha256": "172adf50f3b7a88f02e0e09461a7dc48a03e283cec55bbc330650acd52dcf466",
+      "merged_sha256": "39d153c3d2060c7a4494c181cdb2f8e68ee573bcbfe0f4d15f9210d9436224e8"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/scripts/license_check.py",
+      "target": "skills/sci-literature-evidence/scripts/license_check.py",
+      "decision": "retained_2_1_evidence_runtime",
+      "incoming_sha256": "41205bf40dc0bad1bf451f73b76168aaec2303eeca3247d062a06821ed00dfb7",
+      "merged_sha256": "41205bf40dc0bad1bf451f73b76168aaec2303eeca3247d062a06821ed00dfb7"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/scripts/search_openalex.py",
+      "target": "skills/sci-literature-evidence/scripts/search_openalex.py",
+      "decision": "retained_2_1_evidence_runtime",
+      "incoming_sha256": "9c97465365ea625e2be9a0b5d0c2ebc3259518f45c6c2281d61964cb9c05f638",
+      "merged_sha256": "037c051de1b929d8769d017a723c5a3a367e10ef614464ec1bb8c0b6ba2678db"
+    },
+    {
+      "incoming": "skills/sci-literature-evidence/scripts/verify_evidence_quotes.py",
+      "target": "skills/sci-literature-evidence/scripts/verify_evidence_quotes.py",
+      "decision": "retained_2_1_evidence_runtime",
+      "incoming_sha256": "2d02e1c3e74acecdb4869c0b5a5c33c875290f3074fe0d9a85ab344a8bceb701",
+      "merged_sha256": "21a67f252e98b40055e48930bb9d3aaf8011c4e23811824f8579be07f3243700"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/SKILL.md",
+      "target": "skills/sci-manuscript-build/SKILL.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "cba140390f4f0a6c9f97dd0fa6cae01ecc2780caa656924824df83c183866536",
+      "merged_sha256": "42aea5304b04f6db6da0dbad9b5ec808979767a62ad5ba13676fb5d5523f5262"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/agents/openai.yaml",
+      "target": "skills/sci-manuscript-build/agents/openai.yaml",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "eff84c10bc727764871916c3d467b49c75b20e240505af4b65f5dbf2c7fb2f05",
+      "merged_sha256": "86fd2481f04f06e6310f23d992c9374df66d505f2b942be821eff3667d875919"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/assets/manuscript_kit/README.md",
+      "target": "skills/sci-manuscript-build/assets/manuscript_kit/README.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "ff157aed4abd92a636660fcc207b2cc71b118e0cd202a1256c0a5d56277b700f",
+      "merged_sha256": "7ce4888a7cc694635d5a39608ec9e44fe9407136d1b6025a6c0d8a05bb5be17a"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/assets/manuscript_kit/build_manuscript.py",
+      "target": "skills/sci-manuscript-build/assets/manuscript_kit/build_manuscript.py",
+      "decision": "retained_2_1_runtime_or_safe_placeholder_see_merge_notes",
+      "incoming_sha256": "9c6fc63b73a9e62a85b95f68e0d077c4b000024fafdd915c543f16a47d27e0a5",
+      "merged_sha256": "5f211d88037c1e9619241fbe8234e043336fc8b8716bab581d83fd86eac08b17"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/assets/manuscript_kit/check_manuscript.py",
+      "target": "skills/sci-manuscript-build/assets/manuscript_kit/check_manuscript.py",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "5a30654367f2b1c3b694cc35ec2ee0a929f8d0594060ee942c2a4aa716ce287d",
+      "merged_sha256": "3561f843f10c59ba2b225e0a4b26d040158ed158df01d1f79ff719ddf9d59b1d"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/assets/manuscript_kit/content.py",
+      "target": "skills/sci-manuscript-build/assets/manuscript_kit/content.py",
+      "decision": "retained_2_1_runtime_or_safe_placeholder_see_merge_notes",
+      "incoming_sha256": "3c0542e6b8ac0fc33feabac8e1fbe9ffe8a64335ddc1b74388872aa8cfd3cb5f",
+      "merged_sha256": "da475b36db9b7b5512db04acaa71ec6478645a957ff2f113354dc8029ce85a17"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/assets/manuscript_kit/floats.py",
+      "target": "skills/sci-manuscript-build/assets/manuscript_kit/floats.py",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "13bec1b7b0f44851b57d265f16bb650cca7c0a030bbcd64ebeb3f25b6e0256d2",
+      "merged_sha256": "eba55c966405ee3505b34dff18982863eef20e2997724b21daf4edab131d3384"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/assets/manuscript_kit/manuscript.json",
+      "target": "skills/sci-manuscript-build/assets/manuscript_kit/manuscript.json",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "f57ddaebd2acb41876e2568e6a4cb3b4870300222e1ddea9ae920fbd548d78c9",
+      "merged_sha256": "4f560015e68971484e95351e602d7566b14dc285fc977cbd210e340d9db93b85"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/assets/manuscript_kit/manuscript_core.py",
+      "target": "skills/sci-manuscript-build/assets/manuscript_kit/manuscript_core.py",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "a91d0668badf6e1d84d14cd104f0a3056ecff261b800755a8a2b3afce31cf0f3",
+      "merged_sha256": "cab885a39b487928bd2798304d62c6657bd9fd3abae38b898d34cdb2ece98e62"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/assets/manuscript_kit/references.json",
+      "target": "skills/sci-manuscript-build/assets/manuscript_kit/references.json",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "39c0f38ef8f556209649d82cd9abb9ac2703d09d929b498858f8b66ad1b2eb3c",
+      "merged_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/assets/manuscript_kit/style_limits.json",
+      "target": "skills/sci-manuscript-build/assets/manuscript_kit/style_limits.json",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "06e392828073e40738ace32d0ab6893c66c5d0ee3a95c38d81ac5b864e94fe63",
+      "merged_sha256": "b1eb521e5b6aabf586777f14ff54d6dd712a1fa62816c82224c6bc8001b44fcf"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/assets/manuscript_kit/style_limits.py",
+      "target": "skills/sci-manuscript-build/assets/manuscript_kit/style_limits.py",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "e7ff2e3ed96c07503d0e5b1a2a543c949fc61bf17188bd36a488e0ccf8e1d6e9",
+      "merged_sha256": "3a10ae045d3ba72899ef4523611ed436e023f8d47d40f4c680519f882aff418c"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/references/build-pipeline.md",
+      "target": "skills/sci-manuscript-build/references/build-pipeline.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "e69fa5ce77abbae62a6f5e8abcf995f11004dc6f8b789762e40d9db1874b4bd7",
+      "merged_sha256": "f1ac71d50ccdf6ed417d9c2534e24686716ea66761430ca17b5bcf88a1b3cc1a"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/references/content-markup.md",
+      "target": "skills/sci-manuscript-build/references/content-markup.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "5913611afdebc56a81183f545631d5d24363b09eccf514ae6c9fef1fdae720cf",
+      "merged_sha256": "0d17064a5b778823a51d1965923c2ebab3d076e082f0a56e7b70f85a71ae8d97"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/references/migration-guide.md",
+      "target": "skills/sci-manuscript-build/references/migration-guide.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "fcc859b0cdac13874b4364cf0ed0f373df05ba9f3b24455c58944d5fcd2620fc",
+      "merged_sha256": "46f0d215668e465e9433ecd8988a13d7faf89e57c45351fa6067378a24da9d5e"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/references/versioning-delivery.md",
+      "target": "skills/sci-manuscript-build/references/versioning-delivery.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "dad8b6a21c628cbb98b9ba7c43456faf28d451257036fd0a5a1deeeeb74d3805",
+      "merged_sha256": "342d16bfb5d39ebe331db9a0dc21fbd8b303853f0d9f1cd708e22b160aa02b03"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/scripts/new_project.py",
+      "target": "skills/sci-manuscript-build/scripts/new_project.py",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "c2c79ef35e3b4f52645cafb689ea21c8a4db850a3983489a758f1fc1eff8dff8",
+      "merged_sha256": "81bd9c6cdf1c964c39a1aa2fe55234dd81067b092667e8186124e5db4279064a"
+    },
+    {
+      "incoming": "skills/sci-manuscript-build/scripts/render_check.py",
+      "target": "skills/sci-manuscript-build/scripts/render_check.py",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "de554009e1de4ca7cc6887935bc347a1723fe4bd718a7815ecb569d1b38815be",
+      "merged_sha256": "0fd43824e8253bf34a95ed968ac1ce76f21aa326328ffb0a13fcd21c3c02b055"
+    },
+    {
+      "incoming": "skills/sci-manuscript-review/SKILL.md",
+      "target": "skills/sci-manuscript-review/SKILL.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "349cb1a8cf2526fba8f158f9e6c6fda73a79db2e6c4279286c01f58966f4c79d",
+      "merged_sha256": "33d8c63b7a23df9b5ad566d09c72a6f359064b23cfc22cc85c4f777ac1da5bab"
+    },
+    {
+      "incoming": "skills/sci-manuscript-review/agents/openai.yaml",
+      "target": "skills/sci-manuscript-review/agents/openai.yaml",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "781e16e93a8105e5e436cab868048469348351377badcd6cacdf49f7d5fd6bb5",
+      "merged_sha256": "2d2aa5e23d6f9fc6f456cb867a61677c86333cbb5c3ddeec5004e9acb81b67d0"
+    },
+    {
+      "incoming": "skills/sci-manuscript-review/references/ai-detector-reports.md",
+      "target": "skills/sci-manuscript-review/references/ai-detector-reports.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "3d2978607db2cdbcfad3f64cd711e459fd86814efab290efa74d47e8be987035",
+      "merged_sha256": "2e09182a62bdc71125961dbabd06c41a7659c3ed09f37fb070fa4a3d20106ccb"
+    },
+    {
+      "incoming": "skills/sci-manuscript-review/references/audit-dimensions.md",
+      "target": "skills/sci-manuscript-review/references/audit-dimensions.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "45fa2bab8f60b664156b754d9bc02427beee373c8c231564dc0f367f77fba329",
+      "merged_sha256": "67da1e4087aa2a5cb990bf16d37c4d20f422c1855c2c9fe29ed7c340ae05aff4"
+    },
+    {
+      "incoming": "skills/sci-manuscript-review/references/parallel-audit-recipe.md",
+      "target": "skills/sci-manuscript-review/references/parallel-audit-recipe.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "fdc27b7ea59de3bb804a12087b8e2fb7213b4cfe8d012200b18ea8e2ff436436",
+      "merged_sha256": "5f42192ad3a4c0523fd3ef645cc2019cd743299ee2722f14d1d99a2555db7075"
+    },
+    {
+      "incoming": "skills/sci-manuscript-review/references/readiness-rubric.md",
+      "target": "skills/sci-manuscript-review/references/readiness-rubric.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "2b9341c44f0de99f1d09f0564939df62c59061bcbc5f6de800a56ae6c78916fe",
+      "merged_sha256": "a6e462a2e4025d29d3c894281b842c6de47d2fa3879be8a76b38e92acf824a2f"
+    },
+    {
+      "incoming": "skills/sci-manuscript-review/references/rebuttal-letters.md",
+      "target": "skills/sci-manuscript-review/references/rebuttal-letters.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "5db4434fd70f467628485cf347e1e67ef65ab44a244395b1d3776e0d6984b26d",
+      "merged_sha256": "88e0f3174e32f647edcc3ef01f058dbfbf44a1ff108efbe4d75e4c7209813b91"
+    },
+    {
+      "incoming": "skills/sci-manuscript-review/references/referee-simulation.md",
+      "target": "skills/sci-manuscript-review/references/referee-simulation.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "e65a39cd1688441d55545ae2ec834bd606a7644c578b8927a4c9fd0bb61df090",
+      "merged_sha256": "455f4d660e0f2b704f2762b40a179e31427c7bb5a2322dfe085e4f7b94d806ff"
+    },
+    {
+      "incoming": "skills/sci-manuscript-review/scripts/audit_numbers.py",
+      "target": "skills/sci-manuscript-review/scripts/audit_numbers.py",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "312d583a10c1333acda4a9c405c51b321f239c2a1920a42ed12c144d3854b649",
+      "merged_sha256": "dccbc66e5120116e0a0fe8e5628949a6827cf186fefb4d468bea64f3cbb0235c"
+    },
+    {
+      "incoming": "skills/sci-prose-style/SKILL.md",
+      "target": "skills/sci-prose-style/SKILL.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "d3ea1e740b5acef6540763582e9a414d6a45d771fe797419f37935548cdd8041",
+      "merged_sha256": "525a551e5d4e190bb71a37b8bd75761c455394ac678b7418cf816bcc06949cf8"
+    },
+    {
+      "incoming": "skills/sci-prose-style/agents/openai.yaml",
+      "target": "skills/sci-prose-style/agents/openai.yaml",
+      "decision": "identical_to_incoming",
+      "incoming_sha256": "7c243f2e36dafd0aee0fca0fbbca7a03f6ddf4ec61ce2ab5cb74d4a96d2c2e45",
+      "merged_sha256": "7c243f2e36dafd0aee0fca0fbbca7a03f6ddf4ec61ce2ab5cb74d4a96d2c2e45"
+    },
+    {
+      "incoming": "skills/sci-prose-style/assets/style_limits.json",
+      "target": "skills/sci-prose-style/assets/style_limits.json",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "06e392828073e40738ace32d0ab6893c66c5d0ee3a95c38d81ac5b864e94fe63",
+      "merged_sha256": "b1eb521e5b6aabf586777f14ff54d6dd712a1fa62816c82224c6bc8001b44fcf"
+    },
+    {
+      "incoming": "skills/sci-prose-style/references/ai-flavor-lexicon.md",
+      "target": "skills/sci-prose-style/references/ai-flavor-lexicon.md",
+      "decision": "identical_to_incoming",
+      "incoming_sha256": "b3d85b73b5fbe5f4ec91cfded9598c0b997d3310a19f85a08057d679aa64743a",
+      "merged_sha256": "b3d85b73b5fbe5f4ec91cfded9598c0b997d3310a19f85a08057d679aa64743a"
+    },
+    {
+      "incoming": "skills/sci-prose-style/references/bilingual-consistency.md",
+      "target": "skills/sci-prose-style/references/bilingual-consistency.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "081a0c8cbf4f3af6f668c4fceee46a0957f6fade9688d32ef759df5c5848559c",
+      "merged_sha256": "3904983b1efab927bab6b7ca14593b0cfa84f658b61ce9d0468961689923969a"
+    },
+    {
+      "incoming": "skills/sci-prose-style/references/human-line-of-thought.md",
+      "target": "skills/sci-prose-style/references/human-line-of-thought.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "b065fa535194adb711ec39d90859c5f04f029e92baa50085980d2baf3217a3b6",
+      "merged_sha256": "9852c247bee3edd93d9ee1f163fdcdb15c59498fed61739b58ac25b6f710edf3"
+    },
+    {
+      "incoming": "skills/sci-prose-style/references/introductions.md",
+      "target": "skills/sci-prose-style/references/introductions.md",
+      "decision": "identical_to_incoming",
+      "incoming_sha256": "6fca1a17a2052d2a70e4748cda697eaec47a3de4b413534d79b6dcb72690e4a6",
+      "merged_sha256": "6fca1a17a2052d2a70e4748cda697eaec47a3de4b413534d79b6dcb72690e4a6"
+    },
+    {
+      "incoming": "skills/sci-prose-style/references/outlook-conclusions.md",
+      "target": "skills/sci-prose-style/references/outlook-conclusions.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "f76a62fd127a17723e14c446526714f5dc82da7c109119ecd459711994dbd70e",
+      "merged_sha256": "aa4777628c1777dd4f3baf324bbda3ecfa6caf80b5d703744f587aaf443f072f"
+    },
+    {
+      "incoming": "skills/sci-prose-style/references/paragraph-sentence-craft.md",
+      "target": "skills/sci-prose-style/references/paragraph-sentence-craft.md",
+      "decision": "identical_to_incoming",
+      "incoming_sha256": "96bd537f9a11803e80aec59b886e807e29924f8f7fccfd3fd5eaed9055917c05",
+      "merged_sha256": "96bd537f9a11803e80aec59b886e807e29924f8f7fccfd3fd5eaed9055917c05"
+    },
+    {
+      "incoming": "skills/sci-prose-style/references/quantitative-reporting.md",
+      "target": "skills/sci-prose-style/references/quantitative-reporting.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "843e6236b34f5f6b8f7b0b065fe44f2aefae8a7ebc64f2d0571897b68cdab778",
+      "merged_sha256": "4c9d2b66c13ed639084ae9e62b510e03aa98b35f1528ad9c33dba580306281e5"
+    },
+    {
+      "incoming": "skills/sci-prose-style/references/style-rules.md",
+      "target": "skills/sci-prose-style/references/style-rules.md",
+      "decision": "identical_to_incoming",
+      "incoming_sha256": "a00fe3ca0a6ef449574ee6f170add18a91676fb8e65b2dab74a18cfda5261862",
+      "merged_sha256": "a00fe3ca0a6ef449574ee6f170add18a91676fb8e65b2dab74a18cfda5261862"
+    },
+    {
+      "incoming": "skills/sci-prose-style/references/terminology-template.md",
+      "target": "skills/sci-prose-style/references/terminology-template.md",
+      "decision": "identical_to_incoming",
+      "incoming_sha256": "db96159e85c162de89a55fd973b099d9a50f14f269df55331f327237f9e333ea",
+      "merged_sha256": "db96159e85c162de89a55fd973b099d9a50f14f269df55331f327237f9e333ea"
+    },
+    {
+      "incoming": "skills/sci-prose-style/references/titles-abstracts.md",
+      "target": "skills/sci-prose-style/references/titles-abstracts.md",
+      "decision": "identical_to_incoming",
+      "incoming_sha256": "8bfa273a4a7cd54e27f07f62ab13353c1616236ac36852a06aaed5b2d8c4ef4d",
+      "merged_sha256": "8bfa273a4a7cd54e27f07f62ab13353c1616236ac36852a06aaed5b2d8c4ef4d"
+    },
+    {
+      "incoming": "skills/sci-prose-style/scripts/prose_lint.py",
+      "target": "skills/sci-prose-style/scripts/prose_lint.py",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "75be10b92c53051c8440c9a0e71448c5a80a4739eebb98507acd64f5400b6bd5",
+      "merged_sha256": "239ab3ecc265c1ba07c4085e013523df16b6d3f2de7266db4523a6b076c8f06a"
+    },
+    {
+      "incoming": "skills/sci-prose-style/scripts/style_limits.py",
+      "target": "skills/sci-prose-style/scripts/style_limits.py",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "e7ff2e3ed96c07503d0e5b1a2a543c949fc61bf17188bd36a488e0ccf8e1d6e9",
+      "merged_sha256": "3a10ae045d3ba72899ef4523611ed436e023f8d47d40f4c680519f882aff418c"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/SKILL.md",
+      "target": "skills/sci-writing-orchestrator/SKILL.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "f77e4aeab769cd9cbf532f83c9d21026ccd099b2bc8d4470062376584df14b62",
+      "merged_sha256": "2eaf0ec32697218e2c7a3afea1ce46a5d5f5e6a787a3353d6adf2824e3cb43b5"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/agents/openai.yaml",
+      "target": "skills/sci-writing-orchestrator/agents/openai.yaml",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "7195c15b4e520fe7406b6e9ed7d677d074573bba97dba7072e70db64a54fd68f",
+      "merged_sha256": "8eadd52f81cf222d4e253c6841ce38e4ebbd52d298a9b59ac4a9c8fa9eced4c6"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/01-review-rebuild-and-variants.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/01-review-rebuild-and-variants.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "377b78bc3b112052487edaae71d84f5d9eba12627c55c6eb23355282179bdcf1",
+      "merged_sha256": "377b78bc3b112052487edaae71d84f5d9eba12627c55c6eb23355282179bdcf1"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/02-new-research-article.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/02-new-research-article.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "381bfe8c3b8fbac80b82e481854e2bf7ad539ec309f74b347a588c9ac92e26b6",
+      "merged_sha256": "381bfe8c3b8fbac80b82e481854e2bf7ad539ec309f74b347a588c9ac92e26b6"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/03-reviewer-response.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/03-reviewer-response.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "01c11ee33ccbd27068720c7a34552e1384290ba39ccaa6a55280882d0bc8fe86",
+      "merged_sha256": "01c11ee33ccbd27068720c7a34552e1384290ba39ccaa6a55280882d0bc8fe86"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/04-paragraph-polish.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/04-paragraph-polish.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "cb5e009ff075eb599c3b6d2c062bfec7fb7fb8ae3a04ee7a9a0c3f3a69a8febd",
+      "merged_sha256": "cb5e009ff075eb599c3b6d2c062bfec7fb7fb8ae3a04ee7a9a0c3f3a69a8febd"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/05-detector-guided-revision.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/05-detector-guided-revision.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "36754f15210a01fe57b97752bf95987194acb3856126da5e1e72f64517b2e324",
+      "merged_sha256": "36754f15210a01fe57b97752bf95987194acb3856126da5e1e72f64517b2e324"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/06-one-fact-set-three-drafts.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/06-one-fact-set-three-drafts.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "35e9ae4b7b743a1ed2deba3aadfcc62d01cfcc372242f2ef14e67f85b3264ca7",
+      "merged_sha256": "35e9ae4b7b743a1ed2deba3aadfcc62d01cfcc372242f2ef14e67f85b3264ca7"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/07-guarded-batch-rewrite.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/07-guarded-batch-rewrite.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "f4324698f02a9243d8559c4c684477a07ac9d1a5680bd95c11a8cec5242fe3a9",
+      "merged_sha256": "f4324698f02a9243d8559c4c684477a07ac9d1a5680bd95c11a8cec5242fe3a9"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/08-figure-panels-from-published-sources.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/08-figure-panels-from-published-sources.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "7e79084cbf290a6fdb2121a0cec33705614527ac109e18c9f8471ea13b78b165",
+      "merged_sha256": "7e79084cbf290a6fdb2121a0cec33705614527ac109e18c9f8471ea13b78b165"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/09-results-and-discussion-across-fields.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/09-results-and-discussion-across-fields.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "61d695c87b30abca2cbb63335adaf7987bd88c642bde2fe4bbcfd8a3edd9946f",
+      "merged_sha256": "61d695c87b30abca2cbb63335adaf7987bd88c642bde2fe4bbcfd8a3edd9946f"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/10-introductions-abstracts-titles.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/10-introductions-abstracts-titles.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "0dfc5154870cc6f17eaf262ee1c244cfabc3b61fd0ff4e5690113ba0b950603f",
+      "merged_sha256": "0dfc5154870cc6f17eaf262ee1c244cfabc3b61fd0ff4e5690113ba0b950603f"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/11-proposal-aims-and-feasibility.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/11-proposal-aims-and-feasibility.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "0901b1e6392fa658fc3d3322b8cafa3a48c85d27f6745166e443c404f6234931",
+      "merged_sha256": "0901b1e6392fa658fc3d3322b8cafa3a48c85d27f6745166e443c404f6234931"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/12-thesis-from-published-papers.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/12-thesis-from-published-papers.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "8d4db513986759a3b41078a9e5c4fd34b99445cda0288383a1ee375f0382e11a",
+      "merged_sha256": "8d4db513986759a3b41078a9e5c4fd34b99445cda0288383a1ee375f0382e11a"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/13-editing-an-authors-draft.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/13-editing-an-authors-draft.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "422a979584a039b33e3a28f7cd19cc778078ab0c6a5fdcb73c49ceca423147ca",
+      "merged_sha256": "422a979584a039b33e3a28f7cd19cc778078ab0c6a5fdcb73c49ceca423147ca"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/14-chinese-native-scientific-prose.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/14-chinese-native-scientific-prose.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "1968522793e12244a8ed10e1d4548041a20d94e49492711bb20eee68557d72a1",
+      "merged_sha256": "1968522793e12244a8ed10e1d4548041a20d94e49492711bb20eee68557d72a1"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/15-rebuttal-hard-comments.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/15-rebuttal-hard-comments.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "8516ea2f1658ac2f42bcb9797aa9bf1e9d56e6197115a57e341457f2810948b4",
+      "merged_sha256": "8516ea2f1658ac2f42bcb9797aa9bf1e9d56e6197115a57e341457f2810948b4"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/16-safe-delivery-and-versioning.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/16-safe-delivery-and-versioning.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "25a913a3187ff9b5b4b569a47f1a3a1df87a623c9750678abd307bfe9797f6a4",
+      "merged_sha256": "25a913a3187ff9b5b4b569a47f1a3a1df87a623c9750678abd307bfe9797f6a4"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/case-studies/INDEX.md",
+      "target": "skills/sci-writing-orchestrator/case-studies/methods/INDEX.md",
+      "decision": "preserved_in_method_bank",
+      "incoming_sha256": "296aad17ade50092aa19c89b0e1e6b34d70cbe5a18279b84d3a0c323589c5c07",
+      "merged_sha256": "296aad17ade50092aa19c89b0e1e6b34d70cbe5a18279b84d3a0c323589c5c07"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/presets/INDEX.md",
+      "target": "skills/sci-writing-orchestrator/presets/editorial-1.3/INDEX.md",
+      "decision": "preserved_as_optional_editorial_scaffold",
+      "incoming_sha256": "e40f2854fd1b5872effc1c5cbf992282e323c0f45e566509c34c259ecf45c13b",
+      "merged_sha256": "e40f2854fd1b5872effc1c5cbf992282e323c0f45e566509c34c259ecf45c13b"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/presets/article-nature.json",
+      "target": "skills/sci-writing-orchestrator/presets/editorial-1.3/article-nature.json",
+      "decision": "preserved_as_optional_editorial_scaffold",
+      "incoming_sha256": "a9d6730974e3375dd07ad68f65712696d016818008e40ff87ea4e590aebf3f09",
+      "merged_sha256": "a9d6730974e3375dd07ad68f65712696d016818008e40ff87ea4e590aebf3f09"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/presets/conference-paper.json",
+      "target": "skills/sci-writing-orchestrator/presets/editorial-1.3/conference-paper.json",
+      "decision": "preserved_as_optional_editorial_scaffold",
+      "incoming_sha256": "07491742d9dca00ae84074212800e61c240f76f7ee95da4c1f914c6585d6d384",
+      "merged_sha256": "07491742d9dca00ae84074212800e61c240f76f7ee95da4c1f914c6585d6d384"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/presets/letter.json",
+      "target": "skills/sci-writing-orchestrator/presets/editorial-1.3/letter.json",
+      "decision": "preserved_as_optional_editorial_scaffold",
+      "incoming_sha256": "ef67849b9887284110d63e00ade73afad3fb7ebd8f77a0b85e9a14be8adc986d",
+      "merged_sha256": "ef67849b9887284110d63e00ade73afad3fb7ebd8f77a0b85e9a14be8adc986d"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/presets/perspective.json",
+      "target": "skills/sci-writing-orchestrator/presets/editorial-1.3/perspective.json",
+      "decision": "preserved_as_optional_editorial_scaffold",
+      "incoming_sha256": "051811c3f7ae2ba767bb08bcca05c584963030871a206f2668664f9ed9155da5",
+      "merged_sha256": "051811c3f7ae2ba767bb08bcca05c584963030871a206f2668664f9ed9155da5"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/presets/proposal-nsfc.json",
+      "target": "skills/sci-writing-orchestrator/presets/editorial-1.3/proposal-nsfc.json",
+      "decision": "preserved_as_optional_editorial_scaffold",
+      "incoming_sha256": "7e4f03845768b335639ef3f9eab81f2ae680c4ccda4ff4b1be2f8a000e2f3e7d",
+      "merged_sha256": "7e4f03845768b335639ef3f9eab81f2ae680c4ccda4ff4b1be2f8a000e2f3e7d"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/presets/proposal-rgc.json",
+      "target": "skills/sci-writing-orchestrator/presets/editorial-1.3/proposal-rgc.json",
+      "decision": "preserved_as_optional_editorial_scaffold",
+      "incoming_sha256": "b0ce47ab228adb17f4482cac333f1a0152e9c248b685fa52a64ef6103010606c",
+      "merged_sha256": "b0ce47ab228adb17f4482cac333f1a0152e9c248b685fa52a64ef6103010606c"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/presets/rebuttal.json",
+      "target": "skills/sci-writing-orchestrator/presets/editorial-1.3/rebuttal.json",
+      "decision": "preserved_as_optional_editorial_scaffold",
+      "incoming_sha256": "8ca0cd0905ed05b505569d8d41375fbe633dd063f61cbb4580588cf83b9e0fdc",
+      "merged_sha256": "8ca0cd0905ed05b505569d8d41375fbe633dd063f61cbb4580588cf83b9e0fdc"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/presets/review-chapters.json",
+      "target": "skills/sci-writing-orchestrator/presets/editorial-1.3/review-chapters.json",
+      "decision": "preserved_as_optional_editorial_scaffold",
+      "incoming_sha256": "956ff2fd7c2b6965baeff7baec7004e967a34ae2bb9e59eddb2627748e8f709a",
+      "merged_sha256": "956ff2fd7c2b6965baeff7baec7004e967a34ae2bb9e59eddb2627748e8f709a"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/presets/review.json",
+      "target": "skills/sci-writing-orchestrator/presets/editorial-1.3/review.json",
+      "decision": "preserved_as_optional_editorial_scaffold",
+      "incoming_sha256": "e54c3d88c28105a201557132ca5aaf4776995fbc5c6a2064b660d10f09fe6fef",
+      "merged_sha256": "e54c3d88c28105a201557132ca5aaf4776995fbc5c6a2064b660d10f09fe6fef"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/presets/thesis-chapter.json",
+      "target": "skills/sci-writing-orchestrator/presets/editorial-1.3/thesis-chapter.json",
+      "decision": "preserved_as_optional_editorial_scaffold",
+      "incoming_sha256": "e4d50643550afe096eca47c2db06c75f6737a2922d42dc96c8bc0395164ddda8",
+      "merged_sha256": "e4d50643550afe096eca47c2db06c75f6737a2922d42dc96c8bc0395164ddda8"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/references/article-architecture.md",
+      "target": "skills/sci-writing-orchestrator/references/article-architecture.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "2122050713ef507dd7afd9cfc5ae5f69859a5d231aba04d87f113c21afea9adf",
+      "merged_sha256": "7605ea9896f9056f5f6398fd574c0b0e7331d052340d73e57cb8ae2387be8a36"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/references/meeting-to-decisions.md",
+      "target": "skills/sci-writing-orchestrator/references/meeting-to-decisions.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "50228c8f8cb6f1adf611d440ce29ae7b2998d9c0ae598b984cee66ec3e369dbe",
+      "merged_sha256": "034d1301e260fbd59ba83e39b52af89ff88a9b076189cec2c4d59bca3745507c"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/references/proposal-and-thesis.md",
+      "target": "skills/sci-writing-orchestrator/references/proposal-and-thesis.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "d473925780684e8da743888418a4cc099eff4319467c495a82fbe38f52ba0af6",
+      "merged_sha256": "b15ad5be94171846818e334e82d39dd67eb2e1b50b714216e17cc31003de0813"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/references/rebuttal-and-cover-letter.md",
+      "target": "skills/sci-writing-orchestrator/references/rebuttal-and-cover-letter.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "f4a8cc15b04f54fc1a6e73f9fabd4be34510e0ff92870082dcc08e5898838679",
+      "merged_sha256": "d5a4dcb8645c38489f2e2f8f0b64865680d5c1c7485880fa00057274f38ad86e"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/references/review-architecture.md",
+      "target": "skills/sci-writing-orchestrator/references/review-architecture.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "a5df4c0ed9970a47c9f8c2e5b1f905b52b6e11ca8aeed1ac799002e1db07cb5c",
+      "merged_sha256": "c4c13c8bd33a49e69bfa7470bd5e06f80a309b91f93f79dd8a7edcb10c20780e"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/references/writing-mode-router.md",
+      "target": "skills/sci-writing-orchestrator/references/writing-mode-router.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "fbf3bf9dc28d5628b8fa7017f7c46a2157e5bc85c54e449a575605b3a35f738b",
+      "merged_sha256": "ad36b5d11dc97130e2f9a55dcd5c80408b3f0326b9bb7a1c8e927640c08d9625"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/references/writing-plan-contract.md",
+      "target": "skills/sci-writing-orchestrator/references/writing-plan-contract.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "991966c67103c424c6117d68e60d0c10ea7cf9d058600d62044a3a4cf8e0a1cb",
+      "merged_sha256": "9cb909eee78d5adc202e11b2720fe2e091e90db6ebd1db1681da9cb35796afd9"
+    },
+    {
+      "incoming": "skills/sci-writing-orchestrator/scripts/transcribe_meeting.py",
+      "target": "skills/sci-writing-orchestrator/scripts/transcribe_meeting.py",
+      "decision": "identical_to_incoming",
+      "incoming_sha256": "f1dfac7abb68e5249d0663449fde71330863228236788e18c6e7a9fae2a729bd",
+      "merged_sha256": "f1dfac7abb68e5249d0663449fde71330863228236788e18c6e7a9fae2a729bd"
+    },
+    {
+      "incoming": "tools/global_instructions.md",
+      "target": "tools/global_instructions.md",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "d210dbed6fcb282a4239e9fdfe3a5a6a706d2b691c526d767372a3bd07bff173",
+      "merged_sha256": "5ea2667b424dd5004363ca9e33254e4c2cbd176ff9081447e64f13b99d6c4434"
+    },
+    {
+      "incoming": "tools/install.py",
+      "target": "tools/install.py",
+      "decision": "retained_2_1_runtime_or_safe_placeholder_see_merge_notes",
+      "incoming_sha256": "6235dd26cb6f7028e3548cb03625f76ae2794cdbaf3da29dc986b3d52df4f8c0",
+      "merged_sha256": "4ca202f315f139d28d8756e45ba13ef988c5e26653cfe5da6068db6027c1c966"
+    },
+    {
+      "incoming": "tools/validate_skills.py",
+      "target": "tools/validate_skills.py",
+      "decision": "adapted_or_merged",
+      "incoming_sha256": "0e8ff149f2356e55307728b2230880146fdf822926d1178616e27b5a58e857df",
+      "merged_sha256": "0f1758d04f79278d46b88c150baa7ba853af551fd4705c5ed37ba6893e9f5590"
+    }
+  ]
+}

@@ -90,5 +90,75 @@
   "manual": [
     "Assess clarity, logical qualification and paragraph purpose in context.",
     "Preserve measured conditions, uncertainty and necessary technical terms."
-  ]
+  ],
+  "rhythm": {
+    "about": "A paragraph of min_sentences or more whose sentence lengths all fall within max_range words (English) or max_range_zh characters (Chinese) is flagged as uniform-rhythm. check_manuscript.py warns when explanation connectives (so, because, since, then, therefore, thus, hence; 因此、从而、进而一类) exceed max_connectives_per_100 per 100 sentences in either language; aim for about 8.",
+    "min_sentences": 5,
+    "max_range": 8,
+    "max_range_zh": 12,
+    "fix": "let the content set the length: a long sentence for a mechanism with its conditions, a short one for a plain result",
+    "max_connectives_per_100": 10
+  },
+  "zh": {
+    "about": "Checks for Chinese paragraphs (prose_lint.py). Template phrases are weight 2; the connective, ordinal and question checks follow the English line-of-thought rules.",
+    "long_sentence_chars": 90,
+    "connective": {
+      "label": "zh explanation connective",
+      "pattern": "因此|从而|进而|所以|由此|于是|因而|故而",
+      "min_sentences": 4,
+      "max_share": 0.4,
+      "fix": "因果主要由句序和具名的研究者承担，只在读者会漏掉关系的地方保留连接词"
+    },
+    "question": "[？?]$|^(如何|为何|为什么|是否|哪些|什么|怎样|能否)",
+    "question_fix": "不用设问和内嵌问句，直接写出结论或依赖关系",
+    "ordinal": "首先.{0,300}其次|一方面.{0,300}另一方面",
+    "ordinal_fix": "并列内容没有先后时，按区分各组的依据命名各组",
+    "template": [
+      {
+        "label": "值得注意的是",
+        "pattern": "值得(注意|一提|关注|指出)的是",
+        "fix": "删去，直接写事实"
+      },
+      {
+        "label": "综上所述",
+        "pattern": "综上所述|总而言之|总的来说|总之，",
+        "fix": "删去总结语，结论写成带依据和范围的陈述"
+      },
+      {
+        "label": "提供了新思路",
+        "pattern": "提供了?(一种|一条)?(新的?|全新的?)(思路|途径|视角|可能|方向)",
+        "fix": "写出具体做到了什么、在什么条件下"
+      },
+      {
+        "label": "奠定了基础",
+        "pattern": "奠定了?(坚实的?|重要的?|良好的?)?基础",
+        "fix": "写出下一步具体可以做什么"
+      },
+      {
+        "label": "发挥着重要作用",
+        "pattern": "(发挥|起)着?(重要|关键|至关重要|核心)的?作用|扮演着?(重要|关键|核心)的?角色",
+        "fix": "写出它具体做什么"
+      },
+      {
+        "label": "引起了广泛关注",
+        "pattern": "(引起|受到|吸引)了?(广泛|大量|越来越多|极大)的?(关注|兴趣|重视)",
+        "fix": "删去，或写出具体的研究进展"
+      },
+      {
+        "label": "具有重要意义",
+        "pattern": "具有(重要|深远|重大|广泛)的?(意义|价值)|(广阔|巨大|良好)的?应用前景",
+        "fix": "写出具体的用途和条件"
+      },
+      {
+        "label": "随着……的发展",
+        "pattern": "随着.{1,20}的(快速|迅速|飞速|不断|蓬勃)?发展",
+        "fix": "从具体的问题或事实开头"
+      },
+      {
+        "label": "为……提供了有力支撑",
+        "pattern": "提供了?(有力|坚实|重要)的?(支撑|支持|保障)",
+        "fix": "写出证据本身"
+      }
+    ]
+  }
 }

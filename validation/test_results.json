@@ -1,60 +1,91 @@
 {
-  "version": "2.1.0",
-  "date": "2026-11-01",
-  "skill_count": 6,
-  "sources": {
-    "github_head": "b759d8779d731b10f13133830313c4c30629738d",
-    "implementation_baseline": "0457e77",
-    "local_installed_versions": [
-      "1.0.0",
-      "1.1.0"
-    ]
-  },
-  "structure_validator": {
-    "errors": 0,
-    "warnings": 0
-  },
-  "official_skill_format": {
-    "passed": 6
+  "version": "2.2.0",
+  "date": "2026-11-25",
+  "github_base": "086d3a5cc8d1a002a1f0dcb8df4d193b8423eb1f",
+  "incoming_zip_sha256": "506f9599ae06c18dc437b7a608ea9c60848c417728c83648020010bc354a274e",
+  "installed_comparison": {
+    "codex_skill_files": 103,
+    "all_match_incoming": true,
+    "agents_copy_is_older": true,
+    "global_install_modified": false
   },
   "python310": {
     "version": "3.10.20",
-    "total": 45,
-    "passed": 45,
+    "total": 59,
+    "passed": 59,
     "failed": 0,
     "errors": 0,
     "skipped": 0
   },
   "python312": {
-    "version": "3.12.14",
-    "total": 45,
-    "passed": 42,
+    "total": 59,
+    "passed": 56,
     "failed": 0,
     "errors": 0,
     "skipped": 3,
-    "skip_reason": "Optional local PDF/library tests require PyMuPDF/requests not available in bundled runtime."
+    "reason": "Optional PDF/library dependencies unavailable in bundled runtime"
   },
-  "claude_plugin_validation": {
-    "cli_version": "2.1.316",
-    "passed": true,
-    "advisory": "No optional plugin listing icon; not an installation/manifest error."
-  },
-  "temporary_install": {
-    "scope": "Temporary project only; real global skills/instructions unchanged",
+  "skill_format": [
+    {
+      "skill": "sci-figure-design",
+      "passed": true
+    },
+    {
+      "skill": "sci-literature-evidence",
+      "passed": true
+    },
+    {
+      "skill": "sci-manuscript-build",
+      "passed": true
+    },
+    {
+      "skill": "sci-manuscript-review",
+      "passed": true
+    },
+    {
+      "skill": "sci-prose-style",
+      "passed": true
+    },
+    {
+      "skill": "sci-writing-orchestrator",
+      "passed": true
+    }
+  ],
+  "temporary_installation": {
+    "version": "2.2.0",
     "installed_skills": 6,
     "preserved_previous_skills": 6,
-    "version": "2.1.0",
-    "instructions_injected": false,
+    "no_inject": true,
+    "scope": "temporary project only",
     "passed": true
   },
+  "plugin_cli_passed": true,
+  "protected_runtime_files_byte_identical_to_2_1": {
+    "tools/install.py": "4ca202f315f139d28d8756e45ba13ef988c5e26653cfe5da6068db6027c1c966",
+    "tools/checksums.py": "9a41645912cd6af8396674f57438f263734c1f13099a9037c7291edc9c65e9a3",
+    "tools/sync_plugin_manifests.py": "2b5e7b81c68b4c749a57b57da5db532dd406d905012cb7ad8dcaaee6f170e9b6",
+    "skills/sci-manuscript-build/assets/manuscript_kit/build_manuscript.py": "5f211d88037c1e9619241fbe8234e043336fc8b8716bab581d83fd86eac08b17",
+    "skills/sci-manuscript-build/assets/manuscript_kit/project_source.py": "f6d80674372ff2d8004a3e5294a9ecba56dfeba6ac1ed2d482eb0f7d01ce2f62",
+    "skills/sci-manuscript-build/assets/manuscript_kit/record_review.py": "2fb55e05815a69d7ad9ccfdea095a1d557f375f70f8e584152c5903688a9a6b5",
+    "skills/sci-manuscript-build/assets/manuscript_kit/evidence_tools.py": "759d248a5e921e9d6bc69bf6293204d9de9beb1e00b012aeadaff220f52cb6af",
+    "skills/sci-figure-design/scripts/figure_kit.py": "a4a9eb7a72e8a02c157a07c937125204e6fec10789b97b301c8a64b487d0beec",
+    "skills/sci-literature-evidence/scripts/extract_pdf_text.py": "4387f9b77976569b20361a3c972aa88ad7d4c2d228f476e59a238400953076e3",
+    "skills/sci-literature-evidence/scripts/evidence_tools.py": "759d248a5e921e9d6bc69bf6293204d9de9beb1e00b012aeadaff220f52cb6af",
+    "skills/sci-literature-evidence/scripts/verify_evidence_quotes.py": "21a67f252e98b40055e48930bb9d3aaf8011c4e23811824f8579be07f3243700",
+    "skills/sci-literature-evidence/scripts/search_openalex.py": "037c051de1b929d8769d017a723c5a3a367e10ef614464ec1bb8c0b6ba2678db",
+    "skills/sci-literature-evidence/scripts/build_library_tables.py": "61aa3394d429f3dc8bfeff11feddc61cc2acff0b47d673d849c603ecfca8ebf3",
+    "skills/sci-literature-evidence/scripts/fetch_open_access.py": "39d153c3d2060c7a4494c181cdb2f8e68ee573bcbfe0f4d15f9210d9436224e8",
+    "skills/sci-literature-evidence/scripts/license_check.py": "41205bf40dc0bad1bf451f73b76168aaec2303eeca3247d062a06821ed00dfb7",
+    "skills/sci-literature-evidence/scripts/crossref_verify.py": "72917e2f3d434b5915d4e4511f83dbd5e08e20378f37cbb829a3545894e7dc14"
+  },
   "independent_review": false,
-  "human_author_acceptance": "pending",
+  "new_visual_review_performed": false,
   "not_executed": [
-    "Online search/Crossref/PDF acquisition full end-to-end workflow",
-    "Pandoc native display-equation conversion",
-    "Complex multipage scientific manuscript/figure visual validation",
-    "Actual Codex/OpenCode/plugin installation and discovery",
-    "Hosted GitHub Actions runs",
-    "Human expert assessment of all sixteen teaching cases"
+    "Online literature/Crossref/PDF end-to-end",
+    "Pandoc native display equations",
+    "Commercial AI detectors",
+    "New document visual review",
+    "Actual global client installation/discovery",
+    "Independent field-expert validation"
   ]
 }

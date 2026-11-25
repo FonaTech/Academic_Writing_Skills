@@ -49,3 +49,7 @@ Use [case-studies/INDEX.md](case-studies/INDEX.md) for sixteen cross-domain publ
 Use the detailed mode references for review voice, research-article argument, bounded meeting decisions and external-review triage. A narrative review explains the field's progress and alternatives. Systematic/scoping reviews also report their actual search and screening methods and counts. Keep provenance administration outside narrative body text unless it is part of the method.
 
 For requested length/language variants, use stable block IDs and a correction ledger; synchronize facts and citations, then rebuild every affected variant. See [writing-plan-contract.md](references/writing-plan-contract.md) and the manuscript-build [versioning guide](../sci-manuscript-build/references/versioning-delivery.md). Keep the user's existing standing norms; a preset never authorizes relaxed source checks.
+
+
+## Default Drafting Chain for prose
+Before drafting or revising prose, use sci-prose-style's [human-line-of-thought.md](../sci-prose-style/references/human-line-of-thought.md): facts list first; argument-driven order and named actors; varied sentence lengths; explanation connectives near 8 per 100 sentences; no questions, musings, counted overviews or template phrases; end paragraphs on a fact. Run prose_lint.py on a task-local copy of the delivered prose, including chat-only prose. Preserve quantities, qualifiers, citations and requested language/variant parity. This route does not replace this skill's evidence, build, figure or review responsibilities.

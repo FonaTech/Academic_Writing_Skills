@@ -31,3 +31,7 @@ For reviewer responses, preserve each comment, answer directly and link every pr
 
 ## External reviews and requested variants
 Triage journal comments, colleague critiques and author rewrites point by point as adopted/partly adopted/rejected, with source-based reasons and actual changed locations. See [rebuttal-letters.md](references/rebuttal-letters.md). Include review voice and requested variant synchronization in the audit; a narrative-review preference never removes systematic-review methods or justified uncertainty.
+
+
+## Default Drafting Chain for prose
+Before drafting or revising prose, use sci-prose-style's [human-line-of-thought.md](../sci-prose-style/references/human-line-of-thought.md): facts list first; argument-driven order and named actors; varied sentence lengths; explanation connectives near 8 per 100 sentences; no questions, musings, counted overviews or template phrases; end paragraphs on a fact. Run prose_lint.py on a task-local copy of the delivered prose, including chat-only prose. Preserve quantities, qualifiers, citations and requested language/variant parity. This route does not replace this skill's evidence, build, figure or review responsibilities.

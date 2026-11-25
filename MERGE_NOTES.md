@@ -1,3 +1,7 @@
+# Current merge: 2.2.0
+
+The current 1.3 authoring / 2.1 runtime merge is documented in [MERGE_1.3.0.md](MERGE_1.3.0.md). The notes below describe the historical 2.1 packaging stage before its later GitHub push.
+
 # 2.1.0 合并说明
 
 日期：2026-11-01。此包由用户请求制作，未代替用户推送 GitHub，也未更新真实的全局技能目录。

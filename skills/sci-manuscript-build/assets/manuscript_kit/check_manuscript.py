@@ -64,11 +64,14 @@ def plain(text):
     return re.sub(r'\s+', ' ', text).strip()
 
 
-def sentences(text):
-    protected = re.sub(r'\b(et al|e\.g|i\.e|Fig|Figs|Eq|Eqs|Ref|Refs|ref|vs|approx|ca|cf|no)\.',
+def sentences(text: str) -> list[str]:
+    protected = re.sub(r'\b(et al|e\.g|i\.e|Fig|Figs|Eq|Eqs|Ref|Refs|vs|approx|ca|cf|No|no|Vol|vol|pp|p|'
+                       r'Nat|Commun|Rev|Chem|Phys|Mater|Appl|Lett|Adv|Electron|Photon|Sci|Soc|Proc|Technol|Eng|Bull|'
+                       r'Med|Biol|Ecol|Environ|Geol|Math|Stat|Econ|Psychol|Neurosci|Int|Res|J)\.',
                        lambda m: m.group(0).replace('.', '§'), text)
-    parts = re.split(r'(?<=[.!?])\s+(?=[A-Z0-9(])', protected)
-    return [p.replace('§', '.') for p in parts if len(p.split()) > 2]
+    protected = re.sub(r'(\d)\.(\d)', r'\1§\2', protected)
+    parts = re.split(r'(?<=[.!?\]])\s+(?=[A-Z0-9(“"\[])', protected)   # a bracketed note after a sentence starts a new one
+    return [p.replace('§', '.').strip() for p in parts if re.search(r'[A-Za-z0-9]', p)]
 
 
 def load(name):
@@ -144,6 +147,44 @@ def check_style(content, floats):
             if len(where) > cap:
                 blocks = ', '.join(dict.fromkeys(where))
                 WARN.append(f'style: {label} ×{len(where)} ({kind} {cap:g} for {words} words) in {blocks}; {entry["fix"]}')
+
+
+def check_line_of_thought(content, floats):
+    """Regularities that make prose read as generated (sci-prose-style, references/human-line-of-thought.md)."""
+    minor, rates = {}, {}
+    for lang in CFG['output'].get('languages', ['en']):
+        n_sent = n_conn = 0
+        for bid, text, _ in paragraphs(content, floats, lang):
+            if not text:
+                continue
+            p = plain(text)
+            if lang == 'en':
+                sents = sentences(p)
+                n_conn += sum(sl.explanation_count(s) for s in sents)
+                hits = [h[:3] for h in sl.line_of_thought_en(LIMITS, sents)]
+            else:
+                sents = sl.sentences_zh(p)
+                n_conn += sl.zh_explanation_count(LIMITS, p)
+                hits = [h[:3] for h in sl.line_of_thought_zh(LIMITS, p, sents)]
+            n_sent += len(sents)
+            for weight, kind, detail in hits:
+                if weight >= 2:
+                    WARN.append(f'line of thought: {kind} in {bid}: {detail}')
+                else:
+                    minor.setdefault(kind, []).append(bid)
+        if n_sent:
+            rates[lang] = 100 * n_conn / n_sent
+    if rates:
+        print('Explanation connectives per 100 sentences: '
+              + '; '.join(f'{lang} {r:.1f}' for lang, r in rates.items()))
+    cap = LIMITS.get('rhythm', {}).get('max_connectives_per_100', 10)
+    for lang, r in rates.items():
+        if r > cap:
+            WARN.append(f'line of thought: {r:.1f} explanation connectives per 100 sentences ({lang}); above {cap:g} '
+                        f'the links read as an even causal chain; let sentence order and named actors carry most causes')
+    for kind, where in minor.items():
+        blocks = ', '.join(list(dict.fromkeys(where))[:12])
+        WARN.append(f'line of thought: {kind} ×{len(where)} in {blocks}; review by eye')
 
 
 def _defined(abbr, text):
@@ -431,6 +472,7 @@ def check_review():
 def main(argv):
     content, floats = load_project(HERE, CFG)
     check_style(content, floats)
+    check_line_of_thought(content, floats)
     if '--style' not in argv:
         check_abbreviations(content, floats)
         check_build(content)

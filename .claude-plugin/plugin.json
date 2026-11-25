@@ -2,7 +2,7 @@
   "name": "academic-writing-skills",
   "displayName": "Academic Writing Skills",
   "description": "Evidence-traceable scientific writing: planning, literature and citation verification, expert prose, figures with image-model prompts, bilingual docx builds, and pre-submission review.",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "author": {
     "name": "Yufeng Zhan"
   },

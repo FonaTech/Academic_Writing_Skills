@@ -1,0 +1,14 @@
+{
+  "mode": "rebuttal",
+  "document": "response to reviewers and revised manuscript",
+  "structure": [
+    "summary of changes (3-5 bullets)",
+    "per comment: quote, response, change with location"
+  ],
+  "tone": "direct, courteous, evidence first; one thank-you, not per comment",
+  "checks": [
+    "every promised change exists",
+    "numbers re-verified",
+    "tracked-changes copy if requested"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "mode": "thesis",
+  "document": "thesis or dissertation chapter",
+  "structure": [
+    "link to previous chapter",
+    "introduction",
+    "methods",
+    "results",
+    "discussion",
+    "summary and link forward"
+  ],
+  "numbering": "figures, tables and equations by chapter (Fig. 3.4)"
+}

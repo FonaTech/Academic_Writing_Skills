@@ -1,0 +1,34 @@
+{
+  "mode": "article",
+  "document": "letter / communication",
+  "length_words": [
+    1500,
+    3000
+  ],
+  "abstract_words": [
+    80,
+    150
+  ],
+  "figures": [
+    3,
+    4
+  ],
+  "skeleton": [
+    "gap and result in the first paragraph",
+    "one claim per figure",
+    "methods online"
+  ],
+  "style": {
+    "median_sentence_words": [
+      16,
+      20
+    ],
+    "max_sentence_words": 30,
+    "paragraph_words": [
+      80,
+      180
+    ],
+    "attribution": "concept, mechanism or claim as the grammatical subject, citation at the end of the clause; 'A et al. reported ... [3]' for landmark or disputed results; reference-as-subject ('[3] reported') only where the venue uses it; one convention throughout (see references/article-architecture.md)",
+    "citations": "numbered by first citation"
+  }
+}

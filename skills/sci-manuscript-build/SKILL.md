@@ -52,3 +52,7 @@ Archive before restructuring, avoid simultaneous edits, and deliver only request
 
 ## Merged table, math and collaboration features
 Tables support year_column and year_inline, derived from checked reference years. Inline standard function commands such as \ln and \exp remain upright. The builder checks Word lock files for all planned DOCX outputs before writing. Read [content-markup.md](references/content-markup.md) for the options and [versioning-delivery.md](references/versioning-delivery.md) for requested length variants. These options work with declarative sources and trusted legacy Python content.
+
+
+## Default Drafting Chain for prose
+Before drafting or revising prose, use sci-prose-style's [human-line-of-thought.md](../sci-prose-style/references/human-line-of-thought.md): facts list first; argument-driven order and named actors; varied sentence lengths; explanation connectives near 8 per 100 sentences; no questions, musings, counted overviews or template phrases; end paragraphs on a fact. Run prose_lint.py on a task-local copy of the delivered prose, including chat-only prose. Preserve quantities, qualifiers, citations and requested language/variant parity. This route does not replace this skill's evidence, build, figure or review responsibilities.
